@@ -125,7 +125,7 @@ const lang = {
     },
     "worktitle2" : {
         "ru": "Dats.Team: Разработка на React Native",
-        "en": "Data.Team: React Native Development",
+        "en": "Dats.Team: React Native Development",
     },
     "dickriphn2" : {
         "ru": "Работал над созданием мобильных приложений с использованием React Native и Firebase. Интеграция авторизации, баз данных и взаимодействие с API. Получил опыт работы в командной среде.",
@@ -137,7 +137,7 @@ const lang = {
     },
     "worktitle3" : {
         "ru": "Dats.Team: Разработка на React",
-        "en": "Data.Team: React Development",
+        "en": "Dats.Team: React Development",
     },
     "dickriphn3" : {
         "ru": "Создавал масштабируемые веб-приложения с использованием React, Redux и Next.js. Оптимизировал клиентский интерфейс и обеспечивал производительность. Участвовал в разработке модульных приложений.",
