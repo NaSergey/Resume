@@ -3,6 +3,10 @@ const lang = {
         "ru": "Главная",
         "en": "Home",
     },
+    "langtrigger" : {
+        "ru": "Языки",
+        "en": "Language",
+    },
     "Aboutus" : {
         "ru": "Обо мне",
         "en": "About us",
@@ -80,7 +84,7 @@ const lang = {
         "en": "Additional Skills",
     },
     "dabbled" : {
-        "ru": "Области, в которых я уже пробовал себя и планирую расширить.",
+        "ru": "Области, в которых я уже пробовал себя и планирую расширять.",
         "en": "Areas I’ve dabbled in and plan to expand upon.",
     },
     "Nestworking" : {

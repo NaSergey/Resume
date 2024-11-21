@@ -42,15 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
     translate(savedLanguage);
     
     // Обновить текст в триггере в соответствии с текущим языком
-    const updateTriggerText = () => {
-        const activeLink = Array.from(languageLinks).find(
-            (link) => link.dataset.lang === savedLanguage
-        );
-        if (activeLink) {
-            langTrigger.textContent = activeLink.textContent;
-        }
-    };
-    updateTriggerText();
+    // const updateTriggerText = () => {
+    //     const activeLink = Array.from(languageLinks).find(
+    //         (link) => link.dataset.lang === savedLanguage
+    //     );
+    //     if (activeLink) {
+    //         langTrigger.textContent = activeLink.textContent;
+    //     }
+    // };
+    // updateTriggerText();
     
     // Показать/скрыть меню при клике
     langTrigger.addEventListener('click', (e) => {
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
             translate(selectedLanguage);
     
             // Обновить текст триггера
-            langTrigger.textContent = link.textContent;
+            // langTrigger.textContent = link.textContent;
     
             // Закрыть меню
             langMenu.classList.add('hidden');
