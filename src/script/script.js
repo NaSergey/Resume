@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const menuBtn = document.getElementById("menu-btn");
     const mobileMenu = document.getElementById("mobile-menu");
-
+    const links = mobileMenu.querySelectorAll("a"); 
     // Проверка наличия элементов
     if (!menuBtn || !mobileMenu) {
         console.error("Не найдены элементы с id 'menu-btn' или 'mobile-menu'. Проверьте HTML.");
@@ -41,16 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedLanguage = localStorage.getItem("preferredLanguage") || "en";
     translate(savedLanguage);
     
-    // Обновить текст в триггере в соответствии с текущим языком
-    // const updateTriggerText = () => {
-    //     const activeLink = Array.from(languageLinks).find(
-    //         (link) => link.dataset.lang === savedLanguage
-    //     );
-    //     if (activeLink) {
-    //         langTrigger.textContent = activeLink.textContent;
-    //     }
-    // };
-    // updateTriggerText();
+
     
     // Показать/скрыть меню при клике
     langTrigger.addEventListener('click', (e) => {

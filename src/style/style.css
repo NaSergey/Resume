@@ -12,6 +12,7 @@ body::-webkit-scrollbar {
     display: none; /* Убирает скроллбар в Chrome/Safari */
 }
 
+
 @keyframes appear {
     from {
       opacity: 0;
