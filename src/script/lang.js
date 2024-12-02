@@ -108,8 +108,8 @@ const lang = {
         "en": "My work experience",
     },
     "workstart" : {
-        "ru": "Февраль 2021 — июнь 2021",
-        "en": "February 2021 — June 2021",
+        "ru": "Сентябрь 2022 — Январь 2023",
+        "en": "September 2022 — January 2023",
     },
     "worktitle" : {
         "ru": "Фриланс: Создание сайтов",
@@ -120,8 +120,8 @@ const lang = {
         "en": "I developed websites on Bootstrap with adaptive layout. Gradually, I started working with orders that include JavaScript and PHP. Improved the skills of creating client and server solutions.",
     },
     "workstart2" : {
-        "ru": "Август 2022 — Ноябрь 2023",
-        "en": "August 2022 — November 2023",
+        "ru": "Февраль 2023 — Февраль 2024",
+        "en": "February 2023 — February 2024",
     },
     "worktitle2" : {
         "ru": "Dats.Team: Разработка на React Native",
@@ -132,16 +132,16 @@ const lang = {
         "en": "He worked on creating mobile applications using React Native and Firebase. Integration of authorization, databases and interaction with the API. Gained experience working in a team environment.",
     },
     "workstart3" : {
-        "ru": "Декабрь 2023 — Июль 2024",
-        "en": "December 2023 — July 2024",
+        "ru": "Февраль 2024 — Август 2024",
+        "en": "February 2024 — August 2024",
     },
     "worktitle3" : {
-        "ru": "Dats.Team: Разработка на React",
-        "en": "Dats.Team: React Development",
+        "ru": "Dats.Team: Разработка",
+        "en": "Dats.Team: Development",
     },
     "dickriphn3" : {
-        "ru": "Создавал масштабируемые веб-приложения с использованием React, Redux и Next.js. Оптимизировал клиентский интерфейс и обеспечивал производительность. Участвовал в разработке модульных приложений.",
-        "en": "Created scalable web applications using React, Redux and Next.js . Optimized the client interface and ensured performance. Participated in the development of modular applications.",
+        "ru": "Работал над различными проектами, создавал и оптимизировал фронтенд-часть веб-сайтов и приложений. Основная работа не включала использование React, однако я его использовал для создания своих личных проектах.",
+        "en": "He worked on various projects, created and optimized the frontend part of websites and applications. The main work did not include the use of React, but I used it to create my own personal projects.",
     },
     "Personal" : {
         "ru": "Личные качества",
