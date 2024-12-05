@@ -108,8 +108,8 @@ const lang = {
         "en": "My work experience",
     },
     "workstart" : {
-        "ru": "Сентябрь 2022 — Январь 2023",
-        "en": "September 2022 — January 2023",
+        "ru": "Март 2022 — Сентябрь 2022",
+        "en": "March 2022 — September 2022",
     },
     "worktitle" : {
         "ru": "Фриланс: Создание сайтов",
@@ -120,8 +120,8 @@ const lang = {
         "en": "I developed websites on Bootstrap with adaptive layout. Gradually, I started working with orders that include JavaScript and PHP. Improved the skills of creating client and server solutions.",
     },
     "workstart2" : {
-        "ru": "Февраль 2023 — Февраль 2024",
-        "en": "February 2023 — February 2024",
+        "ru": "Август 2022 — Октябрь 2023",
+        "en": "August 2022 — October 2023",
     },
     "worktitle2" : {
         "ru": "Dats.Team: Разработка на React Native",
@@ -132,8 +132,8 @@ const lang = {
         "en": "He worked on creating mobile applications using React Native and Firebase. Integration of authorization, databases and interaction with the API. Gained experience working in a team environment.",
     },
     "workstart3" : {
-        "ru": "Февраль 2024 — Август 2024",
-        "en": "February 2024 — August 2024",
+        "ru": "Декабрь 2023 — Август 2024",
+        "en": "December 2023 — August 2024",
     },
     "worktitle3" : {
         "ru": "Dats.Team: Разработка",
