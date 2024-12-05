@@ -6,20 +6,51 @@
     <title>Resume</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="./src//style/style.css">
+    <script src="./src/script/lang.js"></script>
+    <link rel="stylesheet" href="./src/style/style.css">
     <script src="./src/script/script.js"></script>
-    
+    <link rel="icon" href="./src/image/title.png" type="image/x-icon">
 </head>
 <body class="bg-header text-[#a4a5a6]" >
     <header class="bg-header fixed w-full z-[100]">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center md:justify-center">
-            <nav class="hidden md:flex space-x-6">
-                <a href="#" class="hover:text-yellow-400 transition">Home</a>
-                <a href="#" class="hover:text-yellow-400 transition">About</a>
-                <a href="#" class="hover:text-yellow-400 transition">Services</a>
-                <a href="#" class="hover:text-yellow-400 transition">Contact</a>
+            <nav class="md:hidden md:flex space-x-6">
+                <a href="#Main" class="text-yellow-400 font-bold transition">Resume</a>
             </nav>
-    
+            <nav class="hidden md:flex translate">
+                <a href="#Main" class="translate-Home hover:text-yellow-400 transition px-2">Home</a>
+                <a href="#Aboutme" class="translate-Aboutus hover:text-yellow-400 transition px-2">About us</a>
+                <a href="#Skills" class="translate-Skills hover:text-yellow-400 transition px-2">Skills</a>
+                <a href="#Workexperience" class="translate-WorkExperience hover:text-yellow-400 transition px-2">Work Experience</a>
+                <!-- <a href="#" id="lang-en" class="hover:text-yellow-400 transition" data-lang="en">English</a>
+                <a href="#" id="lang-ru" class="hover:text-yellow-400 transition" data-lang="ru">Russian</a> -->
+                <div class="relative inline-block px-3">
+                    <!-- Триггер -->
+                    <a 
+                        href="#" 
+                        id="lang-trigger" 
+                        class="translate-langtrigger hover:text-yellow-400 transition cursor-pointer">
+                        Language <!-- Изначально отображаемый язык -->
+                    </a>
+                    
+                    <!-- Выпадающее меню -->
+                    <div 
+                        id="lang-menu" 
+                        class="hidden absolute left-0 min-w-full mt-2 px-2 bg-header rounded-lg">
+                        <a 
+                            href="#" 
+                            id="lang-en" 
+                            class="block py-2 hover:text-yellow-400 transition" 
+                            data-lang="en">English</a>
+                        <a 
+                            href="#" 
+                            id="lang-ru" 
+                            class="block py-2 hover:text-yellow-400 transition" 
+                            data-lang="ru">Русский</a>
+                    </div>
+                </div>
+                
+            </nav>
             <!-- Кнопка -->
             <button class="md:hidden ml-auto text-yellow-400" id="menu-btn">
                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -27,16 +58,18 @@
                 </svg>
             </button>
         </div>
-    
+
         <!-- Меню -->
         <div 
             id="mobile-menu"
             class="md:hidden absolute top-full left-0 w-full bg-header max-h-0 opacity-0 transform transition-all duration-300 ease-in-out">
             <nav class="px-4 py-4 space-y-2">
-                <a href="#" class="block hover:text-yellow-400 transition">Home</a>
-                <a href="#" class="block hover:text-yellow-400 transition">About</a>
-                <a href="#" class="block hover:text-yellow-400 transition">Services</a>
-                <a href="#" class="block hover:text-yellow-400 transition">Contact</a>
+                <a href="#Main" class="translate-Home block hover:text-yellow-400 transition">Home</a>
+                <a  href="#Aboutme" class="translate-Aboutus block hover:text-yellow-400 transition">About us</a>
+                <a href="#Skills" class="translate-Skills block hover:text-yellow-400 transition">Skills</a>
+                <a href="#Workexperience" class="translate-WorkExperience block hover:text-yellow-400 transition">Work Experience</a>
+                <a href="#" id="lang-en" class="block hover:text-yellow-400 transition" data-lang="en">English</a>
+                <a href="#" id="lang-ru" class="block hover:text-yellow-400 transition" data-lang="ru">Русский</a>
             </nav>
         </div>
     </header>
@@ -44,7 +77,7 @@
     
 
     <!-- Content -->
-    <div class="container mx-auto pt-14 ">
+    <div class="container mx-auto pt-14 " id="Main">
         <div class="grid md:grid-cols-[33%_67%] block">
             <div class="flex justify-center bg-2b2c2c">
                 <div class="flex items-center py-16 justify-center md:w-[380px] md:h-[720px] ">
@@ -59,7 +92,7 @@
                 <div class="flex flex-col justify-center w-full pt-16 text-center md:text-left">
                     <!-- Имя -->
                     <p class="text-4xl md:text-5xl">Web</p>
-                    <p class="text-5xl md:text-6xl font-bold text-yellow-400">Наумов Сергей</p>
+                    <p class="translate-name text-5xl md:text-6xl font-bold text-yellow-400">Наумов Сергей</p>
                     <!-- Описание и иконка -->
                     <div class="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start pt-4 space-y-4 md:space-y-0">
                     <p class="text-lg md:text-2xl font-semibold">Front-end Developer</p>
@@ -69,54 +102,58 @@
                     </div>
                     <!-- Разделитель -->
                     <div class="pt-12 md:pt-24 pb-8">
-                    <div class="w-full h-0.5 bg-[#686869]"></div>
-                    </div>
-                    <!-- Информация в сетке -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-                    <!-- Блок 1 -->
-                    <div class="text-center md:text-left rounded-lg">
-                        <p class="font-bold text-xl mb-2">Location</p>
-                        <p class="">Batumi</p>
-                    </div>
-                    <!-- Блок 2 -->
-                    <div class="text-center md:text-left rounded-lg">
-                        <p class="font-bold text-xl mb-2">Date of birth</p>
-                        <p class="">01.03.2000</p>
-                    </div>
-                    <!-- Блок 3 -->
-                    <div class="text-center md:text-left rounded-lg">
-                        <p class="font-bold text-xl mb-2">Experience</p>
-                        <p class="">Frontend Developer (21-24)</p>
-                    </div>
-                    <!-- Блок 4 -->
-                    <div class="text-center md:text-left rounded-lg">
-                        <p class="font-bold text-xl mb-2">Email</p>
-                        <p class="">wxtx.ns@gmail.com</p>
-                    </div>
+                        <div class="w-full h-0.5 bg-[#686869]"></div>
+                        </div>
+                        <!-- Информация в сетке -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+                        <!-- Блок 1 -->
+                        <div class="text-center md:text-left rounded-lg">
+                            <p class="translate-Location font-bold text-xl mb-2">Location</p>
+                            <p class="">Batumi</p>
+                        </div>
+                        <!-- Блок 2 -->
+                        <div class="text-center md:text-left rounded-lg">
+                            <p class="translate-Dateofbirth font-bold text-xl mb-2">Date of birth</p>
+                            <p class="">01.03.2000</p>
+                        </div>
+                        <!-- Блок 3 -->
+                        <div class="text-center md:text-left rounded-lg">
+                            <p class="translate-Experience font-bold text-xl mb-2">Experience</p>
+                            <p class="translate-frontednDew">Frontend Developer (21-24)</p>
+                        </div>
+                        <!-- Блок 4 -->
+                        <div class="text-center md:text-left rounded-lg">
+                            <p class="font-bold text-xl mb-2">Email</p>
+                            <p class="">wxtx.ns@gmail.com</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="grid md:grid-cols-[33%_67%] block">
+        <div class="grid md:grid-cols-[33%_67%] block" id="Aboutme">
             <div class="flex md:justify-end  bg-292a2a border-t border-b border-[#5e5e5e] md:border-none">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
-                    <p class="md:text-right text-yellow-400 ">INTRO</p>
-                    <p class="pt-2">What I am all about.</p>
+                    <p  class="translate-Aboutus md:text-right text-yellow-400 ">About us</p>
+                    <p class="translate-MyDeveloper pt-2">My Developer Path</p>
                 </div>
             </div>
             <div class="bg-2b2c2c">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
-                    <p class="">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aaliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. Nulla vitae mauris non felis mollis faucibus.</p>
-                    <p class="pt-6">Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Fusce lacinia arcu et nulla. Nulla vitae mauris non felis mollis.</p>
+                    <p class="translate-IamFrontend pt-2">
+                        I am a Frontend Developer with 3 years of experience (2021–2024), specializing in building adaptive and functional user interfaces. Proficient in JavaScript, React, Next.js, and Tailwind CSS. Passionate about creating innovative web applications and delivering seamless user experiences.
+                    </p>
+                    <p class="translate-Myexpertise pt-2">
+                        My expertise extends to optimizing designs for responsiveness, integrating APIs, and developing scalable solutions. I thrive on challenges and continuously enhance my skills to stay ahead in the dynamic world of web development.
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="grid md:grid-cols-[33%_67%] block">
+        <div class="grid md:grid-cols-[33%_67%] block" id="Skills">
             <div class="flex md:justify-end  bg-2b2c2c border-t border-b border-[#5e5e5e] md:border-none">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
-                    <p class="md:text-right text-yellow-400 ">Skills</p>
-                    <p class="pt-2">What I am all about.</p>
+                    <p class="translate-Skills md:text-right text-yellow-400 ">Skills</p>
+                    <p class="translate-Mymainskills pt-2">My main skills</p>
                 </div>
             </div>
             <div class="bg-2d2e2e">
@@ -126,17 +163,17 @@
                         <div class="text-yellow-400  font-bold text-lg">01</div>
                         <div class="px-4">
                             <p class="text-[#c2c0c0] font-bold text-lg">React Stack</p>
-                            <p class="py-4">
+                            <p class="translate-ReactStack py-4">
                                 Мой основной стек: React, React Native, Next.js, Redux, Redux Toolkit, для создания интерфейсов с динамическими данными в масштабируемых проектах.
                             </p>
                         </div>
                     </div>
                     <!-- Блок 2 -->
                     <div class="p-2 flex row rounded-lg">
-                        <div class="text-yellow-400 font-bold text-lg">02</div>
+                        <div class="text-yellow-400 font-bold text-lg ">02</div>
                         <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">Layout</p>
-                            <p class="py-4">
+                            <p class="text-[#c2c0c0] font-bold text-lg">Base</p>
+                            <p class="translate-Base py-4">
                                 С помощью HTML5, CSS3, JavaScript (ES6), SCSS создаю адаптивные и кроссбраузерные макеты с упором на современный дизайн.
                             </p>
                         </div>
@@ -146,7 +183,7 @@
                         <div class="text-yellow-400 font-bold text-lg">03</div>
                         <div class="px-4">
                             <p class="text-[#c2c0c0] font-bold text-lg">Git/GitHub</p>
-                            <p class="py-4">
+                            <p class="translate-Git py-4">
                                 Использую Git для управления версиями, совместной работы над кодом, управления ветками и разрешения конфликтов.
                             </p>
                         </div>
@@ -156,8 +193,8 @@
                         <div class="text-yellow-400 font-bold text-lg">04</div>
                         <div class="px-4">
                             <p class="text-[#c2c0c0] font-bold text-lg">TypeScript/JavaScript</p>
-                            <p class="py-4">
-                                JavaScript используют редко.В основном TypeScript т.к помогает улучшить надежность кода за счет строгой типизации упрощает нахождение ошибок.
+                            <p class="translate-TypeScript py-4">
+                                JavaScript используют редко. В основном TypeScript т.к помогает улучшить надежность кода за счет строгой типизации упрощает нахождение ошибок.
                             </p>
                         </div>
                     </div>
@@ -166,7 +203,7 @@
                         <div class="text-yellow-400 font-bold text-lg">05</div>
                         <div class="px-4">
                             <p class="text-[#c2c0c0] font-bold text-lg">For Styling</p>
-                            <p class="py-4">
+                            <p class="translate-Styling py-4">
                                 Tailwind, Bootstrap, Material UI, SCSS/SASS. Обеспечиваю современный дизайн и быструю стилизацию компонентов с использованием удобных и модульных CSS-фреймворков.
                             </p>
                         </div>
@@ -176,7 +213,7 @@
                         <div class="text-yellow-400 font-bold text-lg">06</div>
                         <div class="px-4">
                             <p class="text-[#c2c0c0] font-bold text-lg">RESTful APIs</p>
-                            <p class="py-4">
+                            <p class="translate-RESTful py-4">
                                 Реализую взаимодействие с внешними API с помощью Fetch API. Работаю с запросами GET, POST, PUT и DELETE, создавая эффективное взаимодействие клиента с сервером.
                             </p>
                         </div>
@@ -187,50 +224,50 @@
         <div class="grid md:grid-cols-[33%_67%] block">
             <div class="flex md:justify-end  bg-292a2a border-t border-b border-[#5e5e5e] md:border-none">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
-                    <p class="md:text-right text-yellow-400 ">Additional Skills</p>
-                    <p class="pt-2">Areas I’ve dabbled in and plan to expand upon.</p>
+                    <p class="translate-Additional md:text-right text-yellow-400 ">Additional Skills</p>
+                    <p class="translate-dabbled text-right pt-2">Areas I’ve dabbled in and plan to expand upon.</p>
                 </div>
             </div>
             <div class="bg-2b2c2c">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:py-20 md:px-16 p-6">
                     <div class="p-2 flex row rounded-lg">
-                        <div class="w-4 bg-yellow-400 rounded-xl font-bold"></div>
+                        <div class="w-[12.44px] bg-yellow-400 rounded-xl font-bold"></div>
                         <div class="px-4">
                             <p class="text-[#c2c0c0] font-bold text-lg">Nest.js</p>
-                            <p class="py-4">Experience working with Nest.js: Creating a simple Api, understanding modules, controllers and services.</p>
+                            <p class="translate-Nestworking py-4">Experience working with Nest.js: Creating a simple Api, understanding modules, controllers and services.</p>
                         </div>
                     </div>
                     <div class="p-2 flex row rounded-lg">
-                        <div class="w-4 bg-yellow-400 rounded-xl font-bold"></div>
+                        <div class="w-[12.44px] bg-yellow-400 rounded-xl font-bold"></div>
                         <div class="px-4">
                             <p class="text-[#c2c0c0] font-bold text-lg">Node.js</p>
-                            <p class="py-4">Basic skills in Node.js: working with Express, creating RESTful APIs, handling middleware, and basic error handling.</p>
+                            <p class="translate-Node py-4">Basic skills in Node.js: working with Express, creating RESTful APIs, handling middleware, and basic error handling.</p>
                         </div>
                     </div>
                     <div class="p-2 flex row rounded-lg">
-                        <div class="w-4 bg-yellow-400 rounded-xl font-bold "></div>
+                        <div class="w-[12.44px] bg-yellow-400 rounded-xl font-bold "></div>
                         <div class="px-4">
                             <p class="text-[#c2c0c0] font-bold text-lg">PHP</p>
-                            <p class="py-4">Creating websites using PHP, understanding of PHP syntax, working with forms, sessions, and databases using MySQL.</p>
+                            <p class="translate-PHP py-4">Creating websites using PHP, understanding of PHP syntax, working with forms, sessions, and databases using MySQL.</p>
                         </div>
                     </div>
                     <div class="p-2 flex row rounded-lg">
-                        <div class="w-4 bg-yellow-400 rounded-xl font-bold"></div>
+                        <div class="w-[12.44px] bg-yellow-400 rounded-xl font-bold"></div>
                         <div class="px-4">
                             <p class="text-[#c2c0c0] font-bold text-lg">Docker</p>
-                            <p class="py-4">Basic knowledge of Docker: creating containers, managing images, and understanding container networking and volumes.</p>
+                            <p class="translate-Docker py-4">Basic knowledge of Docker: creating containers, managing images, and understanding container networking and volumes.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="grid md:grid-cols-[33%_67%] block">
+        <div class="grid md:grid-cols-[33%_67%] block " id="Workexperience">
             <div class="flex md:justify-end bg-2b2c2c border-t border-b border-[#5e5e5e] md:border-none">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
-                    <p class="md:text-right text-yellow-400 ">My work experience</p>
+                    <p class="translate-MyWorkExperience md:text-right text-yellow-400 ">My work experience</p>
                 </div>
             </div>
-            <div class="bg-[#2d2e2e] p-6">
+            <div class="bg-[#2d2e2e] md:py-20 md:px-16 p-6">
                 <div class="relative max-w-4xl mx-auto">
                     <!-- Вертикальная линия -->
                     <div class="absolute top-0 left-[5px] z-[0] w-0.5 h-full bg-[#5e5e5e] before:content-[''] before:absolute before:-top-0 before:left-[-7px] before:w-4 before:h-0.5 before:bg-[#5e5e5e] after:content-[''] after:absolute after:-bottom-0.5 after:left-[-7px] after:w-4 after:h-0.5 after:bg-[#5e5e5e]"></div>
@@ -239,9 +276,9 @@
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="flex-shrink-0 w-3 h-3 bg-yellow-400 z-[1] rounded-full"></div>
                         <div class="pt-4">
-                            <p class="text-xs">Февраль 2021 — июнь 2021</p>
-                            <p class="font-bold text-lg">Фриланс: Создание сайтов</p>
-                            <p class="">
+                            <p class="translate-workstart text-xs">Февраль 2021 — июнь 2021</p>
+                            <p class="translate-worktitle font-bold text-lg">Фриланс: Создание сайтов</p>
+                            <p class="translate-dickriphn">
                                 Разрабатывал сайты на Bootstrap с адаптивной версткой. Постепенно начал работать с заказами, включающими JavaScript и PHP. Улучшил навыки создания клиентских и серверных решений.
                             </p>
                         </div>
@@ -251,9 +288,9 @@
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="flex-shrink-0 w-3 h-3 bg-yellow-400 z-[1] rounded-full"></div>
                         <div class="pt-4">
-                            <p class="text-xs">Август 2022 — Ноябрь 2023</p>
-                            <p class="font-bold text-lg">Dats.Team: Разработка на React Native</p>
-                            <p class="">
+                            <p class="translate-workstart2 text-xs">Август 2022 — Ноябрь 2023</p>
+                            <p class="translate-worktitle2 font-bold text-lg">Dats.Team: Разработка на React Native</p>
+                            <p class="translate-dickriphn2">
                                 Работал над созданием мобильных приложений с использованием React Native и Firebase. Интеграция авторизации, баз данных и взаимодействие с API. Получил опыт работы в командной среде.
                             </p>
                         </div>
@@ -263,9 +300,9 @@
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="flex-shrink-0 w-3 h-3 bg-yellow-400 z-[1] rounded-full"></div>
                         <div class="pt-4">
-                            <p class="text-xs">Декабрь 2023 — Июль 2024</p>
-                            <p class="font-bold text-lg">Dats.Team: Разработка на React</p>
-                            <p class="">
+                            <p class="translate-workstart3 text-xs">Декабрь 2023 — Июль 2024</p>
+                            <p class="translate-worktitle3 font-bold text-lg">Dats.Team: Разработка на React</p>
+                            <p class="translate-dickriphn3 ">
                                 Создавал масштабируемые веб-приложения с использованием React, Redux и Next.js. Оптимизировал клиентский интерфейс и обеспечивал производительность. Участвовал в разработке модульных приложений.
                             </p>
                         </div>
@@ -276,7 +313,7 @@
         <div class="grid md:grid-cols-[33%_67%] block">
             <div class="flex md:justify-end  bg-292a2a border-t border-b border-[#5e5e5e] md:border-none">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
-                    <p class="md:text-right text-yellow-400 ">Personal qualities</p>
+                    <p class="translate-Personal md:text-right text-yellow-400 ">Personal qualities</p>
                     <!-- <p class="pt-2">Areas I’ve dabbled in and plan to expand upon.</p> -->
                 </div>
             </div>
@@ -284,24 +321,22 @@
                 <div class="grid gap-4 md:py-20 md:px-16 p-6">
                     <div class="flex row rounded-lg">
                         <div class="">
-                            <p class="pt-2">
+                            <p class="translate-Personaldick pt-2">
                                 I am a team player who values collaboration and efficient task management. I rely on tools like Obsidian to set clear goals and organize work effectively. 
                             </p>
-                            <p>My top priority is delivering high-quality products, ensuring every detail meets the highest standards of excellence. Quality is not just a goal for me — it’s a principle.</p>
+                            <p class="translate-Personadick2">My top priority is delivering high-quality products, ensuring every detail meets the highest standards of excellence. Quality is not just a goal for me — it’s a principle.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <footer class="bg-header md:p-16">
+    <footer class="bg-header md:p-16 block">
         <div class="flex flex-col md:flex-row md:px-20 py-8 px-16">
             <div class="flex flex-col justify-between w-full text-center md:text-left">
                 <div class="">
                     <p class="text-4xl md:text-5xl">Web</p>
-                    <p class="text-5xl md:text-6xl font-bold text-yellow-400">Наумов Сергей</p>
+                    <p class="translate-name text-5xl md:text-6xl font-bold text-yellow-400">Наумов Сергей</p>
                 </div>
               <div class="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start pt-4 space-y-4 md:space-y-0">
                 <p class="text-lg md:text-2xl">Front-end Developer</p>
