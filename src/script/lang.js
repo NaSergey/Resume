@@ -140,8 +140,8 @@ const lang = {
         "en": "Dats.Team: Development",
     },
     "dickriphn3" : {
-        "ru": "Работал над различными проектами, создавал и оптимизировал фронтенд-часть веб-сайтов и приложений. Основная работа не включала использование React, однако я его использовал для создания своих личных проектах.",
-        "en": "He worked on various projects, created and optimized the frontend part of websites and applications. The main work did not include the use of React, but I used it to create my own personal projects.",
+        "ru": "Участвовал в разработке и оптимизации фронтенд-части различных веб-сайтов и приложений. Использовал современные технологии, включая React и Next.js, для создания эффективных и высокопроизводительных интерфейсов.",
+        "en": "Participated in the development and optimization of the frontend part of various websites and applications. He used modern technologies, including React and Next.js, for creating efficient and high-performance interfaces.",
     },
     "Personal" : {
         "ru": "Личные качества",
