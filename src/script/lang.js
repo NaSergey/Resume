@@ -44,8 +44,8 @@ const lang = {
         "en": "My Developer Path",
     },
     "IamFrontend" : {
-        "ru": "Я фронтенд-разработчик с 3-летним опытом работы (2021-2024), специализирующийся на создании адаптивных и функциональных пользовательских интерфейсов. Владею JavaScript, React, Next.js и Tailwind CSS. Увлечен созданием инновационных веб-приложений и обеспечением бесперебойного взаимодействия с пользователями.",
-        "en": "I am a Frontend Developer with 3 years of experience (2021–2024), specializing in building adaptive and functional user interfaces. Proficient in JavaScript, React, Next.js, and Tailwind CSS. Passionate about creating innovative web applications and delivering seamless user experiences.",
+        "ru": "Я фронтенд-разработчик с 3-летним опытом работы (2021-2025), специализирующийся на создании адаптивных и функциональных пользовательских интерфейсов. Владею JavaScript, React, Next.js и Tailwind CSS. Увлечен созданием инновационных веб-приложений и обеспечением бесперебойного взаимодействия с пользователями.",
+        "en": "I am a Frontend Developer with 3 years of experience (2021-2025), specializing in building adaptive and functional user interfaces. Proficient in JavaScript, React, Next.js, and Tailwind CSS. Passionate about creating innovative web applications and delivering seamless user experiences.",
     },
     "Myexpertise" : {
         "ru": "Мой опыт распространяется на оптимизацию дизайна для повышения быстродействия, интеграцию API и разработку масштабируемых решений. Я успешно справляюсь с задачами и постоянно совершенствую свои навыки, чтобы оставаться впереди в динамичном мире веб-разработки.",
