@@ -43,21 +43,21 @@ const lang = {
         "ru": "Мой путь разработчика",
         "en": "My Developer Path",
     },
-    "IamFrontend" : {
-        "ru": "Я фронтенд-разработчик с 3-летним опытом работы (2021-2025), специализирующийся на создании адаптивных и функциональных пользовательских интерфейсов. Владею JavaScript, React, Next.js и Tailwind CSS. Увлечен созданием инновационных веб-приложений и обеспечением бесперебойного взаимодействия с пользователями.",
-        "en": "I am a Frontend Developer with 3 years of experience (2021-2025), specializing in building adaptive and functional user interfaces. Proficient in JavaScript, React, Next.js, and Tailwind CSS. Passionate about creating innovative web applications and delivering seamless user experiences.",
-    },
-    "Myexpertise" : {
-        "ru": "Мой опыт распространяется на оптимизацию дизайна для повышения быстродействия, интеграцию API и разработку масштабируемых решений. Я успешно справляюсь с задачами и постоянно совершенствую свои навыки, чтобы оставаться впереди в динамичном мире веб-разработки.",
-        "en": "My expertise extends to optimizing designs for responsiveness, integrating APIs, and developing scalable solutions. I thrive on challenges and continuously enhance my skills to stay ahead in the dynamic world of web development.",
-    },
+"IamFrontend": {
+  "ru": "Фронтенд-разработчик с 3-летним опытом (2022–2025). Специализируюсь на создании адаптивных пользовательских интерфейсов с использованием React, Next.js и Tailwind CSS. Разрабатываю производительные и стабильные веб-приложения с соблюдением принципов модульности и переиспользуемости.",
+  "en": "Frontend developer with 3 years of experience (2022–2025). Specializing in building adaptive user interfaces using React, Next.js, and Tailwind CSS. Develop performant and maintainable web applications based on modular and reusable architecture."
+},
+"Myexpertise": {
+  "ru": "Опыт включает оптимизацию клиентского рендера, интеграцию REST и GraphQL API, а также разработку масштабируемых решений. Соблюдаю современные подходы к архитектуре и обеспечиваю стабильную работу интерфейсов в продакшене.",
+  "en": "Experience includes client-side performance optimization, REST and GraphQL API integration, and development of scalable solutions. Adhere to modern architectural practices and ensure stable UI operation in production environments."
+},
     "Mymainskills" : {
         "ru": "Мои основные навыки",
         "en": "My main skills",
     },
     "ReactStack" : {
-        "ru": "Мой основной стек: React, React Native, Next.js, Redux, Redux Toolkit, для создания интерфейсов с динамическими данными в масштабируемых проектах.",
-        "en": "My main stack is: React, React Native, Next.js, Redux, Redux Toolkit, for creating interfaces with dynamic data in scalable projects.",
+        "ru": "Мой основной стек: Next.js, React, React Native,  Redux, Redux Toolkit, для создания интерфейсов с динамическими данными в масштабируемых проектах.",
+        "en": "My main stack is: Next.js, React, React Native, Redux, Redux Toolkit, for creating interfaces with dynamic data in scalable projects.",
     },
     "Base" : {
         "ru": "С помощью HTML5, CSS3, JavaScript (ES6), SCSS создаю адаптивные и кроссбраузерные макеты с упором на современный дизайн.",
@@ -116,8 +116,8 @@ const lang = {
         "en": "Freelance: Website Creation",
     },
     "dickriphn" : {
-        "ru": "Разрабатывал сайты на Bootstrap с адаптивной версткой. Постепенно начал работать с заказами, включающими JavaScript и PHP. Улучшил навыки создания клиентских и серверных решений.",
-        "en": "I developed websites on Bootstrap with adaptive layout. Gradually, I started working with orders that include JavaScript and PHP. Improved the skills of creating client and server solutions.",
+        "ru": "Разрабатывал сайты на Bootstrap с адаптивной версткой. Постепенно начал работать с заказами, включающими JavaScript и PHP. Начал изучать взаимодействие клиентской части с сервером.",
+        "en": "I developed websites on Bootstrap with adaptive layout. Gradually, I started working with orders that included JavaScript and PHP. Began studying the interaction between client and server sides.",
     },
     "workstart2" : {
         "ru": "Август 2022 — Октябрь 2023",
@@ -143,17 +143,52 @@ const lang = {
         "ru": "Участвовал в разработке и оптимизации фронтенд-части различных веб-сайтов и приложений. Использовал современные технологии, включая React и Next.js, для создания эффективных и высокопроизводительных интерфейсов.",
         "en": "Participated in the development and optimization of the frontend part of various websites and applications. He used modern technologies, including React and Next.js, for creating efficient and high-performance interfaces.",
     },
+    "workstart4": {
+        "ru": "Октябрь 2024 — Январь 2025",
+        "en": "October 2024 — January 2025"
+    },
+    "worktitle4": {
+        "ru": "Саморазвитие",
+        "en": "Self-Education"
+    },
+    "dickriphn4": {
+        "ru": "Углублял знания по React и Next.js, разрабатывал архитектуры приложений, тестировал различные подходы. Работал над оптимизацией клиентского рендера и взаимодействием с сервером.",
+        "en": "Deepened knowledge of React and Next.js, designed application architectures, and tested various approaches. Focused on optimizing client rendering and client-server interaction."
+    },
+
+    "workstart5": {
+        "ru": "Февраль 2025 — Апрель 2025",
+        "en": "February 2025 — April 2025"
+    },
+    "worktitle5": {
+        "ru": "Разработка CRM-системы",
+        "en": "CRM System Development"
+    },
+    "dickriphn5": {
+        "ru": "Перевёл CRM-систему с монолитной архитектуры на компонентную структуру с использованием React. Внедрил React Query для эффективной работы с API. Повысил производительность, упростил поддержку и улучшил пользовательский опыт.",
+        "en": "Migrated the CRM system from monolithic to a component-based architecture using React. Integrated React Query for efficient API handling. Improved performance, simplified maintenance, and enhanced user experience."
+    },
+
+    "workstart6": {
+        "ru": "Май 2025 — ........",
+        "en": "May 2025 — ........"
+    },
+    "worktitle6": {
+        "ru": "Работа над проектом BasisOS",
+        "en": "Work on BasisOS Project"
+    },
+    "dickriphn6": {
+        "ru": "Участвую в разработке BasisOS. Оптимизировал клиентский рендер, внедрил архитектурные улучшения и повысил производительность интерфейса. Начал использовать Web3-библиотеки и изучать взаимодействие с блокчейном.",
+        "en": "Participating in the development of BasisOS. Optimized client rendering, implemented architectural improvements, and enhanced interface performance. Started working with Web3 libraries and learning blockchain integration."
+    },
+
     "Personal" : {
-        "ru": "Личные качества",
-        "en": "Personal qualities",
+        "ru": "Портфолио",
+        "en": "Portfolio",
     },
-    "Personaldick" : {
-        "ru": "Я командный игрок, ценю сотрудничество и эффективное управление задачами. Я полагаюсь на такие инструменты, как Obsidian, для постановки четких целей и эффективной организации работы.",
-        "en": "I am a team player who values collaboration and efficient task management. I rely on tools like Obsidian to set clear goals and organize work effectively. ",
-    },
-    "Personadick2" : {
-        "ru": "Моим главным приоритетом является производство высококачественной продукции, чтобы каждая деталь соответствовала самым высоким стандартам качества. Качество для меня не просто цель — это принцип.",
-        "en": "My top priority is delivering high-quality products, ensuring every detail meets the highest standards of excellence. Quality is not just a goal for me — it’s a principle.",
+    "Personal1" : {
+        "ru": "Извини, но в данный момент я не могу предоставить доступ к своему портфолио. Однако я активно работаю над проектами и постоянно обновляю свои навыки. Если у вас есть какие-либо вопросы или вы хотите обсудить возможное сотрудничество, пожалуйста, свяжитесь со мной.",
+        "en": "Sorry, but I can't provide access to my portfolio at the moment. However, I am actively working on projects and constantly updating my skills. If you have any questions or would like to discuss potential collaboration, please feel free to contact me.",
     },
 
 }
