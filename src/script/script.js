@@ -10,12 +10,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     menuBtn.addEventListener("click", () => {
         if (mobileMenu.classList.contains("max-h-0")) {
-            mobileMenu.classList.remove("max-h-0", "opacity-0", "-translate-y-5");
-            mobileMenu.classList.add("max-h-screen", "opacity-100", "translate-y-0");
+            mobileMenu.classList.remove("max-h-0", "opacity-0", "-translate-y-5", "pointer-events-none");
+            mobileMenu.classList.add("max-h-screen", "opacity-100", "translate-y-0", "pointer-events-auto");
         } else {
-            mobileMenu.classList.remove("max-h-screen", "opacity-100", "translate-y-0");
-            mobileMenu.classList.add("max-h-0", "opacity-0", "-translate-y-5");
+            mobileMenu.classList.remove("max-h-screen", "opacity-100", "translate-y-0", "pointer-events-auto");
+            mobileMenu.classList.add("max-h-0", "opacity-0", "-translate-y-5", "pointer-events-none");
         }
+    });
+
+    // Close mobile menu when any link is clicked
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove("max-h-screen", "opacity-100", "translate-y-0", "pointer-events-auto");
+            mobileMenu.classList.add("max-h-0", "opacity-0", "-translate-y-5", "pointer-events-none");
+        });
     });
 
 

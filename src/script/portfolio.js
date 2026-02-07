@@ -181,7 +181,7 @@ function openModal(project) {
             const img = document.createElement('img');
             img.src = item.url;
             img.alt = project.title[currentLang];
-            img.className = 'w-full h-36 object-cover rounded-lg cursor-pointer hover:opacity-80 transition aspect-video';
+            img.className = 'w-full h-36 object-cover rounded-lg cursor-pointer hover:opacity-80 transition';
             img.addEventListener('click', () => openFullscreenImage(item.url));
             slide.appendChild(img);
             carouselTrack.appendChild(slide);
