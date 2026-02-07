@@ -35,7 +35,7 @@ const portfolioData = [
 
         image: "./src/image/Dopamine/2.png",
         media: [
-            { type: "video", url: "./src/image/Dopamine/video.mp4" },
+            { type: "video", url: "./src/image/Dopamine/Videos.mp4" },
             { type: "image", url: "./src/image/Dopamine/1.png" },
             { type: "image", url: "./src/image/Dopamine/2.png" },
             { type: "image", url: "./src/image/Dopamine/3.png" },
