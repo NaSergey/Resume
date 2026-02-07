@@ -35,12 +35,12 @@ const portfolioData = [
 
         image: "./src/image/Dopamine/2.png",
         media: [
-            { type: "video", url: "./src/image/Dopamine/Videos.mp4" },
-            { type: "image", url: "./src/image/Dopamine/1.png" },
-            { type: "image", url: "./src/image/Dopamine/2.png" },
-            { type: "image", url: "./src/image/Dopamine/3.png" },
-            { type: "image", url: "./src/image/Dopamine/4.png" },
-            { type: "image", url: "./src/image/Dopamine/5.png" }
+            { type: "video", url: "./src/image/dopamine/video.mp4" },
+            { type: "image", url: "./src/image/dopamine/1.png" },
+            { type: "image", url: "./src/image/dopamine/2.png" },
+            { type: "image", url: "./src/image/dopamine/3.png" },
+            { type: "image", url: "./src/image/dopamine/4.png" },
+            { type: "image", url: "./src/image/dopamine/5.png" }
         ],
         technologies: ["Next.js", "React Query", "ShadcnUI", "Zod", "React Hook Form", "FSD", "Chart.js"]
     },
