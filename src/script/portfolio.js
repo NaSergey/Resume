@@ -13,13 +13,13 @@ const portfolioData = [
             ru: "BasisOS — веб-приложение для децентрализованного финансового протокола (DeFAI). В рамках проекта я выполнил полный редизайн пользовательского интерфейса и разработал анимации для главной страницы.",
             en: "BasisOS is a web application for a decentralized financial protocol (DeFAI). As part of the project, I completed a full UI redesign and developed animations for the main page."
         },
-        image: "./src/image/basiosos/logo.png",
+        image: "./src/image/basios/logo.png",
         media: [
-            { type: "video", url: "./src/image/basiosos/video.mp4" },
-            { type: "image", url: "./src/image/basiosos/1.png" },
-            { type: "image", url: "./src/image/basiosos/2.png" },
-            { type: "image", url: "./src/image/basiosos/3.png" },
-            { type: "image", url: "./src/image/basiosos/4.png" },
+            { type: "video", url: "./src/image/basios/video.mp4" },
+            { type: "image", url: "./src/image/basios/1.png" },
+            { type: "image", url: "./src/image/basios/2.png" },
+            { type: "image", url: "./src/image/basios/3.png" },
+            { type: "image", url: "./src/image/basios/4.png" },
         ],
         technologies: ["Next.js", "React Query", "Framer Motion", "gsap", "lenis", "Chart.js", "Zod", "Wagmi"]
 
