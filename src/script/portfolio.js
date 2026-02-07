@@ -79,6 +79,8 @@ const portfolioData = [
 ];
 
 // Текущий язык
+// Текущий язык
+// Текущий язык
 let currentLang = localStorage.getItem("preferredLanguage") || "en";
 
 // Текущий индекс карусели
