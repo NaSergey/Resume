@@ -33,14 +33,14 @@ const portfolioData = [
         },
 
 
-        image: "./src/image/Dopamine/2.png",
+        image: "./src/image/dopamin/2.png",
         media: [
-            { type: "video", url: "./src/image/dopamine/video.mp4" },
-            { type: "image", url: "./src/image/dopamine/1.png" },
-            { type: "image", url: "./src/image/dopamine/2.png" },
-            { type: "image", url: "./src/image/dopamine/3.png" },
-            { type: "image", url: "./src/image/dopamine/4.png" },
-            { type: "image", url: "./src/image/dopamine/5.png" }
+            { type: "video", url: "./src/image/dopamin/video.mp4" },
+            { type: "image", url: "./src/image/dopamin/1.png" },
+            { type: "image", url: "./src/image/dopamin/2.png" },
+            { type: "image", url: "./src/image/dopamin/3.png" },
+            { type: "image", url: "./src/image/dopamin/4.png" },
+            { type: "image", url: "./src/image/dopamin/5.png" }
         ],
         technologies: ["Next.js", "React Query", "ShadcnUI", "Zod", "React Hook Form", "FSD", "Chart.js"]
     },
@@ -52,12 +52,12 @@ const portfolioData = [
             ru: "PIXEL CRM — веб-система управления клиентами (CRM) для лидов, партнеров, брокеров и маркетинговых кампаний в сфере финансов. Я переписал проект с монолитной архитектуры на компонентную структуру с использованием React, внедрил React Query для работы с API, повысил производительность, упростил поддержку и улучшил интерфейс. Проект успешно вышел в релиз и поддерживается.",
             en: "PIXEL CRM is a web-based CRM system for managing leads, partners, brokers, and marketing campaigns in financial services. I rewrote the project from a monolithic architecture to a component-based structure using React, implemented React Query for API handling, improved performance, simplified maintenance, and enhanced the user interface. The project has been successfully released and is actively maintained."
         },
-        image: "./src/image/pixelcrm/logo.png",
+        image: "./src/image/pixel/logo.png",
         media: [
-            { type: "video", url: "./src/image/pixelcrm/video.mp4" },
-            { type: "image", url: "./src/image/pixelcrm/1.png" },
-            { type: "image", url: "./src/image/pixelcrm/2.png" },
-            { type: "image", url: "./src/image/pixelcrm/3.png" }
+            { type: "video", url: "./src/image/pixel/video.mp4" },
+            { type: "image", url: "./src/image/pixel/1.png" },
+            { type: "image", url: "./src/image/pixel/2.png" },
+            { type: "image", url: "./src/image/pixel/3.png" }
         ],
         technologies: ["React", "Redux Toolkit", "React Query", "React Router", "TypeScript", "Tailwind CSS"]
     },
@@ -68,11 +68,11 @@ const portfolioData = [
             ru: "Traffic Cards — это веб-платформа для управления виртуальными картами, предназначенная для рекламных кампаний и финансовых операций. Система предоставляет управление виртуальными картами, мониторинг транзакций, аналитику расходов. Аутентификация на основе JWT-токенов и поддержка разных профилей пользователей (роли и уровни доступа). Проект не завершён: команда не смогла договориться с банками, frontend реализован примерно на 50%.",
             en: "Traffic Cards is a web platform for managing virtual cards, designed for advertising campaigns and financial operations. The system provides virtual card management, transaction monitoring, expense analytics. JWT-based authentication, and support for multiple user profiles (roles and access levels). The project is incomplete: the team was unable to reach agreements with banks, and the frontend is approximately 50% complete."
         },
-        image: "./src/image/trafficcard/logo.png",
+        image: "./src/image/traffic/logo.png",
         media: [
-            { type: "video", url: "./src/image/trafficcard/video.mp4" },
-            { type: "image", url: "./src/image/trafficcard/1.png" },
-            { type: "image", url: "./src/image/trafficcard/2.png" },
+            { type: "video", url: "./src/image/traffic/video.mp4" },
+            { type: "image", url: "./src/image/traffic/1.png" },
+            { type: "image", url: "./src/image/traffic/2.png" },
         ],
         technologies: ["Next.js", "Redux Toolkit", "React Query", "Tailwind"]
     },
