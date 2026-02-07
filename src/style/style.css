@@ -43,3 +43,29 @@ body::-webkit-scrollbar {
     background-color: #2d2e2e;
 }
 
+/* Custom scrollbar for portfolio modal */
+#portfolio-modal > div::-webkit-scrollbar {
+    width: 8px;
+}
+
+#portfolio-modal > div::-webkit-scrollbar-track {
+    background: #fbbf24;
+    border-radius: 4px;
+}
+
+#portfolio-modal > div::-webkit-scrollbar-thumb {
+    background: #5e5e5e;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+#portfolio-modal > div::-webkit-scrollbar-thumb:hover {
+    background: #fbbf24;
+}
+
+/* Firefox scrollbar */
+#portfolio-modal > div {
+    scrollbar-width: thin;
+    scrollbar-color: #fbbf24 #1a1a1a;
+}
+

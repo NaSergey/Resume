@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +10,12 @@
     <script src="./src/script/lang.js"></script>
     <link rel="stylesheet" href="./src/style/style.css">
     <script src="./src/script/script.js"></script>
+    <script src="./src/script/components.js"></script>
     <link rel="icon" href="./src/image/title.png" type="image/x-icon">
 </head>
-<body class="bg-header text-[#a4a5a6]" >
-    <header class="bg-header fixed w-full z-[100]">
+
+<body class="bg-header text-[#a4a5a6]">
+    <header class="bg-header fixed w-full z-[40]">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center md:justify-center">
             <nav class="md:hidden md:flex space-x-6">
                 <a href="#Main" class="text-yellow-400 font-bold transition">Resume</a>
@@ -21,69 +24,64 @@
                 <a href="#Main" class="translate-Home hover:text-yellow-400 transition px-2">Home</a>
                 <a href="#Aboutme" class="translate-Aboutus hover:text-yellow-400 transition px-2">About us</a>
                 <a href="#Skills" class="translate-Skills hover:text-yellow-400 transition px-2">Skills</a>
-                <a href="#Workexperience" class="translate-WorkExperience hover:text-yellow-400 transition px-2">Work Experience</a>
+                <a href="#Workexperience" class="translate-WorkExperience hover:text-yellow-400 transition px-2">Work
+                    Experience</a>
+                <a href="#Portfolio" class="translate-Portfolio hover:text-yellow-400 transition px-2">Portfolio</a>
                 <!-- <a href="#" id="lang-en" class="hover:text-yellow-400 transition" data-lang="en">English</a>
                 <a href="#" id="lang-ru" class="hover:text-yellow-400 transition" data-lang="ru">Russian</a> -->
-                <div class="relative inline-block px-3">
+                <div class="relative inline-block px-3 group">
                     <!-- Триггер -->
-                    <a 
-                        href="#" 
-                        id="lang-trigger" 
+                    <a href="#" id="lang-trigger"
                         class="translate-langtrigger hover:text-yellow-400 transition cursor-pointer">
                         Language <!-- Изначально отображаемый язык -->
                     </a>
-                    
+
                     <!-- Выпадающее меню -->
-                    <div 
-                        id="lang-menu" 
-                        class="hidden absolute left-0 min-w-full mt-2 px-2 bg-header rounded-lg">
-                        <a 
-                            href="#" 
-                            id="lang-en" 
-                            class="block py-2 hover:text-yellow-400 transition" 
-                            data-lang="en">English</a>
-                        <a 
-                            href="#" 
-                            id="lang-ru" 
-                            class="block py-2 hover:text-yellow-400 transition" 
-                            data-lang="ru">Русский</a>
+                    <div id="lang-menu" class="hidden group-hover:block absolute left-0 min-w-full pt-2 top-full">
+                        <div class="bg-header rounded-lg px-2 shadow-lg">
+                            <a href="#" id="lang-en" class="block py-2 hover:text-yellow-400 transition"
+                                data-lang="en">English</a>
+                            <a href="#" id="lang-ru" class="block py-2 hover:text-yellow-400 transition"
+                                data-lang="ru">Русский</a>
+                        </div>
                     </div>
                 </div>
-                
+
             </nav>
             <!-- Кнопка -->
             <button class="md:hidden ml-auto text-yellow-400" id="menu-btn">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
                 </svg>
             </button>
         </div>
 
         <!-- Меню -->
-        <div 
-            id="mobile-menu"
+        <div id="mobile-menu"
             class="md:hidden absolute top-full left-0 w-full bg-header max-h-0 opacity-0 transform transition-all duration-300 ease-in-out">
             <nav class="px-4 py-4 space-y-2">
                 <a href="#Main" class="translate-Home block hover:text-yellow-400 transition">Home</a>
-                <a  href="#Aboutme" class="translate-Aboutus block hover:text-yellow-400 transition">About us</a>
+                <a href="#Aboutme" class="translate-Aboutus block hover:text-yellow-400 transition">About us</a>
                 <a href="#Skills" class="translate-Skills block hover:text-yellow-400 transition">Skills</a>
-                <a href="#Workexperience" class="translate-WorkExperience block hover:text-yellow-400 transition">Work Experience</a>
+                <a href="#Workexperience" class="translate-WorkExperience block hover:text-yellow-400 transition">Work
+                    Experience</a>
+                <a href="#Portfolio" class="translate-Portfolio block hover:text-yellow-400 transition">Portfolio</a>
                 <a href="#" id="lang-en" class="block hover:text-yellow-400 transition" data-lang="en">English</a>
                 <a href="#" id="lang-ru" class="block hover:text-yellow-400 transition" data-lang="ru">Русский</a>
             </nav>
         </div>
     </header>
-    
-    
+
+
 
     <!-- Content -->
     <div class=" pt-14 " id="Main">
-        <div class="grid md:grid-cols-[33%_67%] block">
+        <div class="grid md:grid-cols-[30%_70%] block">
             <div class="flex justify-center bg-2b2c2c">
                 <div class="flex items-center py-16 justify-center md:w-[380px] md:h-[720px] ">
-                    <img 
-                        src="./src/image/photo.png" 
-                        alt="Фото" 
+                    <img src="./src/image/photo.png" alt="Фото"
                         class="w-64 h-64 object-cover rounded-full border-2 border-yellow-400">
                 </div>
             </div>
@@ -94,62 +92,54 @@
                     <p class="text-4xl md:text-5xl">Web</p>
                     <p class="translate-name text-5xl md:text-6xl font-bold text-yellow-400">Наумов Сергей</p>
                     <!-- Описание и иконка -->
-                    <div class="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start pt-4 space-y-4 md:space-y-0">
-                    <p class="text-lg md:text-2xl font-semibold">Front-end Developer</p>
-                    <a href="https://t.me/@Na_Sergey" target="_blank" class="hover:text-yellow-400">
-                        <i class="fab fa-telegram fa-2xl"></i>
-                    </a>
+                    <div
+                        class="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start pt-4 space-y-4 md:space-y-0">
+                        <p class="text-lg md:text-2xl font-semibold">Middle Front-end Developer</p>
+                        <a href="https://t.me/Na_Sergey" target="_blank" class="hover:text-yellow-400">
+                            <i class="fab fa-telegram fa-2xl"></i>
+                        </a>
                     </div>
                     <!-- Разделитель -->
                     <div class="pt-12 md:pt-24 pb-8">
                         <div class="w-full h-0.5 bg-[#686869]"></div>
-                        </div>
-                        <!-- Информация в сетке -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
-                        <!-- Блок 1 -->
-                        <div class="text-center md:text-left rounded-lg">
-                            <p class="translate-Location font-bold text-xl mb-2">Location</p>
-                            <p class="">Rostov-on-don</p>
-                        </div>
-                        <!-- Блок 2 -->
-                        <div class="text-center md:text-left rounded-lg">
-                            <p class="translate-Dateofbirth font-bold text-xl mb-2">Date of birth</p>
-                            <p class="">01.03.2000</p>
-                        </div>
-                        <!-- Блок 3 -->
-                        <div class="text-center md:text-left rounded-lg">
-                            <p class="translate-Experience font-bold text-xl mb-2">Experience</p>
-                            <p class="translate-frontednDew">Frontend Developer (21-24)</p>
-                        </div>
-                        <!-- Блок 4 -->
-                        <div class="text-center md:text-left rounded-lg">
-                            <p class="font-bold text-xl mb-2">Email</p>
-                            <p class="">wxtx.ns@gmail.com</p>
-                        </div>
+                    </div>
+                    <!-- Информация в сетке -->
+                    <div id="personal-info-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+                        <!-- Personal info blocks will be generated by components.js -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="grid md:grid-cols-[33%_67%] block" id="Aboutme">
+        <div class="grid md:grid-cols-[30%_70%] block" id="Aboutme">
             <div class="flex md:justify-end  bg-292a2a border-t border-b border-[#5e5e5e] md:border-none">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
-                    <p  class="translate-Aboutus md:text-right text-yellow-400 ">About us</p>
-                    <p class="translate-MyDeveloper pt-2">My Developer Path</p>
+                    <p class="translate-Aboutus md:text-right text-yellow-400 ">About us</p>
+                    <!-- <p class="translate-MyDeveloper pt-2">My Developer Path</p> -->
                 </div>
             </div>
             <div class="bg-2b2c2c">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
                     <p class="translate-IamFrontend pt-2">
-                        I am a Frontend Developer with 3 years of experience (2021–2024), specializing in building adaptive and functional user interfaces. Proficient in JavaScript, React, Next.js, and Tailwind CSS. Passionate about creating innovative web applications and delivering seamless user experiences.
+                        I am a Frontend Developer with 3 years of experience (2021–2024), specializing in building
+                        adaptive and functional user interfaces. Proficient in JavaScript, React, Next.js, and Tailwind
+                        CSS. Passionate about creating innovative web applications and delivering seamless user
+                        experiences.
                     </p>
-                    <p class="translate-Myexpertise pt-2">
-                        My expertise extends to optimizing designs for responsiveness, integrating APIs, and developing scalable solutions. I thrive on challenges and continuously enhance my skills to stay ahead in the dynamic world of web development.
+                    <p class="pt-2">
+                        <!-- <span class="translate-MyStrengths underline text-yellow-400 font-bold"></span> -->
+                        <!-- <span class="translate-Myexpertise">
+                            My expertise extends to optimizing designs for responsiveness, integrating APIs, and
+                            developing
+                            scalable solutions. I thrive on challenges and continuously enhance my skills to stay ahead
+                            in
+                            the dynamic world of web development.
+                        </span> -->
                     </p>
                 </div>
             </div>
         </div>
-        <div class="grid md:grid-cols-[33%_67%] block" id="Skills">
+        <div class="grid md:grid-cols-[30%_70%] block" id="Skills">
             <div class="flex md:justify-end  bg-2b2c2c border-t border-b border-[#5e5e5e] md:border-none">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
                     <p class="translate-Skills md:text-right text-yellow-400 ">Skills</p>
@@ -157,261 +147,61 @@
                 </div>
             </div>
             <div class="bg-2d2e2e">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:py-20 md:px-16 p-6">
-                    <!-- Блок 1 -->
-                    <div class="p-2 flex row rounded-lg">
-                        <div class="text-yellow-400  font-bold text-lg">01</div>
-                        <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">React Stack</p>
-                            <p class="translate-ReactStack py-4">
-                                Мой основной стек: React, React Native, Next.js, Redux, Redux Toolkit, для создания интерфейсов с динамическими данными в масштабируемых проектах.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Блок 2 -->
-                    <div class="p-2 flex row rounded-lg">
-                        <div class="text-yellow-400 font-bold text-lg ">02</div>
-                        <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">Base</p>
-                            <p class="translate-Base py-4">
-                                С помощью HTML5, CSS3, JavaScript (ES6), SCSS создаю адаптивные и кроссбраузерные макеты с упором на современный дизайн.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Блок 3 -->
-                    <div class="p-2 flex row rounded-lg">
-                        <div class="text-yellow-400 font-bold text-lg">03</div>
-                        <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">Git/GitHub</p>
-                            <p class="translate-Git py-4">
-                                Использую Git для управления версиями, совместной работы над кодом, управления ветками и разрешения конфликтов.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Блок 4 -->
-                    <div class="p-2 flex row rounded-lg">
-                        <div class="text-yellow-400 font-bold text-lg">04</div>
-                        <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">TypeScript/JavaScript</p>
-                            <p class="translate-TypeScript py-4">
-                                JavaScript используют редко. В основном TypeScript т.к помогает улучшить надежность кода за счет строгой типизации упрощает нахождение ошибок.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Блок 5 -->
-                    <div class="p-2 flex row rounded-lg">
-                        <div class="text-yellow-400 font-bold text-lg">05</div>
-                        <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">For Styling</p>
-                            <p class="translate-Styling py-4">
-                                Tailwind, Bootstrap, Material UI, SCSS/SASS. Обеспечиваю современный дизайн и быструю стилизацию компонентов с использованием удобных и модульных CSS-фреймворков.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Блок 6 -->
-                    <div class="p-2 flex row rounded-lg">
-                        <div class="text-yellow-400 font-bold text-lg">06</div>
-                        <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">RESTful APIs</p>
-                            <p class="translate-RESTful py-4">
-                                Реализую взаимодействие с внешними API с помощью Fetch API. Работаю с запросами GET, POST, PUT и DELETE, создавая эффективное взаимодействие клиента с сервером.
-                            </p>
-                        </div>
-                    </div>
+                <div id="main-skills-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:py-20 md:px-16 p-6">
+                    <!-- Main skills blocks will be generated by components.js -->
                 </div>
             </div>
         </div>
-        <div class="grid md:grid-cols-[33%_67%] block">
+        <div class="grid md:grid-cols-[30%_70%] block" data-section="additional-skills">
             <div class="flex md:justify-end  bg-292a2a border-t border-b border-[#5e5e5e] md:border-none">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
                     <p class="translate-Additional md:text-right text-yellow-400 ">Additional Skills</p>
-                    <p class="translate-dabbled text-right pt-2">Areas I’ve dabbled in and plan to expand upon.</p>
+                    <p class="translate-dabbled text-right pt-2">Areas I've dabbled in and plan to expand upon.</p>
                 </div>
             </div>
             <div class="bg-2b2c2c">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:py-20 md:px-16 p-6">
-                    <div class="p-2 flex flex-row items-start gap-4 rounded-lg">
-                        <div class="w-1 h-full bg-yellow-400 rounded-full shrink-0"></div>
-                        <div>
-                            <p class="text-[#c2c0c0] font-bold text-lg">Nest.js</p>
-                            <p class="translate-Nestworking py-4">
-                            Experience working with Nest.js: Creating a simple Api, understanding modules, controllers and services.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="p-2 flex flex-row items-start gap-4 rounded-lg">
-                        <div class="w-1 h-full bg-yellow-400 rounded-full shrink-0"></div>
-                        <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">Node.js</p>
-                            <p class="translate-Node py-4">Basic skills in Node.js: working with Express, creating RESTful APIs, handling middleware, and basic error handling.</p>
-                        </div>
-                    </div>
-                    <div class="p-2 flex flex-row items-start gap-4 rounded-lg">
-                        <div class="w-1 h-full bg-yellow-400 rounded-full shrink-0 "></div>
-                        <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">PHP</p>
-                            <p class="translate-PHP py-4">Creating websites using PHP, understanding of PHP syntax, working with forms, sessions, and databases using MySQL.</p>
-                        </div>
-                    </div>
-                    <div class="p-2 flex flex-row items-start gap-4 rounded-lg">
-                        <div class="w-1 h-full bg-yellow-400 rounded-full shrink-0"></div>
-                        <div class="px-4">
-                            <p class="text-[#c2c0c0] font-bold text-lg">Docker</p>
-                            <p class="translate-Docker py-4">Basic knowledge of Docker: creating containers, managing images, and understanding container networking and volumes.</p>
-                        </div>
-                    </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:py-20 md:px-16 p-6"
+                    id="additional-skills-container">
+                    <!-- Additional skills blocks will be generated by components.js -->
                 </div>
             </div>
         </div>
-<div class="grid md:grid-cols-[33%_67%] block" id="Workexperience">
-  <div class="flex md:justify-end bg-2b2c2c border-t border-b border-[#5e5e5e] md:border-none">
-    <div class="flex flex-col md:py-20 md:px-16 p-6">
-      <p class="translate-MyWorkExperience md:text-right text-yellow-400">My work experience</p>
-    </div>
-  </div>
+        <div class="grid md:grid-cols-[30%_70%] block" id="Workexperience">
+            <div class="flex md:justify-end bg-2b2c2c border-t border-b border-[#5e5e5e] md:border-none">
+                <div class="flex flex-col md:py-20 md:px-16 p-6">
+                    <p class="translate-MyWorkExperience md:text-right text-yellow-400">My work experience</p>
+                </div>
+            </div>
 
-  <div class="bg-[#2d2e2e] md:py-20 md:px-16 p-6">
-    <div class="relative max-w-4xl mx-auto">
-
-      <!-- Вертикальная линия -->
-      <div id="timeline-line"
-        class="absolute top-0 left-[5px] z-[0] w-0.5 h-full bg-[#5e5e5e]
+            <div class="bg-[#2d2e2e] md:py-20 md:px-16 p-6">
+                <div class="relative max-w-4xl mx-auto">
+                    <!-- Вертикальная линия -->
+                    <div id="timeline-line"
+                        class="absolute top-0 left-[5px] z-[0] w-0.5 h-full bg-[#5e5e5e]
         before:content-[''] before:absolute before:top-0 before:left-[-7px] before:w-4 before:h-0.5 before:bg-[#5e5e5e]
         after:content-[''] after:absolute after:bottom-0 after:left-[-7px] after:w-4 after:h-0.5 after:bg-[#5e5e5e] after:opacity-0 after:transition-opacity after:duration-500">
-      </div>
-
-      <!-- Постоянно видимые 2 блока -->
-      <div class="flex items-center space-x-4 mb-6 cursor-pointer hover:brightness-125 transition ">
-        <div class="flex-shrink-0 w-3 h-3 bg-yellow-400 z-[1] rounded-full"></div>
-        <div class="pt-4">
-          <p class="translate-workstart text-xs"></p>
-          <p class="translate-worktitle font-bold text-lg"></p>
-          <p class="translate-dickriphn">
-            
-          </p>
-        </div>
-      </div>
-
-      <div class="flex items-center space-x-4 mb-6 cursor-pointer hover:brightness-125 transition">
-        <div class="flex-shrink-0 w-3 h-3 bg-yellow-400 z-[1] rounded-full"></div>
-        <div class="pt-4">
-          <p class="translate-workstart2 text-xs"></p>
-          <p class="translate-worktitle2 font-bold text-lg"></p>
-          <p class="translate-dickriphn2">
-          </p>
-        </div>
-      </div>
-
-      <!-- Оборачиваем скрытые блоки -->
-      <div id="more-experience" class="overflow-hidden max-h-0 transition-[max-height] duration-700 ease-in-out">
-        <div class="flex items-center space-x-4 mb-6 cursor-pointer hover:brightness-125 transition">
-          <div class="flex-shrink-0 w-3 h-3 bg-yellow-400 z-[1] rounded-full" id="expand-trigger"></div>
-          <div class="pt-4">
-            <p class="translate-workstart3 text-xs"></p>
-            <p class="translate-worktitle3 font-bold text-lg"></p>
-            <p class="translate-dickriphn3">
-            </p>
-          </div>
-        </div>
-
-        <div class="flex items-center space-x-4 mb-6 cursor-pointer hover:brightness-125 transition">
-          <div class="flex-shrink-0 w-3 h-3 bg-yellow-400 z-[1] rounded-full"></div>
-          <div class="pt-4">
-            <p class="translate-workstart4 text-xs">Октябрь 2024 — Январь 2025</p>
-            <p class="translate-worktitle4 font-bold text-lg">Саморазвитие</p>
-            <p class="translate-dickriphn4">
-              Улучшение уже имеющихся знаний по React и Next.js, разрабатывал и тестировал различные архитектуры приложений. Фокус был на практическом применении паттернов, оптимизации клиентского рендера и взаимодействии с серверной логикой.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex items-center space-x-4 mb-6 cursor-pointer hover:brightness-125 transition">
-        <div class="flex-shrink-0 w-3 h-3 bg-yellow-400 z-[1] rounded-full"></div>
-            <div class="pt-4">
-                <p class="translate-workstart5 text-xs">Февраль 2025 — Апрель 2025</p>
-                <p class="translate-worktitle5 font-bold text-lg">Разработка CRM-системы</p>
-                <p class="translate-dickriphn5">
-                Перенёс CRM-систему с монолита на компонентную архитектуру на базе React. Внедрил React Query для эффективной работы с серверными данными. Оптимизировал производительность, упростил поддержку и улучшил UX.
-                </p>
+                    </div>
+                    <!-- Work experience blocks will be generated by components.js -->
+                </div>
             </div>
         </div>
 
-        <div class="flex items-center space-x-4 mb-6 cursor-pointer hover:brightness-125 transition">
-          <div class="flex-shrink-0 w-3 h-3 bg-yellow-400 z-[1] rounded-full"></div>
-            <div class="pt-4">
-                <p class="translate-workstart6 text-xs">Май 2025 — ........</p>
-                <p class="translate-worktitle6 font-bold text-lg">Работа над проектом BasisOS</p>
-                <p class="translate-dickriphn6">
-                    Участвую в разработке BasisOS. Оптимизировал клиентский рендер, повысил производительность интерфейса, внедрил архитектурные улучшения. Начал работать с Web3-библиотеками и взаимодействие с блокчейном.
-                </p>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  let revealedCount = 0;
-  const step = 2;
-
-  window.addEventListener('DOMContentLoaded', () => {
-    const wrapper = document.getElementById('more-experience');
-    const timeline = document.getElementById('timeline-line');
-    const allBlocks = Array.from(wrapper.children).filter(el => el.classList.contains('flex'));
-    const total = allBlocks.length;
-
-    // Начально скрываем
-    wrapper.style.maxHeight = '0px';
-    allBlocks.forEach(el => el.style.opacity = 0);
-
-    function toggleBlocks() {
-      if (revealedCount >= total) {
-        revealedCount = 0;
-        wrapper.style.maxHeight = '0px';
-        allBlocks.forEach(el => el.style.opacity = 0);
-        timeline.classList.remove('after:opacity-100');
-        return;
-      }
-
-      revealedCount += step;
-      const visibleBlocks = allBlocks.slice(0, revealedCount);
-      visibleBlocks.forEach(el => el.style.opacity = 1);
-
-      // пересчитываем высоту
-      const totalHeight = visibleBlocks.reduce((sum, el) => sum + el.offsetHeight + 24, 0); // mb-6 ≈ 24px
-      wrapper.style.maxHeight = totalHeight + 'px';
-
-      if (revealedCount >= total) {
-        timeline.classList.add('after:opacity-100');
-      }
-    }
-
-    // Клик на любой блок
-    const clickable = document.querySelectorAll('#Workexperience .flex.items-center.space-x-4.mb-6');
-    clickable.forEach(el => el.addEventListener('click', toggleBlocks));
-  });
-</script>
 
 
 
-        <div class="grid md:grid-cols-[33%_67%] block">
-            <div class="flex md:justify-end  bg-292a2a border-t border-b border-[#5e5e5e] md:border-none">
+        <div class="grid md:grid-cols-[30%_70%] block" id="Portfolio">
+            <div class="flex md:justify-end   border-t border-b border-[#5e5e5e] md:border-none">
                 <div class="flex flex-col md:py-20 md:px-16 p-6">
                     <p class="translate-Personal md:text-right text-yellow-400 "></p>
-                    <!-- <p class="pt-2">Areas I’ve dabbled in and plan to expand upon.</p> -->
+                    <!-- <p class="pt-2">Areas I've dabbled in and plan to expand upon.</p> -->
                 </div>
             </div>
             <div class="bg-2b2c2c">
-                <div class="grid gap-4 md:py-20 md:px-16 p-6">
-                    <div class="flex row rounded-lg">
-                        <div class="">
-                            <p class="translate-Personal1 pt-2">
-                                
-                            </p>
-                        </div>
+                <div class="md:py-20 md:px-16 p-6">
+                    <div id="portfolio-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        <!-- Портфолио блоки будут добавлены через JavaScript -->
                     </div>
+                    <p id="portfolio-description" class="text-[#a4a5a6] mt-8 text-left"></p>
                 </div>
             </div>
         </div>
@@ -423,14 +213,71 @@
                     <p class="text-4xl md:text-5xl">Web</p>
                     <p class="translate-name text-5xl md:text-6xl font-bold text-yellow-400">Наумов Сергей</p>
                 </div>
-              <div class="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start pt-4 space-y-4 md:space-y-0">
-                <p class="text-lg md:text-2xl">Front-end Developer</p>
-                <a href="https://t.me/@Na_Sergey" target="_blank" class="hover:text-yellow-400">
-                  <i class="fab fa-telegram fa-2xl"></i>
-                </a>
-              </div>
+                <div
+                    class="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start pt-4 space-y-4 md:space-y-0">
+                    <p class="text-lg md:text-2xl">Middle Front-end Developer</p>
+                    <a href="https://t.me/Na_Sergey" target="_blank" class="hover:text-yellow-400">
+                        <i class="fab fa-telegram fa-2xl"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- Модальное окно портфолио -->
+    <div id="portfolio-modal"
+        class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+        <div id="modal-content"
+            class="bg-[#2d2e2e] rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0">
+            <!-- Заголовок и кнопка закрытия -->
+            <div class="flex justify-between items-center p-4 border-b border-[#5e5e5e]">
+                <h2 id="modal-title" class="text-2xl font-bold text-yellow-400"></h2>
+                <button id="close-modal" class="text-[#a4a5a6] hover:text-yellow-400 text-2xl">&times;</button>
+            </div>
+
+            <!-- Видео (если есть) -->
+            <div id="video-container" class="bg-black hidden">
+                <video id="modal-video" src="" controls class="w-full h-auto aspect-video"></video>
+            </div>
+
+            <!-- Карусель -->
+            <div id="carousel-container" class="relative bg-black overflow-hidden p-2 border-t border-[#5e5e5e]">
+                <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out gap-2"></div>
+                <!-- Кнопки навигации -->
+                <button id="carousel-prev"
+                    class="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-70 text-yellow-400 p-3 rounded-full hover:bg-opacity-90 transition z-10 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button id="carousel-next"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-70 text-yellow-400 p-3 rounded-full hover:bg-opacity-90 transition z-10 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Технологии и описание проекта -->
+            <div class="p-6">
+                <div id="modal-tech" class="mb-4 flex flex-wrap gap-2"></div>
+                <p id="modal-description" class="text-[#a4a5a6]"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для полноэкранного просмотра изображения -->
+    <div id="fullscreen-image-modal"
+        class="fixed inset-0 bg-black bg-opacity-95 z-[60] hidden items-center justify-center p-4">
+        <div class="relative max-w-7xl w-full h-full flex items-center justify-center">
+            <button id="close-fullscreen"
+                class="absolute top-2 right-0 text-white hover:text-yellow-400 text-4xl z-10">&times;</button>
+            <img id="fullscreen-image" src="" alt="Fullscreen" class="max-w-full max-h-full object-contain rounded-lg">
+        </div>
+    </div>
+
+    <!-- Скрипт для портфолио -->
+    <script src="./src/script/portfolio.js"></script>
 </body>
+
 </html>
