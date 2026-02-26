@@ -502,5 +502,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // Show content after all initialization is complete (prevents text flickering on reload)
+    document.body.classList.add('ready');
+    document.body.classList.remove('initial-load');
 });
 

@@ -227,6 +227,11 @@ document.addEventListener('DOMContentLoaded', () => {
             initTimeline();
         }, 100);
     }
+
+    // Apply translation after all content is populated to prevent flickering on load
+    if (typeof translate === 'function') {
+        translate(localStorage.getItem('preferredLanguage') || 'en');
+    }
 });
 
 // Timeline initialization function

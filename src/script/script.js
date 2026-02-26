@@ -34,24 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const langMenu = document.getElementById('lang-menu');
     const languageLinks = document.querySelectorAll('[data-lang]');
 
-    // Используем глобальную функцию translate из lang.js
-    // Установить язык из localStorage или по умолчанию
-    const savedLanguage = localStorage.getItem("preferredLanguage") || "en";
-
-    // Вызываем перевод после полной загрузки DOM
-    // Используем requestAnimationFrame для гарантии, что DOM готов
-    requestAnimationFrame(() => {
-        if (typeof translate === 'function') {
-            translate(savedLanguage);
-        } else {
-            // Если функция еще не загружена, ждем немного
-            setTimeout(() => {
-                if (typeof translate === 'function') {
-                    translate(savedLanguage);
-                }
-            }, 100);
-        }
-    });
+    // Initial translate is called from components.js after DOM is populated
+    // to prevent text flickering on page load
 
     // Показать/скрыть меню при клике (только если элементы существуют)
     /*
