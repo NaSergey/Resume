@@ -176,14 +176,14 @@ function openModal(project) {
 
         images.forEach((item, index) => {
             const slide = document.createElement('div');
-            // On mobile: 1 slide full width; sm: 2 slides; md+: 3 slides. h-full constrains images to container.
-            slide.className = 'min-w-full sm:min-w-[calc(50%-4px)] md:min-w-[calc(33.333%-6px)] flex-shrink-0 h-full flex items-center justify-center overflow-hidden';
+            // flex-shrink-0 prevents collapse; width set via applySlideWidths() for correct carousel behavior
+            slide.className = 'flex-shrink-0 h-full flex items-center justify-center overflow-hidden';
 
             const img = document.createElement('img');
             img.src = item.url;
             img.alt = project.title[currentLang];
-            // max-h-full max-w-full keeps images within container; object-contain prevents stretching
-            img.className = 'max-h-full max-w-full object-contain rounded-lg cursor-pointer hover:opacity-80 transition bg-black';
+            // w-full h-full keeps images filling the slide; object-contain prevents stretching
+            img.className = 'w-full h-full object-contain rounded-lg cursor-pointer hover:opacity-80 transition bg-black';
             img.addEventListener('click', () => openFullscreenImage(item.url));
             slide.appendChild(img);
             carouselTrack.appendChild(slide);
@@ -206,8 +206,9 @@ function openModal(project) {
             }
         }
 
-        // Небольшая задержка для правильной инициализации
+        // Set explicit slide dimensions and update carousel (fixes black slides on mobile)
         setTimeout(() => {
+            applySlideWidths();
             updateCarousel();
         }, 50);
     } else {
@@ -276,6 +277,36 @@ function closeFullscreenImage() {
     fullscreenModal.classList.add('hidden');
     fullscreenModal.classList.remove('flex');
     document.body.style.overflow = '';
+}
+
+// Set explicit slide width based on container (fixes flex/min-w-full issues on mobile)
+function applySlideWidths() {
+    const track = document.getElementById('carousel-track');
+    const container = document.getElementById('carousel-container');
+    if (!track || !container || track.children.length === 0) return;
+
+    const style = window.getComputedStyle(container);
+    const padding = (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0);
+    const containerWidth = container.offsetWidth - padding;
+    if (containerWidth <= 0) return; // Modal may be hidden
+    const gap = 8;
+
+    let slidesPerView, slideWidth;
+    if (containerWidth < 640) {
+        slidesPerView = 1;
+        slideWidth = containerWidth;
+    } else if (containerWidth < 768) {
+        slidesPerView = 2;
+        slideWidth = (containerWidth - gap) / 2;
+    } else {
+        slidesPerView = 3;
+        slideWidth = (containerWidth - gap * 2) / 3;
+    }
+
+    Array.from(track.children).forEach(slide => {
+        slide.style.width = slideWidth + 'px';
+        slide.style.minWidth = slideWidth + 'px';
+    });
 }
 
 // Helper to get accurate visible slides count
@@ -473,6 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
+            applySlideWidths();
             updateCarousel();
         }, 250);
     });
