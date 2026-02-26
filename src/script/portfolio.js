@@ -176,12 +176,14 @@ function openModal(project) {
 
         images.forEach((item, index) => {
             const slide = document.createElement('div');
-            slide.className = 'min-w-[calc(50%-4px)] md:min-w-[calc(33.333%-6px)] flex-shrink-0';
+            // On mobile: 1 slide full width; sm: 2 slides; md+: 3 slides
+            slide.className = 'min-w-full sm:min-w-[calc(50%-4px)] md:min-w-[calc(33.333%-6px)] flex-shrink-0';
 
             const img = document.createElement('img');
             img.src = item.url;
             img.alt = project.title[currentLang];
-            img.className = 'w-full h-36 object-cover rounded-lg cursor-pointer hover:opacity-80 transition';
+            // object-contain prevents stretching; aspect-video maintains 16:9 ratio
+            img.className = 'w-full aspect-video object-contain rounded-lg cursor-pointer hover:opacity-80 transition bg-black';
             img.addEventListener('click', () => openFullscreenImage(item.url));
             slide.appendChild(img);
             carouselTrack.appendChild(slide);
