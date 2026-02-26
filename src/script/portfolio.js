@@ -176,14 +176,14 @@ function openModal(project) {
 
         images.forEach((item, index) => {
             const slide = document.createElement('div');
-            // On mobile: 1 slide full width; sm: 2 slides; md+: 3 slides
-            slide.className = 'min-w-full sm:min-w-[calc(50%-4px)] md:min-w-[calc(33.333%-6px)] flex-shrink-0';
+            // On mobile: 1 slide full width; sm: 2 slides; md+: 3 slides. h-full constrains images to container.
+            slide.className = 'min-w-full sm:min-w-[calc(50%-4px)] md:min-w-[calc(33.333%-6px)] flex-shrink-0 h-full flex items-center justify-center overflow-hidden';
 
             const img = document.createElement('img');
             img.src = item.url;
             img.alt = project.title[currentLang];
-            // object-contain prevents stretching; aspect-video maintains 16:9 ratio
-            img.className = 'w-full aspect-video object-contain rounded-lg cursor-pointer hover:opacity-80 transition bg-black';
+            // max-h-full max-w-full keeps images within container; object-contain prevents stretching
+            img.className = 'max-h-full max-w-full object-contain rounded-lg cursor-pointer hover:opacity-80 transition bg-black';
             img.addEventListener('click', () => openFullscreenImage(item.url));
             slide.appendChild(img);
             carouselTrack.appendChild(slide);
