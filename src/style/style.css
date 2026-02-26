@@ -8,6 +8,15 @@ html, body {
     scroll-behavior: smooth;
 }
 
+/* Prevent content flicker on load - hide until translation and components are ready */
+body.initial-load {
+    opacity: 0;
+}
+body.initial-load.ready {
+    opacity: 1;
+    transition: opacity 0.15s ease;
+}
+
 body::-webkit-scrollbar {
     display: none; /* Убирает скроллбар в Chrome/Safari */
 }
