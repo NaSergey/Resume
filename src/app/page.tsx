@@ -5,6 +5,7 @@ import { About } from "./(main)/components/About";
 import { Stack } from "./(main)/components/Stack";
 import { Experience } from "./(main)/components/Experience";
 import { Portfolio } from "./(main)/components/Portfolio";
+import { ScrollAnimations } from "@/shared/providers/ScrollAnimations";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <Portfolio />
       </main>
       <Footer />
+      <ScrollAnimations />
     </>
   );
 }

@@ -54,7 +54,7 @@ export function Portfolio() {
     <section id="portfolio" className="py-16 md:py-24 scroll-mt-[88px]">
       <SectionHead num="04" title="Избранные" em="проекты" note="selected · 4 items" />
 
-      <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+      <div data-gsap-stagger="" className="grid grid-cols-1 md:grid-cols-6 gap-4">
         {projects.map((p) => {
           const isWide = (p as { wide?: boolean }).wide;
           const colSpan = p.big || isWide ? "md:col-span-6" : "md:col-span-3";

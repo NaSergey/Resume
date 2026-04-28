@@ -8,20 +8,27 @@ const meta = [
 export function Hero() {
   return (
     <section id="top" className="pt-16 pb-0 md:pt-[72px]">
-      <div className="font-mono text-[11px] tracking-widest uppercase mb-5 text-site-muted">
+      <div
+        data-hero-eyebrow=""
+        className="font-mono text-[11px] tracking-widest uppercase mb-5 text-site-muted"
+      >
         curriculum · 2026 / v2.4
       </div>
 
-      <h1 className="font-medium leading-none tracking-[-0.05em] text-[length:var(--text-hero)]">
+      <h1
+        data-hero-h1=""
+        className="font-medium leading-none tracking-tighter text-(length:--text-hero)"
+      >
         Наумов
         <br />
         Сергей
         <span className="text-lime">.</span>
       </h1>
 
-
-
-      <div className="flex flex-col md:flex-row flex-wrap mt-11 ink-border-t ink-border-b">
+      <div
+        data-hero-meta=""
+        className="flex flex-col md:flex-row flex-wrap mt-11 ink-border-t ink-border-b"
+      >
         {meta.map((m) => (
           <div
             key={m.k}

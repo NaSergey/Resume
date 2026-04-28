@@ -14,7 +14,7 @@ export function Stack() {
     <section id="stack" className="site-section">
       <SectionHead num="02" title="Стек" em="и инструменты" note="// tools of trade" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 ink-border">
+      <div data-gsap-stagger="" className="grid grid-cols-1 md:grid-cols-3 ink-border">
         {cells.map((cell) => (
           <div key={cell.cat} className="stack-cell flex flex-col gap-3.5 p-6 min-h-[180px] ink-border-r ink-border-b">
             <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] uppercase text-lime">
