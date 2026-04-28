@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Наумов Сергей — Frontend Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0d0f; --ink:#f4f1ea;
+    --panel:#15151a; --panel-2:#1d1d22;
+    --line:#2a2a2f; --line-2:#3a3a40;
+    --muted:#8a8680; --faint:#4a4a50;
+    --lime:#d7ff3a; --lime-dk:#8fb81a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:88px}
+  body{background:var(--bg);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;font-size:15px;line-height:1.55;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--lime);color:#000}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+  .serif{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+
+  /* ── Marquee ─────────────────────────────── */
+  .marquee{
+    background:var(--lime);color:#000;
+    font-family:"JetBrains Mono",monospace;font-weight:600;font-size:13px;
+    padding:10px 0;overflow:hidden;white-space:nowrap;border-bottom:2px solid #000;
+  }
+  .marquee .track{display:inline-block;padding-left:100%;animation:scroll 28s linear infinite}
+  .marquee span{margin-right:40px}
+  .marquee span::before{content:"★ ";opacity:.5}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+
+  /* ── Nav ─────────────────────────────────── */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(13,13,15,0.82);
+    backdrop-filter:blur(10px) saturate(120%);
+    -webkit-backdrop-filter:blur(10px) saturate(120%);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1200px;margin:0 auto;padding:14px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .nav .brand{
+    font-weight:600;font-size:17px;letter-spacing:-0.015em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .nav .brand .dot{
+    width:10px;height:10px;border-radius:50%;background:var(--lime);
+    box-shadow:0 0 12px var(--lime);
+  }
+  .nav ul{list-style:none;display:flex;gap:4px;align-items:center}
+  .nav a.nitem{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 14px;border-radius:999px;
+    font-size:13.5px;color:var(--muted);
+    transition:color .15s, background .15s;
+  }
+  .nav a.nitem .n{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);transition:color .15s}
+  .nav a.nitem:hover{color:var(--ink);background:var(--panel)}
+  .nav a.nitem.active{color:#000;background:var(--lime)}
+  .nav a.nitem.active .n{color:#000;opacity:.55}
+  .nav .cta{
+    font-family:"JetBrains Mono",monospace;font-size:12px;
+    padding:8px 14px;border:1px solid var(--line-2);border-radius:999px;
+    color:var(--ink);transition:background .15s, color .15s, border-color .15s;
+  }
+  .nav .cta:hover{background:var(--lime);color:#000;border-color:var(--lime)}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+
+  /* ── Hero ────────────────────────────────── */
+  .hero{padding:72px 0 44px}
+  .hero .tag{
+    font-family:"JetBrains Mono",monospace;font-size:12px;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(72px,11vw,152px);font-weight:500;
+    line-height:.88;letter-spacing:-0.05em;
+  }
+  .hero h1 .dot{color:var(--lime)}
+  .hero .sub{
+    margin-top:26px;font-size:22px;line-height:1.45;max-width:720px;color:#d0cec7;
+  }
+  .hero .sub b{background:var(--lime);color:#000;padding:0 6px;font-weight:600}
+  .meta{
+    display:flex;flex-wrap:wrap;gap:0;margin-top:44px;
+    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  }
+  .meta .m{
+    flex:1;min-width:200px;padding:18px 22px;
+    border-right:2px solid var(--ink);
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .meta .m:last-child{border-right:none}
+  .meta .m.accent{background:var(--lime);color:#000}
+  .meta .k{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .meta .m.accent .k{color:#000;opacity:.6}
+  .meta .v{font-size:20px;font-weight:500;letter-spacing:-0.01em}
+
+  /* ── Section ─────────────────────────────── */
+  section{padding:96px 0;border-bottom:2px solid var(--ink);scroll-margin-top:88px}
+  .sec-head{
+    display:grid;grid-template-columns:auto 1fr auto;gap:24px;
+    align-items:baseline;margin-bottom:48px;
+  }
+  .sec-head .num{
+    font-family:"JetBrains Mono",monospace;font-weight:700;
+    font-size:56px;color:var(--lime);letter-spacing:-0.04em;line-height:.9;
+  }
+  .sec-head h2{
+    font-size:44px;font-weight:500;letter-spacing:-0.035em;line-height:1;white-space:nowrap;
+  }
+  .sec-head h2 em{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;color:var(--lime);font-size:1.05em}
+  .sec-head .note{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);text-align:right}
+
+  /* ── About ───────────────────────────────── */
+  .about{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;align-items:start}
+  .about .big{font-size:32px;line-height:1.2;letter-spacing:-0.02em;font-weight:400}
+  .about .big .hl{background:var(--lime);color:#000;padding:0 4px}
+  .about .small p{font-size:15.5px;line-height:1.65;color:#c9c5bd;margin-bottom:14px}
+  .about .small p b{color:var(--ink);font-weight:600}
+
+  /* ── Stack ───────────────────────────────── */
+  .stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink)}
+  .stack-cell{
+    padding:24px 26px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    display:flex;flex-direction:column;gap:14px;min-height:180px;
+  }
+  .stack-cell:nth-child(3n){border-right:none}
+  .stack-cell:nth-last-child(-n+3){border-bottom:none}
+  .stack-cell .cat{
+    font-family:"JetBrains Mono",monospace;font-size:11px;
+    color:var(--lime);letter-spacing:.12em;text-transform:uppercase;
+    display:flex;align-items:center;gap:8px;
+  }
+  .stack-cell .cat::before{
+    content:"";width:6px;height:6px;background:var(--lime);border-radius:50%;
+  }
+  .stack-cell .list{display:flex;flex-wrap:wrap;gap:6px}
+  .stack-cell .list .t{
+    font-size:13px;padding:5px 11px;border-radius:999px;
+    border:1px solid var(--line-2);color:#d0cec7;background:var(--panel);
+    transition:border-color .15s, color .15s;
+  }
+  .stack-cell .list .t:hover{border-color:var(--lime);color:var(--lime)}
+
+  /* ── Timeline (experience) ───────────────── */
+  .timeline{position:relative;padding-left:0}
+  .tl-item{
+    border-top:1px solid var(--line);
+    display:grid;grid-template-columns:220px 1fr 40px;gap:28px;
+    padding:0;align-items:stretch;
+    transition:background .2s;
+  }
+  .tl-item:first-child{border-top:2px solid var(--ink)}
+  .tl-item:last-child{border-bottom:2px solid var(--ink)}
+  .tl-item:hover{background:rgba(215,255,58,0.02)}
+  .tl-item .tl-period{
+    padding:26px 0 26px 24px;
+    font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--lime);
+    position:relative;display:flex;flex-direction:column;gap:4px;
+    align-self:flex-start;
+  }
+  .tl-item .tl-period::before{
+    content:"";position:absolute;left:0;top:32px;
+    width:8px;height:8px;border-radius:50%;
+    background:var(--lime);box-shadow:0 0 0 3px rgba(215,255,58,0.15);
+  }
+  .tl-item .tl-period .dur{color:var(--muted);font-size:11px;letter-spacing:.04em}
+  .tl-item .tl-head{
+    padding:22px 0;cursor:pointer;
+    display:flex;flex-direction:column;gap:6px;
+    align-self:flex-start;
+  }
+  .tl-item .tl-head h3{
+    font-size:24px;font-weight:500;letter-spacing:-0.02em;line-height:1.2;
+    transition:color .15s;
+  }
+  .tl-item .tl-head:hover h3{color:var(--lime)}
+  .tl-item .tl-head .org{
+    font-family:"Instrument Serif",serif;font-style:italic;font-size:18px;color:var(--muted);
+  }
+  .tl-item .tl-head .org::before{content:"— "}
+  .tl-item .tl-toggle{
+    padding:28px 0;display:flex;justify-content:flex-end;align-items:flex-start;
+    font-family:"JetBrains Mono",monospace;font-size:20px;color:var(--muted);
+    user-select:none;transition:color .2s, transform .2s;
+    cursor:pointer;
+  }
+  .tl-item.open .tl-toggle{color:var(--lime);transform:rotate(45deg)}
+  .tl-item.open{background:rgba(215,255,58,0.035)}
+  .tl-item.open .tl-head h3{color:var(--lime)}
+
+  .tl-body{
+    grid-column:1 / -1;
+    overflow:hidden;max-height:0;
+    transition:max-height .4s cubic-bezier(.22,.8,.3,1), padding .3s;
+    padding:0 24px;
+  }
+  .tl-item.open .tl-body{max-height:800px;padding:0 24px 32px 244px}
+  .tl-body .inner{
+    max-width:780px;padding-top:4px;padding-bottom:4px;
+    border-left:1px dashed var(--line-2);padding-left:24px;
+  }
+  .tl-body p{font-size:15.5px;line-height:1.65;color:#c9c5bd;margin-bottom:14px}
+  .tl-body ul{list-style:none;margin:0 0 16px;padding:0}
+  .tl-body li{position:relative;padding-left:22px;font-size:15px;line-height:1.6;color:#c9c5bd;margin-bottom:6px}
+  .tl-body li::before{content:"→";position:absolute;left:0;color:var(--lime);font-weight:600}
+  .tl-body .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .tl-body .tags span{
+    font-family:"JetBrains Mono",monospace;font-size:11.5px;
+    padding:4px 10px;border:1px solid var(--line-2);border-radius:999px;
+    color:#d0cec7;background:var(--panel);
+  }
+
+  /* Expand/collapse-all controls */
+  .tl-controls{
+    display:flex;gap:10px;margin-bottom:18px;
+    font-family:"JetBrains Mono",monospace;font-size:12px;
+  }
+  .tl-controls button{
+    padding:6px 12px;border:1px solid var(--line-2);border-radius:999px;
+    color:var(--muted);transition:color .15s, border-color .15s, background .15s;
+  }
+  .tl-controls button:hover{color:var(--lime);border-color:var(--lime)}
+
+  /* ── Portfolio ───────────────────────────── */
+  .projects{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+  .proj{
+    grid-column:span 3;padding:24px;
+    border:2px solid var(--ink);border-radius:14px;background:var(--panel);
+    display:flex;flex-direction:column;gap:14px;min-height:260px;
+    transition:transform .2s, box-shadow .2s, background .2s;
+    position:relative;
+  }
+  .proj:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 0 var(--lime);background:var(--panel-2)}
+  .proj.big{grid-column:span 6;min-height:220px;flex-direction:row;align-items:stretch;gap:28px}
+  .proj.big .left{flex:1;display:flex;flex-direction:column;gap:14px}
+  .proj.big .right{
+    flex:0 0 280px;display:flex;align-items:center;justify-content:center;
+    background:var(--lime);color:#000;margin:-24px -24px -24px 0;padding:24px;
+    border-left:2px solid var(--ink);
+  }
+  .proj.big .right .big-stat{font-size:64px;font-weight:600;letter-spacing:-0.04em;line-height:.9}
+  .proj.big .right .big-lbl{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:8px}
+  .proj .head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .proj .name{font-size:22px;font-weight:500;letter-spacing:-0.015em}
+  .proj .name .slash{color:var(--muted)}
+  .proj .tag{
+    font-family:"JetBrains Mono",monospace;font-size:10.5px;
+    padding:3px 9px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase;
+    border:1px solid var(--line-2);color:var(--muted);
+  }
+  .proj .tag.os{background:var(--lime);color:#000;border-color:var(--lime)}
+  .proj .desc{font-size:14.5px;line-height:1.55;color:#c9c5bd;flex:1}
+  .proj .foot{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);
+    padding-top:10px;border-top:1px dashed var(--line-2);
+  }
+  .proj .foot .arrow{font-size:18px;color:var(--lime);transition:transform .2s}
+  .proj:hover .foot .arrow{transform:translate(3px,-3px)}
+
+  /* ── Footer ──────────────────────────────── */
+  footer{
+    padding:48px 0;
+    display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+    font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);
+    border-top:2px solid var(--ink);
+  }
+  footer .links{display:flex;gap:18px}
+  footer .links a{transition:color .15s}
+  footer .links a:hover{color:var(--lime)}
+
+  @media (max-width:820px){
+    .wrap,.nav-inner{padding-left:20px;padding-right:20px}
+    .nav ul{display:none}
+    .hero{padding:48px 0 32px}
+    .meta .m{flex-basis:100%;border-right:none;border-bottom:2px solid var(--ink)}
+    .meta .m:last-child{border-bottom:none}
+    .about{grid-template-columns:1fr;gap:30px}
+    .sec-head{grid-template-columns:auto 1fr;gap:14px}
+    .sec-head .num{font-size:32px}
+    .sec-head h2{font-size:28px;white-space:normal}
+    .sec-head .note{display:none}
+    .stack-grid{grid-template-columns:1fr}
+    .stack-cell{border-right:none !important;min-height:auto}
+    .tl-item{grid-template-columns:140px 1fr 30px;gap:14px}
+    .tl-item .tl-period{padding:20px 0 20px 18px;font-size:11.5px}
+    .tl-item .tl-period::before{top:26px;width:6px;height:6px}
+    .tl-item .tl-head{padding:18px 0}
+    .tl-item .tl-head h3{font-size:18px}
+    .tl-item.open .tl-body{padding:0 14px 24px 152px}
+    .projects{grid-template-columns:1fr}
+    .proj,.proj.big{grid-column:span 1;flex-direction:column}
+    .proj.big .right{flex:auto;margin:0;border-left:none;border-top:2px solid var(--ink)}
+  }
+</style>
+</head>
+<body>
+
+<!-- Marquee -->
+<div class="marquee">
+  <div class="track">
+    <span>frontend engineer</span>
+    <span>typescript · react · systems ui</span>
+    <span>санкт-петербург / remote</span>
+    <span>6+ years of shipping</span>
+    <span>frontend engineer</span>
+    <span>typescript · react · systems ui</span>
+    <span>санкт-петербург / remote</span>
+  </div>
+</div>
+
+<!-- Sticky nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="dot"></span>Наумов С.</a>
+    <ul>
+      <li><a class="nitem" href="#about"><span class="n">01</span>Обо мне</a></li>
+      <li><a class="nitem" href="#stack"><span class="n">02</span>Стек</a></li>
+      <li><a class="nitem" href="#experience"><span class="n">03</span>Опыт</a></li>
+      <li><a class="nitem" href="#portfolio"><span class="n">04</span>Портфолио</a></li>
+    </ul>
+    <a class="cta" href="/cdn-cgi/l/email-protection#a5cbc4d0c8cad38bd6c0d7c2c0dce5c8c4ccc98bc0ddc4c8d5c9c0">↵ написать</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- Hero -->
+  <section id="top" class="hero" style="border-bottom:none;padding-bottom:0">
+    <div class="tag">curriculum · 2026 / v2.4</div>
+    <h1>Наумов<br/>Сергей<span class="dot">.</span></h1>
+    <p class="sub">
+      Frontend-инженер. Собираю <b>сложные интерфейсы</b>, которые не тормозят: редакторы, дашборды, интерактивные визуализации — всё, что требует ума в браузере.
+    </p>
+    <div class="meta">
+      <div class="m accent">
+        <span class="k">location</span>
+        <span class="v">Санкт-Петербург</span>
+      </div>
+      <div class="m">
+        <span class="k">experience</span>
+        <span class="v">6+ лет</span>
+      </div>
+      <div class="m">
+        <span class="k">specialty</span>
+        <span class="v">Frontend · TS / React</span>
+      </div>
+      <div class="m">
+        <span class="k">format</span>
+        <span class="v">Remote · full-time</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="sec-head">
+      <div class="num">01</div>
+      <h2>Обо <em>мне</em></h2>
+      <div class="note">// intro.md</div>
+    </div>
+    <div class="about">
+      <div class="big">
+        Проектирую интерфейсы там, где обычный React-буклет ломается. <span class="hl">Производительность и доступность</span> — для меня часть продукта, а не чек-лист.
+      </div>
+      <div class="small">
+        <p>Шесть лет собираю веб: от клиентских лендингов в студии до <b>ядра B2B-продукта на 40k пользователей</b>. Не боюсь сложных доменов — таблицы, редакторы формул, drag-and-drop, интерактивные визуализации на Canvas.</p>
+        <p>Веду наставничество: <b>200+ код-ревью</b>, внутренние воркшопы по TypeScript и архитектуре состояний. В нерабочее время — open source и чрезмерно вылизанные dotfiles.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section id="stack">
+    <div class="sec-head">
+      <div class="num">02</div>
+      <h2>Стек <em>и инструменты</em></h2>
+      <div class="note">// tools of trade</div>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-cell">
+        <div class="cat">Языки</div>
+        <div class="list">
+          <span class="t">TypeScript</span><span class="t">JavaScript</span>
+          <span class="t">HTML</span><span class="t">CSS</span><span class="t">Python</span>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="cat">Фреймворки</div>
+        <div class="list">
+          <span class="t">React</span><span class="t">Next.js</span>
+          <span class="t">Remix</span><span class="t">Vue 3</span>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="cat">Состояние / данные</div>
+        <div class="list">
+          <span class="t">MobX</span><span class="t">Redux Toolkit</span>
+          <span class="t">Zustand</span><span class="t">TanStack Query</span>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="cat">Тулинг</div>
+        <div class="list">
+          <span class="t">Vite</span><span class="t">Webpack</span>
+          <span class="t">Turborepo</span><span class="t">Git</span><span class="t">Figma</span>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="cat">Тестирование</div>
+        <div class="list">
+          <span class="t">Vitest</span><span class="t">Playwright</span>
+          <span class="t">Cypress</span><span class="t">Testing Library</span>
+        </div>
+      </div>
+      <div class="stack-cell">
+        <div class="cat">Языки общения</div>
+        <div class="list">
+          <span class="t">RU · native</span><span class="t">EN · B2</span><span class="t">DE · A2</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="sec-head">
+      <div class="num">03</div>
+      <h2>Опыт <em>работы</em></h2>
+      <div class="note">7 entries · click to expand</div>
+    </div>
+
+    <div class="tl-controls">
+      <button data-act="open">[ + ] развернуть все</button>
+      <button data-act="close">[ − ] свернуть все</button>
+    </div>
+
+    <div class="timeline" id="timeline">
+
+      <!-- 7 -->
+      <article class="tl-item">
+        <div class="tl-period">
+          Март 2022 — Сентябрь 2022
+          <span class="dur">6 месяцев</span>
+        </div>
+        <div class="tl-head" data-toggle>
+          <h3>Фриланс: создание сайтов</h3>
+          <div class="org">Self-employed</div>
+        </div>
+        <div class="tl-toggle" data-toggle>+</div>
+        <div class="tl-body">
+          <div class="inner">
+            <p>Разрабатывал сайты на Bootstrap с адаптивной вёрсткой. Постепенно начал работать с заказами, включающими JavaScript и PHP. Начал изучать взаимодействие клиентской части с сервером.</p>
+            <div class="tags"><span>HTML/CSS</span><span>Bootstrap</span><span>JS</span><span>PHP</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6 placeholder -->
+      <article class="tl-item">
+        <div class="tl-period">
+          Октябрь 2022 — Май 2023
+          <span class="dur">8 месяцев</span>
+        </div>
+        <div class="tl-head" data-toggle>
+          <h3>Junior Frontend Developer</h3>
+          <div class="org">Компания / Placeholder</div>
+        </div>
+        <div class="tl-toggle" data-toggle>+</div>
+        <div class="tl-body">
+          <div class="inner">
+            <p>[placeholder] Кратко: что делал, какие задачи, какие результаты. Замените на реальный текст.</p>
+            <ul>
+              <li>Первое коммерческое знакомство с React и компонентным подходом.</li>
+              <li>Вёрстка по Figma, интеграция с REST API.</li>
+            </ul>
+            <div class="tags"><span>React</span><span>JavaScript</span><span>SCSS</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tl-item">
+        <div class="tl-period">
+          Июнь 2023 — Февраль 2024
+          <span class="dur">9 месяцев</span>
+        </div>
+        <div class="tl-head" data-toggle>
+          <h3>Frontend Developer</h3>
+          <div class="org">Placeholder Studio</div>
+        </div>
+        <div class="tl-toggle" data-toggle>+</div>
+        <div class="tl-body">
+          <div class="inner">
+            <p>[placeholder] Небольшие SPA и клиентские лендинги. Постепенно перешёл на TypeScript.</p>
+            <ul>
+              <li>Впервые взялся за поддержку легаси-кодовой базы.</li>
+              <li>Начал писать тесты — Vitest + Testing Library.</li>
+            </ul>
+            <div class="tags"><span>React</span><span>TypeScript</span><span>Vite</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tl-item">
+        <div class="tl-period">
+          Март 2024 — Октябрь 2024
+          <span class="dur">8 месяцев</span>
+        </div>
+        <div class="tl-head" data-toggle>
+          <h3>Middle Frontend Developer</h3>
+          <div class="org">Placeholder Digital</div>
+        </div>
+        <div class="tl-toggle" data-toggle>+</div>
+        <div class="tl-body">
+          <div class="inner">
+            <p>[placeholder] Участвовал в продуктовой команде. Работа в команде из 5 фронтенд-разработчиков.</p>
+            <ul>
+              <li>Внедрил дизайн-систему на базе Radix Primitives.</li>
+              <li>Разобрался с Redux Toolkit и RTK Query.</li>
+            </ul>
+            <div class="tags"><span>React</span><span>TypeScript</span><span>Redux Toolkit</span><span>Radix</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tl-item">
+        <div class="tl-period">
+          Ноябрь 2024 — Май 2025
+          <span class="dur">7 месяцев</span>
+        </div>
+        <div class="tl-head" data-toggle>
+          <h3>Middle Frontend Developer</h3>
+          <div class="org">Dodo Brands</div>
+        </div>
+        <div class="tl-toggle" data-toggle>+</div>
+        <div class="tl-body">
+          <div class="inner">
+            <p>[placeholder] Миграция админки франчайзи с AngularJS на React — 60+ экранов.</p>
+            <ul>
+              <li>Выстроил e2e-тестирование критических флоу оформления заказа.</li>
+              <li>Ускорил bundle build в 3× через Turborepo-кэш.</li>
+            </ul>
+            <div class="tags"><span>React</span><span>TypeScript</span><span>Cypress</span><span>Turborepo</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tl-item">
+        <div class="tl-period">
+          Июнь 2025 — Декабрь 2025
+          <span class="dur">7 месяцев</span>
+        </div>
+        <div class="tl-head" data-toggle>
+          <h3>Senior Frontend Engineer</h3>
+          <div class="org">Placeholder Lab</div>
+        </div>
+        <div class="tl-toggle" data-toggle>+</div>
+        <div class="tl-body">
+          <div class="inner">
+            <p>[placeholder] Переход на сеньорную позицию. Работал над core-редактором.</p>
+            <ul>
+              <li>Спроектировал модуль drag-and-drop на основе Pointer Events API.</li>
+              <li>Менторил junior-разработчиков, проводил архитектурные ревью.</li>
+            </ul>
+            <div class="tags"><span>TypeScript</span><span>React</span><span>MobX</span><span>Playwright</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tl-item">
+        <div class="tl-period">
+          Январь 2026 — н.в.
+          <span class="dur">current</span>
+        </div>
+        <div class="tl-head" data-toggle>
+          <h3>Senior Frontend Engineer</h3>
+          <div class="org">Контур</div>
+        </div>
+        <div class="tl-toggle" data-toggle>+</div>
+        <div class="tl-body">
+          <div class="inner">
+            <p>Развиваю ядро конструктора отчётов: редактор формул, drag-and-drop таблицы, live-preview.</p>
+            <ul>
+              <li>Сократил время холодной загрузки на 38% (code-splitting + критический CSS).</li>
+              <li>Менторю двух junior-разработчиков, веду еженедельные архитектурные ревью.</li>
+            </ul>
+            <div class="tags"><span>TypeScript</span><span>React 18</span><span>MobX</span><span>Vite</span></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio" style="border-bottom:none">
+    <div class="sec-head">
+      <div class="num">04</div>
+      <h2>Избранные <em>проекты</em></h2>
+      <div class="note">selected · 4 items</div>
+    </div>
+    <div class="projects">
+
+      <a class="proj big" href="#" onclick="return false">
+        <div class="left">
+          <div class="head">
+            <span class="name"><span class="slash">~/</span>flux-editor</span>
+            <span class="tag os">open source</span>
+          </div>
+          <p class="desc">Лёгкий Markdown-редактор с live-preview и расширениями через плагины. ~40 контрибьюторов, используется в нескольких заметных npm-пакетах.</p>
+          <div class="foot">
+            <span>TypeScript · Lexical · Vite</span>
+            <span class="arrow">↗</span>
+          </div>
+        </div>
+        <div class="right">
+          <div>
+            <div class="big-stat">1.2k<span style="color:#000">★</span></div>
+            <div class="big-lbl">stars on github</div>
+          </div>
+        </div>
+      </a>
+
+      <a class="proj" href="#" onclick="return false">
+        <div class="head">
+          <span class="name"><span class="slash">~/</span>latlon</span>
+          <span class="tag">pet</span>
+        </div>
+        <p class="desc">Визуализатор GPX-маршрутов с покадровой прокруткой высотного профиля. Canvas 2D + Web Workers для плавности на 10k+ точек.</p>
+        <div class="foot">
+          <span>React · Canvas · Workers</span>
+          <span class="arrow">↗</span>
+        </div>
+      </a>
+
+      <div class="proj" style="cursor:default">
+        <div class="head">
+          <span class="name"><span class="slash">~/</span>формулы.контур</span>
+          <span class="tag">work</span>
+        </div>
+        <p class="desc">Редактор табличных формул с подсветкой зависимостей и отладкой шагов вычисления. ~40k пользователей ежедневно.</p>
+        <div class="foot">
+          <span>TypeScript · React · CodeMirror</span>
+          <span class="arrow" style="opacity:.3">—</span>
+        </div>
+      </div>
+
+      <a class="proj" href="#" onclick="return false" style="grid-column:span 6">
+        <div class="head">
+          <span class="name"><span class="slash">~/</span>dotfiles</span>
+          <span class="tag os">open source</span>
+        </div>
+        <p class="desc">Конфиги Neovim, zsh, tmux и обвязка под Arch / macOS. Документированы построчно — можно читать как туториал.</p>
+        <div class="foot">
+          <span>Lua · Shell · Fish</span>
+          <span class="arrow">↗</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>★ built by hand · last update 04.2026</span>
+    <div class="links">
+      <a href="/cdn-cgi/l/email-protection#f19f90849c9e87df829483969488b19c90989ddf9489909c819d94">email</a>
+      <a href="#">github</a>
+      <a href="#">telegram</a>
+      <a href="#">linkedin</a>
+    </div>
+    <span>© 2026 Наумов С.</span>
+  </footer>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Timeline accordion
+  document.querySelectorAll('.tl-item').forEach(item => {
+    item.querySelectorAll('[data-toggle]').forEach(el => {
+      el.addEventListener('click', () => {
+        const open = item.classList.contains('open');
+        item.classList.toggle('open', !open);
+        const tog = item.querySelector('.tl-toggle');
+        tog.textContent = open ? '+' : '+'; // rotation handles visual
+      });
+    });
+  });
+  document.querySelectorAll('.tl-controls button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const act = btn.dataset.act;
+      document.querySelectorAll('.tl-item').forEach(it => {
+        it.classList.toggle('open', act === 'open');
+      });
+    });
+  });
+
+  // Scroll-spy nav
+  const items = document.querySelectorAll('.nav a.nitem');
+  const sections = [...items].map(a => document.querySelector(a.getAttribute('href')));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        items.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  sections.forEach(s => s && io.observe(s));
+</script>
+
+</body>
+</html>
