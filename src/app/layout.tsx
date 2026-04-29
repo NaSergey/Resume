@@ -1,48 +1,45 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
-import { cookies } from "next/headers";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { defaultLocale, LOCALE_COOKIE, locales, type Locale } from "@/shared/config/i18n";
 import { LenisProvider } from "@/shared/providers/LenisProvider";
+import { CustomCursor } from "@/widgets/CustomCursor";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono-jet",
   subsets: ["latin"],
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-serif-inst",
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
 export const metadata: Metadata = {
   title: "Наумов Сергей — Frontend Engineer",
-  description: "Portfolio & Resume",
+  description:
+    "Senior Frontend Engineer специализирующийся на React, Next.js, TypeScript. 6+ лет опыта построения production-grade интерфейсов.",
+  keywords: ["Frontend Engineer", "React", "Next.js", "TypeScript", "Наумов Сергей"],
+  authors: [{ name: "Наумов Сергей" }],
+  openGraph: {
+    title: "Наумов Сергей — Frontend Engineer",
+    description: "Senior Frontend Engineer. React · Next.js · TypeScript · 6+ лет опыта",
+    type: "website",
+  },
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const cookieStore = await cookies();
-  const cookie = cookieStore.get(LOCALE_COOKIE)?.value;
-  const lang: Locale = locales.includes(cookie as Locale) ? (cookie as Locale) : defaultLocale;
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang={lang}
-      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      lang="ru"
+      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
       <body>
-        <LenisProvider>{children}</LenisProvider>
+        <LenisProvider>
+          <CustomCursor />
+          {children}
+        </LenisProvider>
       </body>
     </html>
   );
