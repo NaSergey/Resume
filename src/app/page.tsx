@@ -1,21 +1,35 @@
 import { Header } from "@/widgets/Header";
 import { Footer } from "@/widgets/Footer";
-import { Hero } from "./(main)/components/Hero";
-import { About } from "./(main)/components/About";
-import { Stack } from "./(main)/components/Stack";
-import { Experience } from "./(main)/components/Experience";
-import { Portfolio } from "./(main)/components/Portfolio";
+import { Hero } from "@/features/Hero";
+import { About } from "@/features/About";
+import { Skills } from "@/features/Skills";
+import { Experience } from "@/features/Experience";
+import { Projects } from "@/features/Projects";
+import { Contact } from "@/features/Contact";
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main className="max-w-[1200px] mx-auto w-full px-5 md:px-8">
+      <main>
         <Hero />
+
+        {/* Divider */}
+        <div
+          style={{
+            height: "1px",
+            background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)",
+          }}
+        />
         <About />
-        <Stack />
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
+        <Skills />
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
         <Experience />
-        <Portfolio />
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
+        <Projects />
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
+        <Contact />
       </main>
       <Footer />
     </>

@@ -6,18 +6,11 @@ import { cn } from "@/shared/lib/utils";
 import { scrollTo } from "@/shared/providers/LenisProvider";
 import { LOCALE_COOKIE, locales, defaultLocale, type Locale } from "@/shared/config/i18n";
 
-const marqueeItems = [
-  "frontend engineer",
-  "typescript · react · systems ui",
-  "санкт-петербург / remote",
-  "6+ years of shipping",
-];
-
 const navLinks = [
-  { href: "#about", label: "Обо мне", n: "01" },
-  { href: "#stack", label: "Стек", n: "02" },
-  { href: "#experience", label: "Опыт", n: "03" },
-  { href: "#portfolio", label: "Портфолио", n: "04" },
+  { href: "#about",      label: "Обо мне",   n: "01" },
+  { href: "#skills",     label: "Стек",      n: "02" },
+  { href: "#experience", label: "Опыт",      n: "03" },
+  { href: "#projects",   label: "Проекты",   n: "04" },
 ];
 
 function TelegramIcon() {
@@ -28,18 +21,8 @@ function TelegramIcon() {
   );
 }
 
-function GlobeIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-      <path d="M2 12h20" />
-    </svg>
-  );
-}
 
 function LangSwitcher() {
-  const [open, setOpen] = useState(false);
   const [lang, setLangState] = useState<Locale>(defaultLocale);
   const router = useRouter();
 
@@ -49,72 +32,27 @@ function LangSwitcher() {
     if (found && locales.includes(found as Locale)) setLangState(found as Locale);
   }, []);
 
-  const switchLang = (l: Locale) => {
-    document.cookie = `${LOCALE_COOKIE}=${l}; path=/; SameSite=Lax`;
-    setLangState(l);
-    setOpen(false);
+  const cycle = () => {
+    const next = locales[(locales.indexOf(lang) + 1) % locales.length];
+    document.cookie = `${LOCALE_COOKIE}=${next}; path=/; SameSite=Lax`;
+    setLangState(next);
     router.refresh();
   };
 
   return (
-    <div
-      className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+    <button
+      onClick={cycle}
+      aria-label="Switch language"
+      className="flex items-center justify-center w-9 h-9 border border-site-line2 rounded-full font-mono text-xs text-site-muted transition-all duration-200 hover:text-cyan hover:border-cyan hover:scale-110 hover:shadow-[0_0_18px_rgba(0,212,255,0.35)] hover:bg-[rgba(0,212,255,0.06)]"
     >
-      <button
-        aria-label="Switch language"
-        className={cn(
-          "flex items-center justify-center w-9 h-9 border rounded-full transition-colors duration-150",
-          open ? "text-lime border-lime" : "text-site-muted border-site-line2 hover:text-lime hover:border-lime"
-        )}
-      >
-        <GlobeIcon />
-      </button>
-
-      <div className={cn(
-        "absolute right-0 top-full pt-2 z-50 transition-all duration-150",
-        open ? "opacity-100 pointer-events-auto translate-y-0" : "opacity-0 pointer-events-none -translate-y-1"
-      )}>
-        <div className="flex flex-col py-1 border border-site-line2 rounded-xl bg-[rgba(13,13,15,0.96)] backdrop-blur-md overflow-hidden min-w-[68px]">
-          {locales.map((l) => (
-            <button
-              key={l}
-              onClick={() => switchLang(l)}
-              className={cn(
-                "px-4 py-2 font-mono text-xs text-left transition-colors duration-100",
-                lang === l
-                  ? "text-lime"
-                  : "text-site-muted hover:text-site-ink hover:bg-site-panel"
-              )}
-            >
-              {l.toUpperCase()}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Marquee() {
-  const repeated = [...marqueeItems, ...marqueeItems];
-  return (
-    <div className="overflow-hidden whitespace-nowrap border-b-2 border-black py-2.5 bg-lime text-black">
-      <div className="marquee-track">
-        {repeated.map((item, i) => (
-          <span key={i} className="mr-10 font-mono font-semibold text-[13px]">
-            <span className="opacity-50">★ </span>
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
+      {lang.toUpperCase()}
+    </button>
   );
 }
 
 function Nav() {
   const [active, setActive] = useState("");
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const sections = navLinks.map((l) => document.querySelector(l.href));
@@ -130,20 +68,33 @@ function Nav() {
     return () => io.disconnect();
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   function handleNav(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
     e.preventDefault();
     scrollTo(href);
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-site-line bg-[rgba(13,13,15,0.82)] backdrop-blur-[10px] backdrop-saturate-[120%]">
-      <div className="max-w-[1200px] mx-auto px-5 md:px-8 py-3.5 flex items-center justify-between gap-6">
+    <nav
+      className={cn(
+        "fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300",
+        scrolled
+          ? " backdrop-blur-xl backdrop-saturate-180 shadow-[0_1px_0_rgba(255,255,255,0.04)]"
+          : "backdrop-blur-md"
+      )}
+    >
+      <div className="max-w-300 mx-auto px-5 md:px-8 py-3.5 flex items-center justify-between gap-6">
         <a
-          href="#top"
-          onClick={(e) => handleNav(e, "#top")}
-          className="font-semibold text-[17px] tracking-[-0.015em] flex items-center gap-2.5"
+          href="#hero"
+          onClick={(e) => handleNav(e, "#hero")}
+          className="font-semibold text-[17px] tracking-[-0.015em] flex items-center gap-2.5 transition-opacity duration-150 hover:opacity-80"
         >
-          <span className="flex-shrink-0 w-2.5 h-2.5 rounded-full bg-lime dot-breathe" />
+          <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-lime dot-breathe" />
           Наумов С.
         </a>
 
@@ -156,11 +107,13 @@ function Nav() {
                   href={l.href}
                   onClick={(e) => handleNav(e, l.href)}
                   className={cn(
-                    "inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-[13.5px] transition-colors duration-150",
-                    isActive ? "bg-lime text-black" : "text-site-muted hover:text-site-ink hover:bg-site-panel"
+                    "inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-[13.5px] transition-all duration-150",
+                    isActive
+                      ? "bg-lime text-cyan"
+                      : "text-site-muted hover:text-site-ink hover:bg-site-panel"
                   )}
                 >
-                  <span className={cn("font-mono text-[11px]", isActive ? "text-black/55" : "text-site-faint")}>
+                  <span className={cn("font-mono text-label", isActive ? "text-cyan" : "text-site-faint")}>
                     {l.n}
                   </span>
                   {l.label}
@@ -177,7 +130,7 @@ function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Telegram"
-            className="flex items-center justify-center w-9 h-9 border border-site-line2 rounded-full text-site-muted transition-colors duration-150 hover:text-lime hover:border-lime"
+            className="flex items-center justify-center w-9 h-9 border border-site-line2 rounded-full text-site-muted transition-all duration-200 hover:text-cyan hover:border-cyan hover:scale-110 hover:shadow-[0_0_18px_rgba(0,212,255,0.35)] hover:bg-[rgba(0,212,255,0.06)]"
           >
             <TelegramIcon />
           </a>
@@ -188,10 +141,5 @@ function Nav() {
 }
 
 export function Header() {
-  return (
-    <>
-      <Marquee />
-      <Nav />
-    </>
-  );
+  return <Nav />;
 }
