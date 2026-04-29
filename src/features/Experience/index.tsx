@@ -34,30 +34,67 @@ const JOBS = [
     id: "j3",
     company: "Agency XYZ",
     role: "Frontend Developer",
-    period: "2018 — 2020",
-    duration: "2 года",
+    period: "2019 — 2020",
+    duration: "1 год",
     type: "Full-time",
     stack: ["React", "CSS", "GSAP"],
     desc: "Разработка award-winning лендингов и промо-сайтов. Работа с международными брендами. Фокус на интерактивные анимации и нестандартные UI решения.",
     highlight: false,
   },
+  {
+    id: "j4",
+    company: "Crypto Startup",
+    role: "Frontend Developer",
+    period: "2021 — 2022",
+    duration: "8 мес",
+    type: "Contract",
+    stack: ["React", "Wagmi", "Viem", "Tailwind"],
+    desc: "Разработка Web3 интерфейса для DeFi протокола. Интеграция кошельков, real-time данные из блокчейна, кастомные анимации графиков.",
+    highlight: false,
+  },
+  {
+    id: "j5",
+    company: "Digital Studio",
+    role: "Frontend Developer",
+    period: "2018 — 2019",
+    duration: "1 год",
+    type: "Full-time",
+    stack: ["React", "Redux", "SCSS"],
+    desc: "Разработка корпоративных порталов и SaaS-продуктов. Участие в code review, написание unit-тестов, внедрение компонентного подхода.",
+    highlight: false,
+  },
+  {
+    id: "j6",
+    company: "Freelance",
+    role: "Frontend Developer",
+    period: "2017 — 2018",
+    duration: "1 год",
+    type: "Freelance",
+    stack: ["HTML", "CSS", "JavaScript", "PHP"],
+    desc: "Разработка лендингов, корпоративных сайтов и интернет-магазинов. Работа с различными CMS, верстка по макетам Figma/Photoshop.",
+    highlight: false,
+  },
+  {
+    id: "j7",
+    company: "IT Academy",
+    role: "Junior Developer",
+    period: "2016 — 2017",
+    duration: "1 год",
+    type: "Internship",
+    stack: ["HTML", "CSS", "JavaScript"],
+    desc: "Первые коммерческие проекты, изучение основ разработки. Верстка, базовая интерактивность, работа в команде.",
+    highlight: false,
+  },
 ];
 
-/**
- * Experience section.
- *
- * Animations:
- * - Timeline line draws from top to bottom via scaleY + ScrollTrigger scrub
- * - Each job entry: connector dot pops in, card slides from right
- * - Active card expands with height animation via GSAP (not CSS max-height hack)
- * - Scroll-pinned on desktop: timeline stays fixed while cards scroll
- */
+const CARD_HEIGHT = 76; // px — высота одной карточки + gap
+
 export function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
+  const lineRef    = useRef<HTMLDivElement>(null);
+  const listRef    = useRef<HTMLDivElement>(null);
   const [activeId, setActiveId] = useState<string>("j1");
 
-  /* ── Timeline draw animation ── */
   useEffect(() => {
     const ctx = gsap.context(() => {
       const trig = {
@@ -66,62 +103,33 @@ export function Experience() {
         toggleActions: "play none none none",
       };
 
-      // Tag / heading
-      gsap.fromTo(
-        ".exp-tag",
+      gsap.fromTo(".exp-tag",
         { x: -30, opacity: 0 },
         { x: 0, opacity: 1, duration: 0.6, ease: "power2.out", scrollTrigger: trig }
       );
-      gsap.fromTo(
-        ".exp-heading",
+      gsap.fromTo(".exp-heading",
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.7, ease: "power2.out", scrollTrigger: trig }
       );
 
-      // Timeline line scaleY from 0 → 1 with scrub
       if (lineRef.current) {
-        gsap.fromTo(
-          lineRef.current,
+        gsap.fromTo(lineRef.current,
           { scaleY: 0 },
-          {
-            scaleY: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: ".timeline-wrap",
-              start: "top 70%",
-              end: "bottom 60%",
-              scrub: 0.5,
-            },
-          }
+          { scaleY: 1, ease: "none",
+            scrollTrigger: { trigger: ".timeline-wrap", start: "top 70%", end: "bottom 60%", scrub: 0.5 } }
         );
       }
 
-      // Cards stagger from right
-      gsap.fromTo(
-        ".exp-card",
-        { x: 40, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.7,
-          stagger: 0.18,
-          ease: "power2.out",
-          scrollTrigger: { ...trig, start: "top 70%" },
-        }
+      gsap.fromTo(".timeline-dot",
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, stagger: 0.18, ease: "back.out(1.8)",
+          scrollTrigger: { ...trig, start: "top 70%" } }
       );
 
-      // Dots pop in
-      gsap.fromTo(
-        ".timeline-dot",
-        { scale: 0, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.4,
-          stagger: 0.18,
-          ease: "back.out(1.8)",
-          scrollTrigger: { ...trig, start: "top 70%" },
-        }
+      gsap.fromTo(".exp-card",
+        { x: -20, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, stagger: 0.12, ease: "power2.out",
+          scrollTrigger: { ...trig, start: "top 70%" } }
       );
     }, sectionRef);
 
@@ -144,36 +152,31 @@ export function Experience() {
           >
             Опыт работы
           </h2>
-          <p
-            className="font-mono text-sm"
-            style={{ color: "var(--color-ink-faint)" }}
-          >
+          <p className="font-mono text-sm" style={{ color: "var(--color-ink-faint)" }}>
             6+ years · 3 companies
           </p>
         </div>
 
-        {/* Timeline layout */}
-        <div className="timeline-wrap grid md:grid-cols-[80px_1fr] lg:grid-cols-[80px_1fr_360px] gap-0">
+        <div className="timeline-wrap grid lg:grid-cols-[40px_1fr_380px] gap-0">
+
           {/* Vertical line + dots */}
-          <div className="relative hidden md:block">
+          <div className="relative hidden lg:block">
             <div
               ref={lineRef}
               className="timeline-line"
               style={{ transformOrigin: "top center" }}
             />
-            <div className="relative z-10 flex flex-col gap-0">
-              {JOBS.map((job, i) => {
+            <div className="relative z-10 flex flex-col" style={{ gap: `${CARD_HEIGHT}px` }}>
+              {JOBS.map((job) => {
                 const isActive = job.id === activeId;
-                const DOT_SPACING = 120;
                 return (
                   <div
                     key={job.id}
-                    className="timeline-dot"
-                    style={{ marginTop: i === 0 ? 0 : `${DOT_SPACING}px`, position: "relative" }}
+                    className="timeline-dot cursor-pointer"
                     onClick={() => setActiveId(job.id)}
                   >
                     <div
-                      className="w-3 h-3 rounded-full absolute -left-[5px]"
+                      className="w-3 h-3 rounded-full absolute -left-1.25"
                       style={{
                         background: isActive ? "var(--color-cyan)" : "var(--color-ink-ghost)",
                         border: `1px solid ${isActive ? "var(--color-cyan)" : "rgba(255,255,255,0.1)"}`,
@@ -187,82 +190,73 @@ export function Experience() {
             </div>
           </div>
 
-          {/* Job list */}
-          <div className="flex flex-col gap-4">
+          {/* Scrollable card list */}
+          <div
+            ref={listRef}
+            data-lenis-prevent
+            className="flex flex-col gap-3 overflow-y-auto [&::-webkit-scrollbar]:hidden"
+            style={{ maxHeight: "480px", scrollbarWidth: "none" }}
+          >
             {JOBS.map((job) => {
               const isActive = job.id === activeId;
               return (
                 <div
                   key={job.id}
-                  className="exp-card opacity-0"
+                  className="exp-card opacity-0 p-5 cursor-pointer clip-corner"
                   onClick={() => setActiveId(job.id)}
                   data-cursor-hover
+                  style={{
+                    border: `1px solid ${isActive ? "rgba(0,212,255,0.45)" : "var(--color-border)"}`,
+                    background: isActive ? "rgba(0,212,255,0.04)" : "var(--color-surface)",
+                    boxShadow: isActive ? "0 0 16px rgba(0,212,255,0.08)" : "none",
+                    transition: "border-color 0.2s, background 0.2s, box-shadow 0.2s",
+                  }}
                 >
-                  <div
-                    className="glass-hi clip-corner p-6 transition-all duration-300"
-                    style={{
-                      borderColor: isActive ? "rgba(0,212,255,0.3)" : "var(--color-border)",
-                      background: isActive ? "rgba(0,212,255,0.04)" : undefined,
-                    }}
-                  >
-                    {/* Header row */}
-                    <div className="flex items-start justify-between gap-4 mb-3">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          {job.highlight && (
-                            <span
-                              className="font-mono text-[9px] tracking-widest uppercase px-2 py-0.5"
-                              style={{
-                                color: "var(--color-cyan)",
-                                border: "1px solid rgba(0,212,255,0.3)",
-                                borderRadius: "2px",
-                              }}
-                            >
-                              Current
-                            </span>
-                          )}
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        {job.highlight && (
                           <span
-                            className="font-sans font-semibold text-base"
-                            style={{ color: isActive ? "var(--color-ink)" : "var(--color-ink-dim)" }}
+                            className="font-mono text-[9px] tracking-widest uppercase px-2 py-0.5"
+                            style={{
+                              color: "var(--color-cyan)",
+                              border: "1px solid rgba(0,212,255,0.3)",
+                              borderRadius: "2px",
+                            }}
                           >
-                            {job.role}
+                            Current
                           </span>
-                        </div>
+                        )}
                         <span
-                          className="font-mono text-[12px]"
-                          style={{ color: isActive ? "var(--color-cyan)" : "var(--color-ink-faint)" }}
+                          className="font-sans font-semibold text-base"
+                          style={{ color: isActive ? "var(--color-ink)" : "var(--color-ink-dim)" }}
                         >
-                          {job.company}
+                          {job.role}
                         </span>
                       </div>
-
-                      <div className="text-right flex-shrink-0">
-                        <div
-                          className="font-mono text-[11px]"
-                          style={{ color: "var(--color-ink-dim)" }}
-                        >
-                          {job.period}
-                        </div>
-                        <div
-                          className="font-mono text-[10px]"
-                          style={{ color: "var(--color-ink-faint)" }}
-                        >
-                          {job.duration}
-                        </div>
-                      </div>
+                      <span
+                        className="font-mono text-[12px]"
+                        style={{ color: isActive ? "var(--color-cyan)" : "var(--color-ink-faint)" }}
+                      >
+                        {job.company}
+                      </span>
                     </div>
 
-                    {/* Expandable body */}
-                    {isActive && (
-                      <ExpandBody job={job} />
-                    )}
+                    <div className="text-right shrink-0">
+                      <div className="font-mono text-label" style={{ color: "var(--color-ink-dim)" }}>
+                        {job.period}
+                      </div>
+                      <div className="font-mono text-[10px]" style={{ color: "var(--color-ink-faint)" }}>
+                        {job.duration}
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          {/* Right detail panel — desktop only */}
+          {/* Right — detail panel */}
           <div className="hidden lg:block pl-8">
             <DetailPanel job={activeJob} />
           </div>
@@ -272,31 +266,52 @@ export function Experience() {
   );
 }
 
-function ExpandBody({ job }: { job: typeof JOBS[0] }) {
+function DetailPanel({ job }: { job: typeof JOBS[0] }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!ref.current) return;
-    gsap.fromTo(
-      ref.current,
-      { height: 0, opacity: 0, y: -10 },
-      { height: "auto", opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+    gsap.fromTo(ref.current,
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }
     );
-    return () => {
-      if (ref.current) {
-        gsap.set(ref.current, { clearProps: "all" });
-      }
-    };
-  }, []);
+  }, [job.id]);
 
   return (
-    <div ref={ref} style={{ overflow: "hidden" }}>
-      <p
-        className="text-sm leading-relaxed mt-4 mb-4"
-        style={{ color: "var(--color-ink-dim)" }}
-      >
+    <div
+      ref={ref}
+      className="glass-hi clip-corner p-6 sticky top-24"
+      style={{ borderColor: "rgba(0,212,255,0.2)" }}
+    >
+      <div className="mb-6">
+        <p className="font-mono text-[10px] tracking-widest uppercase mb-2" style={{ color: "var(--color-ink-faint)" }}>
+          Currently viewing
+        </p>
+        <h3 className="font-bold text-lg mb-1" style={{ color: "var(--color-cyan)" }}>
+          {job.company}
+        </h3>
+        <p className="text-sm" style={{ color: "var(--color-ink-dim)" }}>{job.role}</p>
+      </div>
+
+      <div className="space-y-3 mb-6">
+        {[
+          { label: "Period",   value: job.period },
+          { label: "Duration", value: job.duration },
+          { label: "Type",     value: job.type },
+        ].map((row) => (
+          <div key={row.label} className="flex justify-between">
+            <span className="font-mono text-label" style={{ color: "var(--color-ink-faint)" }}>{row.label}</span>
+            <span className="font-mono text-label" style={{ color: "var(--color-ink-dim)" }}>{row.value}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="h-px w-full mb-6" style={{ background: "var(--color-border)" }} />
+
+      <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--color-ink-dim)" }}>
         {job.desc}
       </p>
+
       <div className="flex flex-wrap gap-2">
         {job.stack.map((s) => (
           <span
@@ -313,51 +328,6 @@ function ExpandBody({ job }: { job: typeof JOBS[0] }) {
           </span>
         ))}
       </div>
-    </div>
-  );
-}
-
-function DetailPanel({ job }: { job: typeof JOBS[0] }) {
-  return (
-    <div
-      className="glass-hi clip-corner p-6 sticky top-24"
-      style={{ borderColor: "rgba(0,212,255,0.2)" }}
-    >
-      <div className="mb-6">
-        <p className="font-mono text-[10px] tracking-widest uppercase mb-2" style={{ color: "var(--color-ink-faint)" }}>
-          Currently viewing
-        </p>
-        <h3 className="font-bold text-lg mb-1" style={{ color: "var(--color-cyan)" }}>
-          {job.company}
-        </h3>
-        <p className="text-sm" style={{ color: "var(--color-ink-dim)" }}>{job.role}</p>
-      </div>
-
-      <div className="space-y-3 mb-6">
-        {[
-          { label: "Period", value: job.period },
-          { label: "Duration", value: job.duration },
-          { label: "Type", value: job.type },
-        ].map((row) => (
-          <div key={row.label} className="flex justify-between">
-            <span className="font-mono text-[11px]" style={{ color: "var(--color-ink-faint)" }}>
-              {row.label}
-            </span>
-            <span className="font-mono text-[11px]" style={{ color: "var(--color-ink-dim)" }}>
-              {row.value}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div
-        className="h-px w-full mb-6"
-        style={{ background: "var(--color-border)" }}
-      />
-
-      <p className="text-sm leading-relaxed" style={{ color: "var(--color-ink-dim)" }}>
-        {job.desc}
-      </p>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { SectionTag } from "@/shared/ui/SectionTag";
@@ -236,54 +237,30 @@ export function About() {
             <div className="relative">
               <svg
                 ref={frameRef}
-                viewBox="0 0 320 380"
+                viewBox="0 0 320 320"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full"
                 aria-hidden
               >
-                {/* Outer frame */}
-                <rect
-                  x="1" y="1" width="318" height="378"
-                  stroke="rgba(0,212,255,0.25)" strokeWidth="1"
-                />
-                {/* Corner cuts */}
-                <path d="M1 40 L1 1 L40 1" stroke="var(--color-cyan)" strokeWidth="1.5" />
-                <path d="M279 1 L319 1 L319 40" stroke="var(--color-cyan)" strokeWidth="1.5" />
-                <path d="M319 339 L319 379 L279 379" stroke="var(--color-cyan)" strokeWidth="1.5" />
-                <path d="M40 379 L1 379 L1 339" stroke="var(--color-cyan)" strokeWidth="1.5" />
-                {/* Scan line */}
-                <line x1="1" y1="190" x2="319" y2="190" stroke="rgba(0,212,255,0.1)" strokeWidth="1" strokeDasharray="4 4" />
-                {/* Data labels */}
-                <text x="8" y="374" fontFamily="monospace" fontSize="9" fill="rgba(0,212,255,0.4)">ID:NS-01</text>
-                <text x="220" y="374" fontFamily="monospace" fontSize="9" fill="rgba(0,212,255,0.4)">STATUS:ACTIVE</text>
+                <rect x="1" y="1" width="318" height="318" stroke="rgba(0,212,255,0.25)" strokeWidth="1" />
+                <path d="M1 40 L1 1 L40 1"           stroke="var(--color-cyan)" strokeWidth="1.5" />
+                <path d="M279 1 L319 1 L319 40"       stroke="var(--color-cyan)" strokeWidth="1.5" />
+                <path d="M319 279 L319 319 L279 319"  stroke="var(--color-cyan)" strokeWidth="1.5" />
+                <path d="M40 319 L1 319 L1 279"       stroke="var(--color-cyan)" strokeWidth="1.5" />
+                <line x1="1" y1="160" x2="319" y2="160" stroke="rgba(0,212,255,0.1)" strokeWidth="1" strokeDasharray="4 4" />
+                <text x="8" y="314" fontFamily="monospace" fontSize="9" fill="rgba(0,212,255,0.4)">ID:NS-01</text>
+                <text x="220" y="314" fontFamily="monospace" fontSize="9" fill="rgba(0,212,255,0.4)">STATUS:ACTIVE</text>
               </svg>
 
-              {/* Avatar placeholder */}
-              <div
-                className="absolute inset-[16px] flex items-center justify-center"
-                style={{ background: "var(--color-surface)" }}
-              >
-                <div className="text-center space-y-2">
-                  <div
-                    className="w-20 h-20 rounded-full mx-auto"
-                    style={{
-                      background: "linear-gradient(135deg, rgba(0,212,255,0.2), rgba(157,78,221,0.2))",
-                      border: "1px solid rgba(0,212,255,0.3)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "32px",
-                      fontWeight: 700,
-                      color: "var(--color-cyan)",
-                    }}
-                  >
-                    НС
-                  </div>
-                  <p className="font-mono text-[10px] tracking-widest uppercase" style={{ color: "var(--color-ink-faint)" }}>
-                    НАУМОВ СЕРГЕЙ
-                  </p>
-                </div>
+              {/* Avatar */}
+              <div className="absolute inset-4 overflow-hidden">
+                <Image
+                  src="/photo/avatara.png"
+                  alt="avatar"
+                  fill
+                  className="object-cover object-top"
+                />
               </div>
             </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { stopLenis, startLenis } from "@/shared/providers/LenisProvider";
 
@@ -21,8 +21,10 @@ export function ProjectModal({ project, onClose }: Props) {
   if (project) last.current = project;
   const p = last.current;
 
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
-    if (project) stopLenis();
+    if (project) { stopLenis(); setReady(false); }
     else startLenis();
     return () => { startLenis(); };
   }, [project]);
@@ -75,12 +77,14 @@ export function ProjectModal({ project, onClose }: Props) {
             ✕
           </DialogClose>
 
+          <div style={{ opacity: ready ? 1 : 0, transition: "opacity 0.25s ease" }}>
           <div className="relative w-full overflow-hidden" style={{ borderRadius: "12px 12px 0 0" }}>
             <video
               src={p.video}
               autoPlay muted loop playsInline
               className="w-full object-cover"
               style={{ maxHeight: "320px" }}
+              onCanPlay={() => setReady(true)}
             />
             <div
               className="absolute bottom-0 left-0 right-0 h-16"
@@ -133,27 +137,13 @@ export function ProjectModal({ project, onClose }: Props) {
                 </span>
               ))}
             </div>
-
-            <a
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-mono text-[12px] tracking-wider uppercase px-5 py-2.5 rounded transition-all duration-200 hover:scale-105"
-              style={{
-                color: p.rawColor,
-                border: `1px solid ${p.rawColor}40`,
-                background: `${p.rawColor}0d`,
-              }}
-              data-cursor-hover
-            >
-              View project →
-            </a>
           </div>
 
           <div
             className="absolute bottom-0 left-0 right-0 h-px"
             style={{ background: `linear-gradient(90deg, transparent, ${p.rawColor}60, transparent)` }}
           />
+          </div>
         </DialogContent>
       )}
     </Dialog>
