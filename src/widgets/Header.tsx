@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/shared/lib/utils";
 import { scrollTo } from "@/shared/providers/LenisProvider";
 import { LOCALE_COOKIE, locales, defaultLocale, type Locale } from "@/shared/config/i18n";
+import { SlashIcon } from "@/shared/ui/SlashIcon";
 
 const navLinks = [
   { href: "#about",      label: "Обо мне",   n: "01" },
@@ -20,7 +21,6 @@ function TelegramIcon() {
     </svg>
   );
 }
-
 
 function LangSwitcher() {
   const [lang, setLangState] = useState<Locale>(defaultLocale);
@@ -43,7 +43,7 @@ function LangSwitcher() {
     <button
       onClick={cycle}
       aria-label="Switch language"
-      className="flex items-center justify-center w-9 h-9 border border-site-line2 rounded-full font-mono text-xs text-site-muted transition-all duration-200 hover:text-cyan hover:border-cyan hover:scale-110 hover:shadow-[0_0_18px_rgba(0,212,255,0.35)] hover:bg-[rgba(0,212,255,0.06)]"
+      className="flex items-center justify-center w-9 h-9 border border-[rgba(99,102,241,0.2)] rounded-full font-mono text-xs text-ink-dim transition-all duration-200 hover:text-cyan hover:border-cyan hover:scale-110 hover:shadow-[0_0_14px_rgba(0,212,255,0.3)] hover:bg-[rgba(0,212,255,0.06)]"
     >
       {lang.toUpperCase()}
     </button>
@@ -53,6 +53,22 @@ function LangSwitcher() {
 function Nav() {
   const [active, setActive] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const ulRef = useRef<HTMLUListElement>(null);
+  const liRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const [pill, setPill] = useState({ x: 0, y: 0, w: 0, h: 0, opacity: 0 });
+
+  useEffect(() => {
+    const idx = navLinks.findIndex((l) => l.href === active);
+    if (idx === -1 || !ulRef.current || !liRefs.current[idx]) {
+      setPill((s) => ({ ...s, opacity: 0 }));
+      return;
+    }
+    const a = liRefs.current[idx]!.querySelector("a");
+    if (!a) return;
+    const aRect = a.getBoundingClientRect();
+    const ulRect = ulRef.current.getBoundingClientRect();
+    setPill({ x: aRect.left - ulRect.left, y: aRect.top - ulRect.top, w: aRect.width, h: aRect.height, opacity: 1 });
+  }, [active]);
 
   useEffect(() => {
     const sections = navLinks.map((l) => document.querySelector(l.href));
@@ -82,38 +98,53 @@ function Nav() {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 w-full z-50 transition-all duration-500",
         scrolled
-          ? " backdrop-blur-xl backdrop-saturate-180 shadow-[0_1px_0_rgba(255,255,255,0.04)]"
-          : "backdrop-blur-md"
+          ? "bg-[rgba(4,4,11,0.82)] backdrop-blur-sm backdrop-saturate-180 shadow-[0_4px_32px_rgba(0,0,0,0.5)]"
+          : "bg-[rgba(4,4,11,0.2)] backdrop-blur-md"
       )}
     >
-      <div className="max-w-300 mx-auto px-5 md:px-8 py-3.5 flex items-center justify-between gap-6">
+      <div className="max-w-350 mx-auto px-5 md:px-8 py-3.5 flex items-center justify-between gap-6">
         <a
           href="#hero"
           onClick={(e) => handleNav(e, "#hero")}
-          className="font-semibold text-[17px] tracking-[-0.015em] flex items-center gap-2.5 transition-opacity duration-150 hover:opacity-80"
+          className="font-semibold text-[17px] tracking-[-0.015em] flex items-center gap-2 transition-all duration-200 hover:text-cyan group"
         >
-          <span className="shrink-0 w-2.5 h-2.5 rounded-full bg-lime dot-breathe" />
+          <SlashIcon className="opacity-50 group-hover:opacity-100 transition-opacity duration-200" />
           Наумов С.
         </a>
 
-        <ul className="hidden md:flex gap-1 items-center list-none">
-          {navLinks.map((l) => {
+        <ul ref={ulRef} className="hidden md:flex gap-0.5 items-center list-none relative">
+          {/* Sliding pill indicator */}
+          <span
+            aria-hidden
+            className="absolute rounded-full pointer-events-none bg-[rgba(0,212,255,0.08)] border border-[rgba(0,212,255,0.22)] shadow-[0_0_14px_rgba(0,212,255,0.1)]"
+            style={{
+              left: pill.x,
+              top: pill.y,
+              width: pill.w,
+              height: pill.h,
+              opacity: pill.opacity,
+              transition:
+                "left 0.55s cubic-bezier(0.34,1.56,0.64,1), width 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease",
+            }}
+          />
+
+          {navLinks.map((l, i) => {
             const isActive = active === l.href;
             return (
-              <li key={l.href}>
+              <li key={l.href} ref={(el) => { liRefs.current[i] = el; }}>
                 <a
                   href={l.href}
                   onClick={(e) => handleNav(e, l.href)}
                   className={cn(
-                    "inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-[13.5px] transition-all duration-150",
+                    "relative inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-[13.5px] transition-colors duration-150",
                     isActive
-                      ? "bg-lime text-cyan"
-                      : "text-site-muted hover:text-site-ink hover:bg-site-panel"
+                      ? "text-cyan"
+                      : "text-ink-dim hover:text-ink hover:bg-[rgba(255,255,255,0.04)]"
                   )}
                 >
-                  <span className={cn("font-mono text-label", isActive ? "text-cyan" : "text-site-faint")}>
+                  <span className={cn("font-mono text-label", isActive ? "text-cyan/70" : "text-ink-faint")}>
                     {l.n}
                   </span>
                   {l.label}
@@ -130,12 +161,14 @@ function Nav() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Telegram"
-            className="flex items-center justify-center w-9 h-9 border border-site-line2 rounded-full text-site-muted transition-all duration-200 hover:text-cyan hover:border-cyan hover:scale-110 hover:shadow-[0_0_18px_rgba(0,212,255,0.35)] hover:bg-[rgba(0,212,255,0.06)]"
+            className="flex items-center justify-center w-9 h-9 border border-[rgba(99,102,241,0.2)] rounded-full text-ink-dim transition-all duration-200 hover:text-cyan hover:border-cyan hover:scale-110 hover:shadow-[0_0_14px_rgba(0,212,255,0.3)] hover:bg-[rgba(0,212,255,0.06)]"
           >
             <TelegramIcon />
           </a>
         </div>
       </div>
+      <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
+
     </nav>
   );
 }

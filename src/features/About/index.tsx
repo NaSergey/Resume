@@ -9,10 +9,10 @@ import { SectionTag } from "@/shared/ui/SectionTag";
 gsap.registerPlugin(ScrollTrigger);
 
 const STATS = [
-  { value: 6, suffix: "+", label: "Лет опыта" },
-  { value: 40, suffix: "+", label: "Проектов" },
-  { value: 12, suffix: "", label: "Компаний" },
-  { value: 99, suffix: "%", label: "Happy clients" },
+  { value: 4, suffix: "+", label: "Лет опыта" },
+  { value: 8, suffix: "+", label: "Проектов" },
+  { value: 6, suffix: "+", label: "Работодателей" },
+  { value: 25, suffix: "+", label: "Технологий" },
 ];
 
 const TRAITS = [
@@ -198,7 +198,7 @@ export function About() {
               style={{ color: "var(--color-ink-dim)", lineHeight: 1.75, fontSize: "15px" }}
             >
               <p>
-                6+ лет я занимаюсь frontend-разработкой — от стартапов на начальном этапе до
+                4+ лет я занимаюсь frontend-разработкой — от стартапов на начальном этапе до
                 enterprise-систем с миллионной аудиторией. Специализируюсь на React-экосистеме,
                 сложных анимациях и архитектуре дизайн-систем.
               </p>

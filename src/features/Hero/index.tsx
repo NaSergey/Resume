@@ -5,6 +5,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { GridBackground } from "./GridBackground";
 import { MagneticButton } from "@/shared/ui/MagneticButton";
+import { SlashIcon } from "@/shared/ui/SlashIcon";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -363,7 +364,7 @@ export function Hero() {
             className="w-1.5 h-1.5 rounded-full dot-breathe flex-shrink-0"
             style={{ background: "var(--color-cyan)" }}
           />
-          <span className="flicker">SYS://PORTFOLIO_v2.0</span>
+          <span className="flicker inline-flex items-center">SYS:<SlashIcon width={16} height={11} />PORTFOLIO_v2.0</span>
           <span style={{ color: "var(--color-ink-faint)" }}>■</span>
           <span style={{ color: "var(--color-ink-faint)" }}>INITIALIZING</span>
           <span className="blink" style={{ color: "var(--color-cyan)" }}>_</span>
@@ -447,8 +448,8 @@ export function Hero() {
         {/* Meta strip */}
         <div ref={metaRef} className="flex flex-wrap gap-x-8 gap-y-4 mb-12">
           {[
-            { label: "Опыт",     value: "6+",   unit: "лет" },
-            { label: "Проектов", value: "40+",  unit: "запущено" },
+            { label: "Опыт",     value: "4+",   unit: "лет" },
+            { label: "Проектов", value: "8+",  unit: "" },
             { label: "Локация",  value: "СПб",  unit: "/ Remote" },
             { label: "Статус",   value: "Open", unit: "to offers" },
           ].map((m) => (

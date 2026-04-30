@@ -72,14 +72,13 @@ export function ProjectModal({ project, onClose }: Props) {
             ✕
           </DialogClose>
 
-          <div style={{ opacity: ready ? 1 : 0, transition: "opacity 0.25s ease" }}>
-          <div className="relative w-full overflow-hidden" style={{ borderRadius: "12px 12px 0 0" }}>
+          <div style={{ opacity: ready ? 1 : 0, transition: "opacity 0.3s ease" }}>
+          <div className="relative w-full overflow-hidden" style={{ borderRadius: "12px 12px 0 0", height: "320px" }}>
             <video
               src={p.video}
               autoPlay muted loop playsInline
-              className="w-full object-cover"
-              style={{ maxHeight: "320px" }}
-              onCanPlay={() => setReady(true)}
+              className="w-full h-full object-cover"
+              onLoadedMetadata={() => setReady(true)}
             />
             <div
               className="absolute bottom-0 left-0 right-0 h-16"

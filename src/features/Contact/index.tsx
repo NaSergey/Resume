@@ -150,7 +150,7 @@ export function Contact() {
               className="contact-sub opacity-0 text-lg mb-16 max-w-xl"
               style={{ color: "var(--color-ink-dim)", lineHeight: 1.7 }}
             >
-              Открыт для интересных проектов, full-time позиций и коллабораций.
+              Открыт для интересных проектов, full-time позиций и фриланса.
               Обычно отвечаю в течение 24 часов.
             </p>
 

@@ -234,7 +234,7 @@ export function Projects() {
       {/* Pinned horizontal scroll — heading lives inside the pin */}
       <div ref={pinWrapRef} className="flex flex-col" style={{ height: "100vh" }}>
         {/* Heading — stationary inside pinned area */}
-        <div className="shrink-0 md:pt-24 pt-4 px-[clamp(20px,6vw,80px)] pb-[clamp(16px,2vh,28px)]">
+        <div className="shrink-0 pt-[clamp(20px,6vw,80px)] px-[clamp(20px,6vw,80px)] pb-[clamp(16px,2vh,28px)]">
           <div className="proj-tag mb-4 opacity-0">
             <SectionTag index="04" label="Projects" />
           </div>
