@@ -5,54 +5,9 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { SectionTag } from "@/shared/ui/SectionTag";
 import { FlickerText } from "@/shared/ui/FlickerText";
+import { SKILL_GROUPS, TECH_TAG_GROUPS } from "@/shared/data";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const SKILL_GROUPS = [
-  {
-    category: "React Stack",
-    color: "var(--color-cyan)",
-    rawColor: "#00d4ff",
-    skills: [
-      { name: "Next.js",                  level: 95 },
-      { name: "React",                    level: 90 },
-      { name: "Redux / RTK",              level: 90 },
-      { name: "React Hook Form / Zod",    level: 85 },
-      { name: "React Native",             level: 75 },
-    ],
-  },
-  {
-    category: "Animation",
-    color: "var(--color-purple)",
-    rawColor: "#9d4edd",
-    skills: [
-      { name: "Tailwind / Bootstrap",     level: 100 },
-      { name: "GSAP / Lenis",             level: 95 },
-      { name: "Framer-motion",            level: 90 },
-      { name: "Shadcn / Material UI",     level: 90 },
-      { name: "SCSS",                     level: 85 },
-    ],
-  },
-  {
-    category: "APIs",
-    color: "#00ff87",
-    rawColor: "#00ff87",
-    skills: [
-      { name: "REST API",                 level: 100 },
-      { name: "React Query",              level: 100 },
-      { name: "OpenAPI (Swagger)",        level: 90 },
-      { name: "GraphQL",                  level: 65 },
-      { name: "WebSockets",               level: 65 },
-    ],
-  },
-];
-
-const TECH_TAG_GROUPS = [
-  { color: "var(--color-cyan)",   rawColor: "#00d4ff", tags: ["TypeScript", "JS", "PHP"] },
-  { color: "var(--color-purple)", rawColor: "#9d4edd", tags: ["FSD", "Git/GitHub", "Docker"] },
-  { color: "#00ff87",             rawColor: "#00ff87", tags: ["@Wagmi", "Rainbow-me", "Viem"] },
-  { color: "#fff12d",             rawColor: "#fff12d", tags: ["Node.js", "Nest.js"] },
-];
 
 export function Skills() {
   const sectionRef  = useRef<HTMLElement>(null);

@@ -4,12 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { stopLenis, startLenis } from "@/shared/providers/LenisProvider";
 
-export type Project = {
-  id: string; num: string; title: string; category: string;
-  desc: string; stack: string[]; color: string; rawColor: string;
-  year: string; link: string;
-  images: string[]; video: string;
-};
+import { type Project } from "@/shared/data";
 
 interface Props {
   project: Project | null;

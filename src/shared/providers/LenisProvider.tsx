@@ -9,9 +9,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 let lenis: Lenis | null = null;
 
-export function refreshLenis() { lenis?.resize(); }
-export function stopLenis()    { lenis?.stop(); }
-export function startLenis()   { lenis?.start(); }
+export function refreshLenis()    { lenis?.resize(); }
+export function stopLenis()       { lenis?.stop(); }
+export function startLenis()      { lenis?.start(); }
+export function syncLenisTarget() { if (lenis) lenis.scrollTo(lenis.scroll, { immediate: true }); }
 
 export function scrollTo(target: string) {
   const el = document.querySelector(target);

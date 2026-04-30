@@ -1,7 +1,7 @@
 export function Footer() {
   return (
     <footer className="max-w-[1200px] mx-auto w-full px-5 md:px-8 py-12 flex flex-wrap justify-between items-center gap-5 text-xs font-mono text-site-muted ink-border-t">
-      <span>★ built by hand · last update 04.2026</span>
+      <span>★ Last update 04.2026</span>
       <div className="flex gap-[18px]">
         {[
           { label: "email", href: "mailto:wxtx.ns@gmail.com" },
