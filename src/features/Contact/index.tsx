@@ -5,6 +5,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { SectionTag } from "@/shared/ui/SectionTag";
 import { MagneticButton } from "@/shared/ui/MagneticButton";
+import { useLang } from "@/shared/providers/LangProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,16 +16,8 @@ const CONTACT_LINKS = [
   { label: "LinkedIn", value: "linkedin.com/in/ns", href: "#", icon: "⬡" },
 ];
 
-/**
- * Contact section.
- *
- * Animations:
- * - Heading: glitch text effect on scroll enter
- * - Contact rows: stagger in from bottom with spring
- * - CTA button: magnetic (inherited from MagneticButton)
- * - Background: animated gradient mesh
- */
 export function Contact() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const glitchIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -37,9 +30,13 @@ export function Contact() {
         toggleActions: "play none none none",
       };
 
-      gsap.fromTo(".contact-tag", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power2.out", scrollTrigger: trig });
+      gsap.fromTo(
+        ".contact-tag",
+        { x: -30, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.6, ease: "power2.out", scrollTrigger: trig }
+      );
 
-      // Glitch heading on enter
+      // Возвращаем триггер для глитча
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top 70%",
@@ -89,15 +86,24 @@ export function Contact() {
       );
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      if (glitchIntervalRef.current) clearInterval(glitchIntervalRef.current);
+    };
   }, []);
 
   function triggerGlitch() {
     const el = headingRef.current;
     if (!el) return;
 
+    // 1. Фиксируем высоту ДО старта перебора, чтобы блок не прыгал при переносе строк
+    const currentHeight = el.offsetHeight;
+    el.style.minHeight = `${currentHeight}px`;
+
     const original = el.textContent ?? "";
-    const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
+    
+    // 2. Убрали слишком широкие символы (W, M, @, %) для стабилизации ширины слов
+    const CHARS = "ABCDEFGHJKLNPQRSTUVXYZ0123456789#$&?";
     let iterations = 0;
 
     glitchIntervalRef.current = setInterval(() => {
@@ -111,9 +117,12 @@ export function Contact() {
         .join("");
 
       iterations += 1.5;
+      
       if (iterations >= original.length) {
         if (glitchIntervalRef.current) clearInterval(glitchIntervalRef.current);
         el.textContent = original;
+        // 3. Снимаем фиксацию высоты после завершения
+        el.style.minHeight = "";
       }
     }, 40);
   }
@@ -137,34 +146,31 @@ export function Contact() {
           </div>
 
           <div className="max-w-3xl">
-            {/* Heading with glitch */}
+            {/* Heading */}
             <h2
               ref={headingRef}
               className="font-bold mb-6 opacity-0"
               style={{ fontSize: "var(--text-h2)", color: "var(--color-ink)", lineHeight: 1.05 }}
             >
-              Готов к новым вызовам
+              {t.contact.heading}
             </h2>
 
             <p
               className="contact-sub opacity-0 text-lg mb-16 max-w-xl"
               style={{ color: "var(--color-ink-dim)", lineHeight: 1.7 }}
             >
-              Открыт для интересных проектов, full-time позиций и коллабораций.
-              Обычно отвечаю в течение 24 часов.
+              {t.contact.subtitle}
             </p>
 
-            {/* Contact links */}
             <div className="space-y-1 mb-16">
               {CONTACT_LINKS.map((link, i) => (
                 <ContactRow key={link.label} link={link} index={i} />
               ))}
             </div>
 
-            {/* CTA */}
             <div className="contact-cta opacity-0">
               <MagneticButton href="mailto:wxtx.ns@gmail.com" variant="primary" size="lg">
-                <span>Написать письмо</span>
+                <span>{t.contact.ctaLabel}</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
@@ -210,7 +216,6 @@ function ContactRow({ link, index }: { link: typeof CONTACT_LINKS[0]; index: num
       onMouseLeave={handleLeave}
       data-cursor-hover
     >
-      {/* Progress line on hover */}
       <div
         className="row-line absolute bottom-0 left-0 right-0 h-px origin-left"
         style={{

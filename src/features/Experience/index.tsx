@@ -4,94 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { SectionTag } from "@/shared/ui/SectionTag";
+import { syncLenisTarget } from "@/shared/providers/LenisProvider";
+import { JOBS, type Job } from "@/shared/data";
+import { useLang } from "@/shared/providers/LangProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const JOBS = [
-  {
-    id: "j1",
-    company: "Acme Digital",
-    role: "Senior Frontend Engineer",
-    period: "2022 — н.в.",
-    duration: "2 года",
-    type: "Full-time",
-    stack: ["React", "Next.js", "TypeScript", "GSAP"],
-    desc: "Архитектура дизайн-системы на 200+ компонентов. Оптимизация Core Web Vitals: LCP с 4.2s до 1.1s. Внедрение micro-frontend подхода для масштабирования команды.",
-    highlight: true,
-  },
-  {
-    id: "j2",
-    company: "Fintech Corp",
-    role: "Frontend Engineer",
-    period: "2020 — 2022",
-    duration: "2 года",
-    type: "Full-time",
-    stack: ["Vue.js", "TypeScript", "D3.js"],
-    desc: "Разработка финтех-дашборда с real-time данными. Реализация сложных D3 визуализаций. Ответственен за DX — storybook, тесты, CI/CD пайплайн.",
-    highlight: false,
-  },
-  {
-    id: "j3",
-    company: "Agency XYZ",
-    role: "Frontend Developer",
-    period: "2019 — 2020",
-    duration: "1 год",
-    type: "Full-time",
-    stack: ["React", "CSS", "GSAP"],
-    desc: "Разработка award-winning лендингов и промо-сайтов. Работа с международными брендами. Фокус на интерактивные анимации и нестандартные UI решения.",
-    highlight: false,
-  },
-  {
-    id: "j4",
-    company: "Crypto Startup",
-    role: "Frontend Developer",
-    period: "2021 — 2022",
-    duration: "8 мес",
-    type: "Contract",
-    stack: ["React", "Wagmi", "Viem", "Tailwind"],
-    desc: "Разработка Web3 интерфейса для DeFi протокола. Интеграция кошельков, real-time данные из блокчейна, кастомные анимации графиков.",
-    highlight: false,
-  },
-  {
-    id: "j5",
-    company: "Digital Studio",
-    role: "Frontend Developer",
-    period: "2018 — 2019",
-    duration: "1 год",
-    type: "Full-time",
-    stack: ["React", "Redux", "SCSS"],
-    desc: "Разработка корпоративных порталов и SaaS-продуктов. Участие в code review, написание unit-тестов, внедрение компонентного подхода.",
-    highlight: false,
-  },
-  {
-    id: "j6",
-    company: "Freelance",
-    role: "Frontend Developer",
-    period: "2017 — 2018",
-    duration: "1 год",
-    type: "Freelance",
-    stack: ["HTML", "CSS", "JavaScript", "PHP"],
-    desc: "Разработка лендингов, корпоративных сайтов и интернет-магазинов. Работа с различными CMS, верстка по макетам Figma/Photoshop.",
-    highlight: false,
-  },
-  {
-    id: "j7",
-    company: "IT Academy",
-    role: "Junior Developer",
-    period: "2016 — 2017",
-    duration: "1 год",
-    type: "Internship",
-    stack: ["HTML", "CSS", "JavaScript"],
-    desc: "Первые коммерческие проекты, изучение основ разработки. Верстка, базовая интерактивность, работа в команде.",
-    highlight: false,
-  },
-];
-
-const CARD_HEIGHT = 76; // px — высота одной карточки + gap
 
 export function Experience() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
-  const lineRef    = useRef<HTMLDivElement>(null);
+  const thumbRef   = useRef<HTMLDivElement>(null);
   const listRef    = useRef<HTMLDivElement>(null);
   const [activeId, setActiveId] = useState<string>("j1");
 
@@ -112,19 +35,6 @@ export function Experience() {
         { y: 0, opacity: 1, duration: 0.7, ease: "power2.out", scrollTrigger: trig }
       );
 
-      if (lineRef.current) {
-        gsap.fromTo(lineRef.current,
-          { scaleY: 0 },
-          { scaleY: 1, ease: "none",
-            scrollTrigger: { trigger: ".timeline-wrap", start: "top 70%", end: "bottom 60%", scrub: 0.5 } }
-        );
-      }
-
-      gsap.fromTo(".timeline-dot",
-        { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.4, stagger: 0.18, ease: "back.out(1.8)",
-          scrollTrigger: { ...trig, start: "top 70%" } }
-      );
 
       gsap.fromTo(".exp-card",
         { x: -20, opacity: 0 },
@@ -135,6 +45,45 @@ export function Experience() {
 
     return () => ctx.revert();
   }, []);
+
+  const updateThumb = () => {
+    const list  = listRef.current;
+    const thumb = thumbRef.current;
+    if (!list || !thumb) return;
+    const { scrollTop, scrollHeight, clientHeight } = list;
+    const thumbH = Math.max(40, (clientHeight / scrollHeight) * clientHeight);
+    const thumbY = (scrollTop / (scrollHeight - clientHeight || 1)) * (clientHeight - thumbH);
+    thumb.style.height = `${thumbH}px`;
+    thumb.style.top    = `${thumbY}px`;
+  };
+
+  useEffect(() => { updateThumb(); }, []);
+
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!list.contains(e.target as Node)) return;
+      const { scrollTop, scrollHeight, clientHeight } = list;
+      const canScroll = (e.deltaY > 0 && scrollTop + clientHeight < scrollHeight - 1)
+                     || (e.deltaY < 0 && scrollTop > 0);
+      if (canScroll) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        list.scrollBy({ top: e.deltaY, behavior: "instant" });
+      }
+    };
+    window.addEventListener("wheel", onWheel, { passive: false, capture: true });
+    return () => window.removeEventListener("wheel", onWheel, { capture: true });
+  }, []);
+
+  useEffect(() => {
+    const thumb = thumbRef.current;
+    if (!thumb) return;
+    const color = JOBS.find((j) => j.id === activeId)?.color ?? "var(--color-cyan)";
+    thumb.style.background = color;
+    thumb.style.boxShadow  = `0 0 8px ${color}`;
+  }, [activeId]);
 
   const activeJob = JOBS.find((j) => j.id === activeId)!;
 
@@ -150,65 +99,50 @@ export function Experience() {
             className="exp-heading opacity-0 font-bold"
             style={{ fontSize: "var(--text-h2)", color: "var(--color-ink)" }}
           >
-            Опыт работы
+            {t.experience.heading}
           </h2>
           <p className="font-mono text-sm" style={{ color: "var(--color-ink-faint)" }}>
-            6+ years · 3 companies
+            {t.experience.subtitle}
           </p>
         </div>
 
         <div className="timeline-wrap grid lg:grid-cols-[40px_1fr_380px] gap-0">
 
-          {/* Vertical line + dots */}
-          <div className="relative hidden lg:block">
+          {/* Scrollbar track + thumb */}
+          <div className="relative hidden lg:block" style={{ height: "480px" }}>
             <div
-              ref={lineRef}
-              className="timeline-line"
-              style={{ transformOrigin: "top center" }}
+              ref={thumbRef}
+              className="absolute rounded-full"
+              style={{
+                top: 0,
+                left: "calc(50% - 1.5px)",
+                width: "3px",
+                background: "var(--color-cyan)",
+                boxShadow: "0 0 8px var(--color-cyan)",
+                transition: "top 0.12s ease",
+              }}
             />
-            <div className="relative z-10 flex flex-col" style={{ gap: `${CARD_HEIGHT}px` }}>
-              {JOBS.map((job) => {
-                const isActive = job.id === activeId;
-                return (
-                  <div
-                    key={job.id}
-                    className="timeline-dot cursor-pointer"
-                    onClick={() => setActiveId(job.id)}
-                  >
-                    <div
-                      className="w-3 h-3 rounded-full absolute -left-1.25"
-                      style={{
-                        background: isActive ? "var(--color-cyan)" : "var(--color-ink-ghost)",
-                        border: `1px solid ${isActive ? "var(--color-cyan)" : "rgba(255,255,255,0.1)"}`,
-                        boxShadow: isActive ? "0 0 12px var(--color-cyan-glow)" : "none",
-                        transition: "all 0.3s ease",
-                      }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
           </div>
 
           {/* Scrollable card list */}
           <div
             ref={listRef}
-            data-lenis-prevent
             className="flex flex-col gap-3 overflow-y-auto [&::-webkit-scrollbar]:hidden"
             style={{ maxHeight: "480px", scrollbarWidth: "none" }}
+            onMouseEnter={syncLenisTarget}
+            onScroll={updateThumb}
           >
             {JOBS.map((job) => {
               const isActive = job.id === activeId;
               return (
                 <div
                   key={job.id}
-                  className="exp-card opacity-0 p-5 cursor-pointer clip-corner"
+                  className="exp-card opacity-0 p-5 clip-corner"
                   onClick={() => setActiveId(job.id)}
-                  data-cursor-hover
                   style={{
-                    border: `1px solid ${isActive ? "rgba(0,212,255,0.45)" : "var(--color-border)"}`,
-                    background: isActive ? "rgba(0,212,255,0.04)" : "var(--color-surface)",
-                    boxShadow: isActive ? "0 0 16px rgba(0,212,255,0.08)" : "none",
+                    border: `1px solid ${isActive ? `${job.color}70` : "var(--color-border)"}`,
+                    background: isActive ? `${job.color}08` : "var(--color-surface)",
+                    boxShadow: isActive ? `0 0 20px ${job.color}14` : "none",
                     transition: "border-color 0.2s, background 0.2s, box-shadow 0.2s",
                   }}
                 >
@@ -219,26 +153,30 @@ export function Experience() {
                           <span
                             className="font-mono text-[9px] tracking-widest uppercase px-2 py-0.5"
                             style={{
-                              color: "var(--color-cyan)",
-                              border: "1px solid rgba(0,212,255,0.3)",
+                              color: job.color,
+                              border: `1px solid ${job.color}50`,
                               borderRadius: "2px",
                             }}
                           >
-                            Current
+                            Latest
                           </span>
                         )}
                         <span
-                          className="font-sans font-semibold text-base"
-                          style={{ color: isActive ? "var(--color-ink)" : "var(--color-ink-dim)" }}
+                          className="font-mono font-semibold text-base"
+                          style={{
+                            color: isActive ? job.color : "var(--color-ink-dim)",
+                            textShadow: isActive ? `0 0 14px ${job.color}90` : "none",
+                            transition: "color 0.2s, text-shadow 0.2s",
+                          }}
                         >
-                          {job.role}
+                          {job.company}
                         </span>
                       </div>
                       <span
-                        className="font-mono text-[12px]"
-                        style={{ color: isActive ? "var(--color-cyan)" : "var(--color-ink-faint)" }}
+                        className="font-mono text-label"
+                        style={{ color: "var(--color-ink-faint)" }}
                       >
-                        {job.company}
+                        {job.role}
                       </span>
                     </div>
 
@@ -247,7 +185,7 @@ export function Experience() {
                         {job.period}
                       </div>
                       <div className="font-mono text-[10px]" style={{ color: "var(--color-ink-faint)" }}>
-                        {job.duration}
+                        {t.experience.durations[job.id as keyof typeof t.experience.durations] ?? job.duration}
                       </div>
                     </div>
                   </div>
@@ -266,38 +204,67 @@ export function Experience() {
   );
 }
 
-function DetailPanel({ job }: { job: typeof JOBS[0] }) {
+function DetailPanel({ job }: { job: Job }) {
+  const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
+  const [displayed, setDisplayed] = useState(job);
 
+  // Initial mount
   useEffect(() => {
     if (!ref.current) return;
     gsap.fromTo(ref.current,
-      { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }
+      { x: 80, opacity: 0, rotation: 4 },
+      { x: 0, opacity: 1, rotation: 0, duration: 0.5, ease: "power3.out" }
     );
+  }, []);
+
+  useEffect(() => {
+    if (job.id === displayed.id) return;
+    const el = ref.current;
+    if (!el) return;
+
+    gsap.killTweensOf(el);
+
+    // Throw out to the right
+    gsap.to(el, {
+      x: 220,
+      opacity: 0,
+      rotation: 12,
+      scale: 0.9,
+      duration: 0.25,
+      ease: "power3.in",
+      onComplete: () => {
+        setDisplayed(job);
+        // Fly in from the right
+        gsap.fromTo(el,
+          { x: 160, opacity: 0, rotation: -8, scale: 0.95 },
+          { x: 0, opacity: 1, rotation: 0, scale: 1, duration: 0.38, ease: "power3.out" }
+        );
+      },
+    });
   }, [job.id]);
 
   return (
     <div
       ref={ref}
       className="glass-hi clip-corner p-6 sticky top-24"
-      style={{ borderColor: "rgba(0,212,255,0.2)" }}
+      style={{ borderColor: `${displayed.color}35`, transition: "border-color 0.3s ease" }}
     >
       <div className="mb-6">
-        <p className="font-mono text-[10px] tracking-widest uppercase mb-2" style={{ color: "var(--color-ink-faint)" }}>
+        <p className="font-mono text-[10px] tracking-widest uppercase mb-2" style={{ color: displayed.color }}>
           Currently viewing
         </p>
-        <h3 className="font-bold text-lg mb-1" style={{ color: "var(--color-cyan)" }}>
-          {job.company}
+        <h3 className="font-bold text-lg mb-1" style={{ color: displayed.color, textShadow: `0 0 16px ${displayed.color}60` }}>
+          {displayed.company}
         </h3>
-        <p className="text-sm" style={{ color: "var(--color-ink-dim)" }}>{job.role}</p>
+        <p className="text-sm" style={{ color: "var(--color-ink-dim)" }}>{displayed.role}</p>
       </div>
 
       <div className="space-y-3 mb-6">
         {[
-          { label: "Period",   value: job.period },
-          { label: "Duration", value: job.duration },
-          { label: "Type",     value: job.type },
+          { label: "Period",   value: displayed.period },
+          { label: "Duration", value: displayed.duration },
+          { label: "Type",     value: displayed.type },
         ].map((row) => (
           <div key={row.label} className="flex justify-between">
             <span className="font-mono text-label" style={{ color: "var(--color-ink-faint)" }}>{row.label}</span>
@@ -309,19 +276,19 @@ function DetailPanel({ job }: { job: typeof JOBS[0] }) {
       <div className="h-px w-full mb-6" style={{ background: "var(--color-border)" }} />
 
       <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--color-ink-dim)" }}>
-        {job.desc}
+        {t.experience.jobs[displayed.id as keyof typeof t.experience.jobs] ?? displayed.desc}
       </p>
 
       <div className="flex flex-wrap gap-2">
-        {job.stack.map((s) => (
+        {displayed.stack.map((s) => (
           <span
             key={s}
             className="font-mono text-[10px] tracking-wider px-2 py-1"
             style={{
-              color: "var(--color-cyan)",
-              border: "1px solid rgba(0,212,255,0.2)",
+              color: displayed.color,
+              border: `1px solid ${displayed.color}40`,
               borderRadius: "2px",
-              background: "rgba(0,212,255,0.04)",
+              background: `${displayed.color}08`,
             }}
           >
             {s}

@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { LenisProvider } from "@/shared/providers/LenisProvider";
+import { LangProvider } from "@/shared/providers/LangProvider";
 import { CustomCursor } from "@/widgets/CustomCursor";
+import { LOCALE_COOKIE } from "@/shared/config/i18n";
+import type { Locale } from "@/shared/config/translations";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space",
@@ -19,27 +23,33 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Наумов Сергей — Frontend Engineer",
   description:
-    "Senior Frontend Engineer специализирующийся на React, Next.js, TypeScript. 6+ лет опыта построения production-grade интерфейсов.",
+    "Middle Frontend Engineer специализирующийся на React, Next.js, TypeScript. 6+ лет опыта построения production-grade интерфейсов.",
   keywords: ["Frontend Engineer", "React", "Next.js", "TypeScript", "Наумов Сергей"],
   authors: [{ name: "Наумов Сергей" }],
   openGraph: {
     title: "Наумов Сергей — Frontend Engineer",
-    description: "Senior Frontend Engineer. React · Next.js · TypeScript · 6+ лет опыта",
+    description: "Middle Frontend Engineer. React · Next.js · TypeScript · 6+ лет опыта",
     type: "website",
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const raw = cookieStore.get(LOCALE_COOKIE)?.value;
+  const initialLang: Locale = raw === "en" || raw === "ru" ? raw : "ru";
+
   return (
     <html
-      lang="ru"
+      lang={initialLang}
       className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
       <body>
-        <LenisProvider>
-          <CustomCursor />
-          {children}
-        </LenisProvider>
+        <LangProvider initialLang={initialLang}>
+          <LenisProvider>
+            <CustomCursor />
+            {children}
+          </LenisProvider>
+        </LangProvider>
       </body>
     </html>
   );

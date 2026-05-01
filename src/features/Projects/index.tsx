@@ -5,67 +5,9 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { SectionTag } from "@/shared/ui/SectionTag";
 import { MagneticButton } from "@/shared/ui/MagneticButton";
-import { ProjectModal, type Project } from "./ProjectModal";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const PROJECTS: Project[] = [
-  {
-    id: "p1", num: "001", title: "AI Dashboard", category: "SaaS · Web App",
-    desc: "Дашборд реального времени для мониторинга ML-моделей. Сложные D3 визуализации, WebSocket стриминг, dark-mode first.",
-    stack: ["Next.js", "TypeScript", "D3.js", "WebSocket"],
-    color: "var(--color-cyan)", rawColor: "#00d4ff", year: "2024", link: "#",
-    images: [
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-    ],
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: "p2", num: "002", title: "DeFi Protocol UI", category: "Web3 · Finance",
-    desc: "Интерфейс для DeFi протокола с кастомными анимациями, wallet интеграцией и real-time данными из блокчейна.",
-    stack: ["React", "Wagmi", "GSAP", "TailwindCSS"],
-    color: "var(--color-purple)", rawColor: "#9d4edd", year: "2023", link: "#",
-    images: [
-      "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&q=80",
-      "https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=800&q=80",
-    ],
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: "p3", num: "003", title: "Motion Brand Site", category: "Creative · Agency",
-    desc: "Award-winning сайт бренда с горизонтальным скроллом, параллаксом и WebGL частицами. Awwwards honorable mention.",
-    stack: ["Next.js", "GSAP", "Three.js", "CSS"],
-    color: "#00ff87", rawColor: "#00ff87", year: "2023", link: "#",
-    images: [
-      "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80",
-      "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80",
-    ],
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: "p4", num: "004", title: "E-Commerce Platform", category: "E-Commerce · SaaS",
-    desc: "Полноценная e-commerce платформа с micro-frontend архитектурой, персонализацией и A/B тестированием.",
-    stack: ["Next.js", "TypeScript", "GraphQL", "Redis"],
-    color: "var(--color-pink)", rawColor: "#ff2d78", year: "2022", link: "#",
-    images: [
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
-      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80",
-    ],
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: "p5", num: "005", title: "Design System", category: "UI · Tooling",
-    desc: "Компонентная библиотека с токенами дизайна, storybook-документацией и автоматической генерацией кода.",
-    stack: ["React", "Storybook", "CSS Modules", "Figma API"],
-    color: "var(--color-pink)", rawColor: "#fff12d", year: "2022", link: "#",
-    images: [
-      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
-      "https://images.unsplash.com/photo-1545235617-9465d2a55698?w=800&q=80",
-    ],
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-];
+import { ProjectModal } from "./ProjectModal";
+import { PROJECTS, type Project } from "@/shared/data";
+import { useLang } from "@/shared/providers/LangProvider";
 
 /**
  * Projects — deep animation system.
@@ -85,6 +27,7 @@ const PROJECTS: Project[] = [
  * - Number scramble/glitch effect via IntersectionObserver
  */
 export function Projects() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const pinWrapRef = useRef<HTMLDivElement>(null);
   const trackRef   = useRef<HTMLDivElement>(null);
@@ -176,14 +119,12 @@ export function Projects() {
           duration:  0.9,
           stagger:   0.1,
           ease:      "expo.out",
-          scrollTrigger: { ...trig, start: "top 70%" },
+          scrollTrigger: { ...trig, start: "top 70%", once: true },
           onComplete() {
             gsap.set(".proj-card", { clearProps: "clipPath" });
           },
         }
       );
-
-      ScrollTrigger.refresh();
 
       return () => {
         hST.kill();
@@ -293,7 +234,7 @@ export function Projects() {
       {/* Pinned horizontal scroll — heading lives inside the pin */}
       <div ref={pinWrapRef} className="flex flex-col" style={{ height: "100vh" }}>
         {/* Heading — stationary inside pinned area */}
-        <div className="shrink-0 pt-4 px-[clamp(20px,6vw,80px)] pb-[clamp(16px,2vh,28px)]">
+        <div className="shrink-0 pt-[clamp(20px,6vw,80px)] px-[clamp(20px,6vw,80px)] pb-[clamp(16px,2vh,28px)]">
           <div className="proj-tag mb-4 opacity-0">
             <SectionTag index="04" label="Projects" />
           </div>
@@ -303,7 +244,7 @@ export function Projects() {
               className="proj-heading opacity-0 font-bold"
               style={{ fontSize: "var(--text-h2)", color: "var(--color-ink)" }}
             >
-              Избранные проекты
+              {t.projects.heading}
             </h2>
             <MagneticButton href="https://github.com/NaSergey" variant="outline" size="sm">
               GitHub →
@@ -313,7 +254,7 @@ export function Projects() {
 
         <div
           ref={trackRef}
-          className="flex items-center shrink-0 px-[clamp(20px,6vw,80px)] gap-6 py-4 h-[clamp(360px,52vh,500px)]"
+          className="flex items-center shrink-0 px-[clamp(20px,6vw,80px)] gap-6 py-4 h-[clamp(420px,60vh,580px)]"
         >
           {PROJECTS.map((project) => (
             <div
@@ -331,7 +272,7 @@ export function Projects() {
               >
                 {/* glass backdrop — separate element so backdrop-filter doesn't break preserve-3d */}
                 <div
-                  className="noise absolute inset-0 pointer-events-none"
+                  className="noise absolute inset-0 pointer-events-none z-10"
                   style={{
                     borderRadius: "4px",
                     background: "rgba(18, 18, 42, 0.96)",
@@ -365,7 +306,7 @@ export function Projects() {
                       {project.num}
                     </span>
                     <span className="font-mono text-label" style={{ color: "var(--color-ink-faint)" }}>
-                      {project.year}
+                      {project.year === "Будет позже" ? t.projects.comingSoon : project.year}
                     </span>
                   </div>
                 </div>
@@ -387,9 +328,9 @@ export function Projects() {
                 </div>
 
                 {/* FRONT layer — desc + stack + link */}
-                <div className="layer-front relative z-10">
+                <div className="layer-front relative z-10 flex flex-col">
                   <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--color-ink-dim)" }}>
-                    {project.desc}
+                    {t.projects.descs[project.id as keyof typeof t.projects.descs] ?? project.desc}
                   </p>
 
                   <div className="flex flex-wrap gap-2 mb-6">
@@ -411,7 +352,7 @@ export function Projects() {
 
                   <a
                     href={project.link}
-                    className="inline-flex items-center gap-2 font-mono text-[12px] tracking-wider uppercase"
+                    className="inline-flex items-center gap-2 font-mono text-[12px] tracking-wider uppercase mt-auto"
                     style={{ color: project.rawColor }}
                     data-cursor-hover
                     onMouseEnter={(e) => {
@@ -421,14 +362,14 @@ export function Projects() {
                       gsap.to(e.currentTarget.querySelector(".arrow"), { x: 0, duration: 0.5, ease: "elastic.out(1.5, 0.4)" });
                     }}
                   >
-                    <span>View project</span>
+                    <span>{t.projects.viewProject}</span>
                     <span className="arrow" style={{ display: "inline-block" }}>→</span>
                   </a>
                 </div>
 
                 {/* Bottom accent */}
                 <div
-                  className="absolute bottom-0 left-0 right-0 h-px"
+                  className="absolute bottom-0 left-0 right-0 h-px z-20"
                   style={{ background: `linear-gradient(90deg, transparent, ${project.rawColor}60, transparent)` }}
                 />
                 </div>{/* end content wrapper */}

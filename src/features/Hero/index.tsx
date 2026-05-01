@@ -5,6 +5,8 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { GridBackground } from "./GridBackground";
 import { MagneticButton } from "@/shared/ui/MagneticButton";
+import { SlashIcon } from "@/shared/ui/SlashIcon";
+import { useLang } from "@/shared/providers/LangProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,6 +35,7 @@ gsap.registerPlugin(ScrollTrigger);
  * - On first scroll, chars get a brief skewX jolt proportional to velocity
  */
 export function Hero() {
+  const { t } = useLang();
   const wrapRef    = useRef<HTMLElement>(null);
   const charsRef   = useRef<HTMLElement[]>([]);
   const labelRef   = useRef<HTMLDivElement>(null);
@@ -363,7 +366,7 @@ export function Hero() {
             className="w-1.5 h-1.5 rounded-full dot-breathe flex-shrink-0"
             style={{ background: "var(--color-cyan)" }}
           />
-          <span className="flicker">SYS://PORTFOLIO_v2.0</span>
+          <span className="flicker inline-flex items-center">SYS:<SlashIcon width={16} height={11} />PORTFOLIO_v2.0</span>
           <span style={{ color: "var(--color-ink-faint)" }}>■</span>
           <span style={{ color: "var(--color-ink-faint)" }}>INITIALIZING</span>
           <span className="blink" style={{ color: "var(--color-cyan)" }}>_</span>
@@ -379,7 +382,7 @@ export function Hero() {
             style={{ fontSize: "var(--text-hero)", color: "var(--color-ink)" }}
           >
             <span className="block">
-              {"НАУМОВ".split("").map((c, i) => (
+              {t.hero.name.line1.split("").map((c, i) => (
                 <span
                   key={`n-${i}`}
                   className="hero-char split-char"
@@ -391,7 +394,7 @@ export function Hero() {
             </span>
 
             <span className="block">
-              {"СЕРГЕ".split("").map((c, i) => (
+              {t.hero.name.line2main.split("").map((c, i) => (
                 <span
                   key={`s-${i}`}
                   className="hero-char split-char"
@@ -400,7 +403,7 @@ export function Hero() {
                   {c}
                 </span>
               ))}
-              {"Й".split("").map((c, i) => (
+              {t.hero.name.line2end.split("").map((c, i) => (
                 <span
                   key={`y-${i}`}
                   className="hero-char split-char"
@@ -447,12 +450,12 @@ export function Hero() {
         {/* Meta strip */}
         <div ref={metaRef} className="flex flex-wrap gap-x-8 gap-y-4 mb-12">
           {[
-            { label: "Опыт",     value: "6+",   unit: "лет" },
-            { label: "Проектов", value: "40+",  unit: "запущено" },
-            { label: "Локация",  value: "СПб",  unit: "/ Remote" },
-            { label: "Статус",   value: "Open", unit: "to offers" },
+            { id: "exp",    label: t.hero.metaLabels.experience, value: "4+",   unit: t.hero.metaUnits.experience },
+            { id: "proj",   label: t.hero.metaLabels.projects,   value: "8+",   unit: "" },
+            { id: "status", label: t.hero.metaLabels.status,     value: "Open", unit: t.hero.metaUnits.status },
+            { id: "loc",    label: t.hero.metaLabels.location,   value: "СПб",  unit: t.hero.metaUnits.location },
           ].map((m) => (
-            <div key={m.label} className="flex flex-col gap-1" style={{ opacity: 0 }}>
+            <div key={m.id} className="flex flex-col gap-1" style={{ opacity: 0 }}>
               <span
                 className="font-mono text-[10px] tracking-[0.2em] uppercase"
                 style={{ color: "var(--color-ink-faint)" }}
@@ -480,7 +483,7 @@ export function Hero() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-            Посмотреть работы
+            {t.hero.cta}
           </MagneticButton>
         </div>
       </div>
