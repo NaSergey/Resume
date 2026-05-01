@@ -5,21 +5,22 @@ import Image from "next/image";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { SectionTag } from "@/shared/ui/SectionTag";
+import { useLang } from "@/shared/providers/LangProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STATS = [
-  { value: 4, suffix: "+", label: "Лет опыта" },
-  { value: 8, suffix: "+", label: "Проектов" },
-  { value: 6, suffix: "+", label: "Работодателей" },
-  { value: 25, suffix: "+", label: "Технологий" },
+const STAT_VALUES = [
+  { value: 4,  suffix: "+" },
+  { value: 8,  suffix: "+" },
+  { value: 6,  suffix: "+" },
+  { value: 25, suffix: "+" },
 ];
 
 const TRAITS = [
   "Performance-first thinking",
   "Design-system architecture",
   "Complex animation engineering",
-  "Cross-functional collaboration",
+  "Web3 / Blockchain",
 ];
 
 /**
@@ -33,6 +34,7 @@ const TRAITS = [
  * - Portrait frame draws in via SVG stroke animation
  */
 export function About() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const tagRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -181,9 +183,9 @@ export function About() {
               className="font-sans font-bold mb-8 leading-[1.05]"
               style={{ fontSize: "var(--text-h2)", color: "var(--color-ink)" }}
             >
-              {["Я строю", "интерфейсы,", "которые", "ощущаются."].map((word) => (
+              {t.about.heading.map((word, i) => (
                 <span
-                  key={word}
+                  key={i}
                   className="about-word inline-block mr-[0.25em]"
                   style={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
                 >
@@ -197,27 +199,31 @@ export function About() {
               className="space-y-5 max-w-xl"
               style={{ color: "var(--color-ink-dim)", lineHeight: 1.75, fontSize: "15px" }}
             >
-              <p>
-                4+ лет я занимаюсь frontend-разработкой — от стартапов на начальном этапе до
-                enterprise-систем с миллионной аудиторией. Специализируюсь на React-экосистеме,
-                сложных анимациях и архитектуре дизайн-систем.
-              </p>
-              <p>
-                Для меня код — это не просто инструмент. Я думаю как motion designer и системный
-                архитектор одновременно: каждое взаимодействие должно быть осмысленным,
-                каждый пиксель — намеренным.
-              </p>
-              <p>
-                Open to interesting projects and full-time positions.
-              </p>
+              {t.about.body.map((text, i) => <p key={i}>{text}</p>)}
+            </div>
+
+            {/* Days in dev */}
+            <div
+              className="mt-8 inline-flex items-center gap-3 px-4 py-2"
+              style={{ border: "1px solid rgba(0,212,255,0.12)", borderRadius: "var(--radius-sm)", background: "rgba(0,212,255,0.03)" }}
+            >
+              <span className="font-sans font-bold text-xl leading-none" style={{ color: "var(--color-cyan)" }}>
+                {Math.floor((Date.now() - new Date("2022-03-01").getTime()) / 86400000)}
+              </span>
+              <span className="font-mono text-label tracking-wider" style={{ color: "var(--color-ink-faint)" }}>
+                {t.about.daysLabel}
+              </span>
+              <span className="font-mono text-label" style={{ color: "var(--color-ink-faint)", opacity: 0.5 }}>
+                · {t.about.since} 2022
+              </span>
             </div>
 
             {/* Trait tags */}
-            <div ref={traitsRef} className="flex flex-wrap gap-2 mt-8">
+            <div ref={traitsRef} className="flex flex-wrap gap-2 mt-6">
               {TRAITS.map((t) => (
                 <span
                   key={t}
-                  className="font-mono text-[11px] tracking-wider uppercase px-3 py-1.5"
+                  className="font-mono text-label tracking-wider uppercase px-3 py-1.5"
                   style={{
                     color: "var(--color-cyan)",
                     border: "1px solid rgba(0,212,255,0.2)",
@@ -266,9 +272,9 @@ export function About() {
 
             {/* Stats grid */}
             <div ref={statsRef} className="grid grid-cols-2 gap-3">
-              {STATS.map((s) => (
+              {STAT_VALUES.map((s, i) => (
                 <div
-                  key={s.label}
+                  key={i}
                   className="stat-item opacity-0 p-4 glass-hi clip-corner-sm"
                   data-value={s.value}
                 >
@@ -283,7 +289,7 @@ export function About() {
                     className="font-mono text-[10px] tracking-widest uppercase"
                     style={{ color: "var(--color-ink-faint)" }}
                   >
-                    {s.label}
+                    {t.about.stats[i]}
                   </div>
                 </div>
               ))}

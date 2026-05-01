@@ -6,10 +6,12 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import { SectionTag } from "@/shared/ui/SectionTag";
 import { FlickerText } from "@/shared/ui/FlickerText";
 import { SKILL_GROUPS, TECH_TAG_GROUPS } from "@/shared/data";
+import { useLang } from "@/shared/providers/LangProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function Skills() {
+  const { t } = useLang();
   const sectionRef  = useRef<HTMLElement>(null);
   const pinWrapRef  = useRef<HTMLDivElement>(null);
 
@@ -171,7 +173,7 @@ export function Skills() {
           className="skills-heading opacity-0 font-bold mb-10"
           style={{ fontSize: "var(--text-h2)", color: "var(--color-ink)" }}
         >
-          Технический стек
+          {t.skills.heading}
         </h2>
 
         {/* Skill groups */}
@@ -250,7 +252,7 @@ export function Skills() {
         {/* Tech tag cloud */}
         <div>
           <FlickerText className="font-mono text-xs tracking-[0.2em] uppercase mb-6">
-            I also work with
+            {t.skills.alsoWorks}
           </FlickerText>
           <div className="tech-cloud flex flex-wrap gap-2">
             {TECH_TAG_GROUPS.map((group) => (

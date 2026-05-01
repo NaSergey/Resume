@@ -120,9 +120,6 @@ export function Projects() {
           stagger:   0.1,
           ease:      "expo.out",
           scrollTrigger: { ...trig, start: "top 70%", once: true },
-          onComplete() {
-            gsap.set(".proj-card", { clearProps: "clipPath" });
-          },
         }
       );
 

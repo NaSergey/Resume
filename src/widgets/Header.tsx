@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { cn } from "@/shared/lib/utils";
 import { scrollTo } from "@/shared/providers/LenisProvider";
-import { LOCALE_COOKIE, locales, defaultLocale, type Locale } from "@/shared/config/i18n";
-import { SlashIcon } from "@/shared/ui/SlashIcon";
+import { useLang } from "@/shared/providers/LangProvider";
+import { locales } from "@/shared/config/i18n";
+import { AnimatedSlashIcon } from "@/shared/ui/AnimatedSlashIcon";
 
-const navLinks = [
-  { href: "#about",      label: "Обо мне",   n: "01" },
-  { href: "#skills",     label: "Стек",      n: "02" },
-  { href: "#experience", label: "Опыт",      n: "03" },
-  { href: "#projects",   label: "Проекты",   n: "04" },
-];
+const navHrefs = [
+  { href: "#about",      key: "about",      n: "01" },
+  { href: "#skills",     key: "skills",     n: "02" },
+  { href: "#experience", key: "experience", n: "03" },
+  { href: "#projects",   key: "projects",   n: "04" },
+] as const;
 
 function TelegramIcon() {
   return (
@@ -23,20 +23,11 @@ function TelegramIcon() {
 }
 
 function LangSwitcher() {
-  const [lang, setLangState] = useState<Locale>(defaultLocale);
-  const router = useRouter();
-
-  useEffect(() => {
-    const match = document.cookie.match(new RegExp(`(?:^|; )${LOCALE_COOKIE}=([^;]*)`));
-    const found = match?.[1];
-    if (found && locales.includes(found as Locale)) setLangState(found as Locale);
-  }, []);
+  const { lang, setLang } = useLang();
 
   const cycle = () => {
     const next = locales[(locales.indexOf(lang) + 1) % locales.length];
-    document.cookie = `${LOCALE_COOKIE}=${next}; path=/; SameSite=Lax`;
-    setLangState(next);
-    router.refresh();
+    setLang(next);
   };
 
   return (
@@ -51,6 +42,7 @@ function LangSwitcher() {
 }
 
 function Nav() {
+  const { t, lang } = useLang();
   const [active, setActive] = useState("");
   const [scrolled, setScrolled] = useState(false);
   const ulRef = useRef<HTMLUListElement>(null);
@@ -58,7 +50,7 @@ function Nav() {
   const [pill, setPill] = useState({ x: 0, y: 0, w: 0, h: 0, opacity: 0 });
 
   useEffect(() => {
-    const idx = navLinks.findIndex((l) => l.href === active);
+    const idx = navHrefs.findIndex((l) => l.href === active);
     if (idx === -1 || !ulRef.current || !liRefs.current[idx]) {
       setPill((s) => ({ ...s, opacity: 0 }));
       return;
@@ -68,20 +60,23 @@ function Nav() {
     const aRect = a.getBoundingClientRect();
     const ulRect = ulRef.current.getBoundingClientRect();
     setPill({ x: aRect.left - ulRect.left, y: aRect.top - ulRect.top, w: aRect.width, h: aRect.height, opacity: 1 });
-  }, [active]);
+  }, [active, lang]);
 
   useEffect(() => {
-    const sections = navLinks.map((l) => document.querySelector(l.href));
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive("#" + e.target.id);
-        });
-      },
-      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
-    );
-    sections.forEach((s) => s && io.observe(s));
-    return () => io.disconnect();
+    const threshold = window.innerHeight * 0.35;
+
+    const update = () => {
+      const hit = [...navHrefs].reverse().find((l) => {
+        const el = document.querySelector(l.href);
+        if (!el) return false;
+        return el.getBoundingClientRect().top <= threshold;
+      });
+      setActive(hit ? hit.href : "");
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
 
   useEffect(() => {
@@ -110,12 +105,11 @@ function Nav() {
           onClick={(e) => handleNav(e, "#hero")}
           className="font-semibold text-[17px] tracking-[-0.015em] flex items-center gap-2 transition-all duration-200 hover:text-cyan group"
         >
-          <SlashIcon className="opacity-50 group-hover:opacity-100 transition-opacity duration-200" />
-          Наумов С.
+          <AnimatedSlashIcon className="opacity-50 group-hover:opacity-100 transition-opacity duration-200" />
+          {t.logo}
         </a>
 
         <ul ref={ulRef} className="hidden md:flex gap-0.5 items-center list-none relative">
-          {/* Sliding pill indicator */}
           <span
             aria-hidden
             className="absolute rounded-full pointer-events-none bg-[rgba(0,212,255,0.08)] border border-[rgba(0,212,255,0.22)] shadow-[0_0_14px_rgba(0,212,255,0.1)]"
@@ -130,7 +124,7 @@ function Nav() {
             }}
           />
 
-          {navLinks.map((l, i) => {
+          {navHrefs.map((l, i) => {
             const isActive = active === l.href;
             return (
               <li key={l.href} ref={(el) => { liRefs.current[i] = el; }}>
@@ -147,7 +141,7 @@ function Nav() {
                   <span className={cn("font-mono text-label", isActive ? "text-cyan/70" : "text-ink-faint")}>
                     {l.n}
                   </span>
-                  {l.label}
+                  {t.nav[l.key]}
                 </a>
               </li>
             );
@@ -168,7 +162,6 @@ function Nav() {
         </div>
       </div>
       <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
-
     </nav>
   );
 }

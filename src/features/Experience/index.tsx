@@ -6,11 +6,13 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import { SectionTag } from "@/shared/ui/SectionTag";
 import { syncLenisTarget } from "@/shared/providers/LenisProvider";
 import { JOBS, type Job } from "@/shared/data";
+import { useLang } from "@/shared/providers/LangProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
 
 export function Experience() {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const thumbRef   = useRef<HTMLDivElement>(null);
   const listRef    = useRef<HTMLDivElement>(null);
@@ -97,10 +99,10 @@ export function Experience() {
             className="exp-heading opacity-0 font-bold"
             style={{ fontSize: "var(--text-h2)", color: "var(--color-ink)" }}
           >
-            Опыт работы
+            {t.experience.heading}
           </h2>
           <p className="font-mono text-sm" style={{ color: "var(--color-ink-faint)" }}>
-            4 лет · 2 company · 3 freelance 
+            {t.experience.subtitle}
           </p>
         </div>
 
@@ -183,7 +185,7 @@ export function Experience() {
                         {job.period}
                       </div>
                       <div className="font-mono text-[10px]" style={{ color: "var(--color-ink-faint)" }}>
-                        {job.duration}
+                        {t.experience.durations[job.id as keyof typeof t.experience.durations] ?? job.duration}
                       </div>
                     </div>
                   </div>
@@ -203,6 +205,7 @@ export function Experience() {
 }
 
 function DetailPanel({ job }: { job: Job }) {
+  const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const [displayed, setDisplayed] = useState(job);
 
@@ -273,7 +276,7 @@ function DetailPanel({ job }: { job: Job }) {
       <div className="h-px w-full mb-6" style={{ background: "var(--color-border)" }} />
 
       <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--color-ink-dim)" }}>
-        {displayed.desc}
+        {t.experience.jobs[displayed.id as keyof typeof t.experience.jobs] ?? displayed.desc}
       </p>
 
       <div className="flex flex-wrap gap-2">

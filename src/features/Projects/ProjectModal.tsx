@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { stopLenis, startLenis } from "@/shared/providers/LenisProvider";
 
 import { type Project } from "@/shared/data";
+import { useLang } from "@/shared/providers/LangProvider";
 
 interface Props {
   project: Project | null;
@@ -16,6 +17,7 @@ export function ProjectModal({ project, onClose }: Props) {
   if (project) last.current = project;
   const p = last.current;
 
+  const { t } = useLang();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -100,7 +102,7 @@ export function ProjectModal({ project, onClose }: Props) {
             <div className="flex items-start justify-between gap-4 mb-3">
               <div>
                 <p className="font-mono text-label tracking-widest uppercase mb-1" style={{ color: "var(--color-ink-faint)" }}>
-                  {p.category} · {p.year}
+                  {p.category} · {p.year === "Будет позже" ? t.projects.comingSoon : p.year}
                 </p>
                 <h2 className="font-bold" style={{ fontSize: "var(--text-h3)", color: "var(--color-ink)" }}>
                   {p.title}
