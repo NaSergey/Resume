@@ -359,7 +359,7 @@ export function Hero() {
         {/* System label */}
         <div
           ref={labelRef}
-          className="opacity-0 mb-8 inline-flex items-center gap-3 font-mono text-[11px] uppercase"
+          className="opacity-0 mb-8 inline-flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase"
           style={{ color: "var(--color-cyan)", letterSpacing: "0.25em" }}
         >
           <span
@@ -368,6 +368,7 @@ export function Hero() {
           />
           <span className="flicker inline-flex items-center">SYS:<SlashIcon width={16} height={11} />PORTFOLIO_v2.0</span>
           <span style={{ color: "var(--color-ink-faint)" }}>■</span>
+          <span className="basis-full sm:hidden" />
           <span style={{ color: "var(--color-ink-faint)" }}>INITIALIZING</span>
           <span className="blink" style={{ color: "var(--color-cyan)" }}>_</span>
         </div>

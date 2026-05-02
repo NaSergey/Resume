@@ -229,7 +229,7 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" ref={sectionRef} className="bg-bg">
+    <section id="projects" ref={sectionRef} className="bg-bg isolate">
       {/* Pinned horizontal scroll — heading lives inside the pin */}
       <div ref={pinWrapRef} className="flex flex-col md:h-[calc(100vh-65px)]">
         {/* Heading — stationary inside pinned area */}
@@ -267,7 +267,7 @@ export function Projects() {
               {/* glass-hi (backdrop-filter) lives on the outer shell; preserve-3d on the inner — they must not share an element */}
               <div
                 className="card-inner h-full relative"
-                style={{ transformStyle: "preserve-3d", borderRadius: "4px" }}
+                style={{ borderRadius: "4px" }}
               >
                 {/* glass backdrop — separate element so backdrop-filter doesn't break preserve-3d */}
                 <div

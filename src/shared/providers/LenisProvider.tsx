@@ -46,17 +46,20 @@ export function navigateTo(target: string) {
         const goingBackward  = elTop < currentScroll;
 
         if (goingBackward) {
-          // Find the scrubbed pin inside this section and jump to its end
-          // so the scrub animation is at 100% (bars filled, etc.)
           const st = ScrollTrigger.getAll().find(
             (s) => s.vars.scrub && s.pin && (el as HTMLElement).contains(s.trigger as Element | null)
           );
           lenis!.scrollTo(st ? st.end - 1 : (el as HTMLElement), { immediate: true, offset: st ? 0 : -65 });
+          ScrollTrigger.refresh();
+          if (st?.animation) {
+            // Reset silently then seek to end — guarantees onUpdate fires even if already at 1
+            st.animation.progress(0, true);
+            st.animation.progress(1);
+          }
         } else {
           lenis!.scrollTo(el as HTMLElement, { immediate: true, offset: -65 });
+          ScrollTrigger.refresh();
         }
-
-        ScrollTrigger.refresh();
 
         gsap.to(overlayEl!, {
           opacity: 0,
