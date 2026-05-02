@@ -1,13 +1,14 @@
 "use client";
 
 import Lenis from "@studio-freight/lenis";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 let lenis: Lenis | null = null;
+let overlayEl: HTMLDivElement | null = null;
 
 export function refreshLenis()    { lenis?.resize(); }
 export function stopLenis()       { lenis?.stop(); }
@@ -17,30 +18,72 @@ export function syncLenisTarget() { if (lenis) lenis.scrollTo(lenis.scroll, { im
 export function scrollTo(target: string) {
   const el = document.querySelector(target);
   if (el && lenis) {
-    lenis.scrollTo(el as HTMLElement, { offset: -88 });
+    lenis.scrollTo(el as HTMLElement, { offset: -65 });
   }
 }
 
+export function navigateTo(target: string) {
+  const el = document.querySelector(target);
+  if (!el || !lenis) return;
+
+  if (!lenis || !overlayEl) {
+    const top = (el as HTMLElement).getBoundingClientRect().top + window.scrollY - 65;
+    window.scrollTo({ top, behavior: lenis ? "auto" : "smooth" });
+    return;
+  }
+
+  overlayEl.style.pointerEvents = "all";
+
+  gsap.fromTo(overlayEl,
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 0.22,
+      ease: "power2.in",
+      onComplete() {
+        const currentScroll  = lenis!.scroll;
+        const elTop          = (el as HTMLElement).getBoundingClientRect().top + currentScroll;
+        const goingBackward  = elTop < currentScroll;
+
+        if (goingBackward) {
+          // Find the scrubbed pin inside this section and jump to its end
+          // so the scrub animation is at 100% (bars filled, etc.)
+          const st = ScrollTrigger.getAll().find(
+            (s) => s.vars.scrub && s.pin && (el as HTMLElement).contains(s.trigger as Element | null)
+          );
+          lenis!.scrollTo(st ? st.end - 1 : (el as HTMLElement), { immediate: true, offset: st ? 0 : -65 });
+        } else {
+          lenis!.scrollTo(el as HTMLElement, { immediate: true, offset: -65 });
+        }
+
+        ScrollTrigger.refresh();
+
+        gsap.to(overlayEl!, {
+          opacity: 0,
+          duration: 0.32,
+          delay: 0.05,
+          ease: "power2.out",
+          onComplete() {
+            if (overlayEl) overlayEl.style.pointerEvents = "none";
+          },
+        });
+      },
+    }
+  );
+}
+
 export function LenisProvider({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    overlayEl = ref.current;
+
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch) return;
+
     lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-
-    // Tell ScrollTrigger to read scroll position from Lenis, not native scroll.
-    // Without this, ST reads window.scrollY which can lag behind Lenis's
-    // animated value, causing the pin to engage at wrong positions.
-    ScrollTrigger.scrollerProxy(document.body, {
-      scrollTop(value?: number) {
-        if (value !== undefined && lenis) {
-          lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis?.scroll ?? 0;
-      },
-      getBoundingClientRect() {
-        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-      },
     });
 
     lenis.on("scroll", ScrollTrigger.update);
@@ -50,12 +93,28 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
-      ScrollTrigger.scrollerProxy(document.body, undefined as never);
+      overlayEl = null;
       gsap.ticker.remove(tick);
       lenis?.destroy();
       lenis = null;
     };
   }, []);
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <div
+        ref={ref}
+        aria-hidden
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "var(--color-bg)",
+          opacity: 0,
+          pointerEvents: "none",
+          zIndex: 9990,
+        }}
+      />
+    </>
+  );
 }

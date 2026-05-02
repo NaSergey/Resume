@@ -70,6 +70,7 @@
     color: var(--color-ink);
     min-height: 100svh;
     overflow-x: hidden;
+    overscroll-behavior: none;
   }
 
   a {

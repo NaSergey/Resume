@@ -44,6 +44,7 @@ export function Projects() {
 
       const trig = {
         trigger: sectionRef.current,
+
         start: "top 80%",
         toggleActions: "play none none none",
       };
@@ -74,12 +75,10 @@ export function Projects() {
 
       const hST = ScrollTrigger.create({
         trigger:             pinWrap,
-        start:               "top top",
-        end:                 () => `+=${Math.abs(getScrollAmount())}`,
+
+        start:               "top 65px",
+        end:                 () => `+=${Math.abs(getScrollAmount()) + window.innerHeight - 65}`,
         pin:                 true,
-        pinType:             "transform",
-        // anticipatePin removed — with Lenis it reads smoothed velocity
-        // and fires 100-150px too early, causing the teleport
         scrub:               1,
         invalidateOnRefresh: true,
 
@@ -230,12 +229,12 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" ref={sectionRef}>
+    <section id="projects" ref={sectionRef} className="bg-bg">
       {/* Pinned horizontal scroll — heading lives inside the pin */}
-      <div ref={pinWrapRef} className="flex flex-col" style={{ height: "100vh" }}>
+      <div ref={pinWrapRef} className="flex flex-col md:h-[calc(100vh-65px)]">
         {/* Heading — stationary inside pinned area */}
-        <div className="shrink-0 pt-[clamp(20px,6vw,80px)] px-[clamp(20px,6vw,80px)] pb-[clamp(16px,2vh,28px)]">
-          <div className="proj-tag mb-4 opacity-0">
+        <div className="shrink-0 pt-9 px-5 pb-4 md:pt-10 md:px-20">
+          <div className="proj-tag opacity-0">
             <SectionTag index="04" label="Projects" />
           </div>
 
@@ -254,7 +253,7 @@ export function Projects() {
 
         <div
           ref={trackRef}
-          className="flex items-center shrink-0 px-[clamp(20px,6vw,80px)] gap-6 py-4 h-[clamp(420px,60vh,580px)]"
+          className="flex items-center shrink-0 px-5 md:px-20 gap-6 py-4 h-[clamp(380px,55vh,520px)]"
         >
           {PROJECTS.map((project) => (
             <div

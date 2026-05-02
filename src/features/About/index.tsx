@@ -170,7 +170,7 @@ export function About() {
 
   return (
     <section id="about" ref={sectionRef}>
-      <div className="section-wrap">
+      <div className="px-5 md:px-20 py-16 md:py-20 max-w-350 mx-auto">
         <div ref={tagRef} className="mb-12 opacity-0">
           <SectionTag index="01" label="About Me" />
         </div>
@@ -240,7 +240,7 @@ export function About() {
           {/* Right — visual */}
           <div className="flex flex-col gap-8">
             {/* SVG portrait frame */}
-            <div className="relative">
+            <div className="relative hidden lg:block">
               <svg
                 ref={frameRef}
                 viewBox="0 0 320 320"

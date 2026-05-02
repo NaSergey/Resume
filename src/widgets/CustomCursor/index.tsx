@@ -9,7 +9,9 @@ import { useCursor } from "@/shared/hooks/useCursor";
  * 3. Trail — 2 ghost rings at progressively longer delays + lower opacity
  */
 export function CustomCursor() {
-  const { dotRef, ringRef, t1Ref, t2Ref, state } = useCursor();
+  const { dotRef, ringRef, t1Ref, t2Ref, state, isTouch } = useCursor();
+
+  if (isTouch) return null;
 
   const hidden = state === "hidden";
   const hovering = state === "hover";

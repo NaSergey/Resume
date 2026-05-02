@@ -7,28 +7,25 @@ import { Experience } from "@/features/Experience";
 import { Projects } from "@/features/Projects";
 import { Contact } from "@/features/Contact";
 
+const Divider = () => (
+  <div className="h-px bg-[linear-gradient(90deg,transparent,var(--color-border-hi),transparent)]" />
+);
+
 export default function Home() {
   return (
     <>
       <Header />
       <main>
         <Hero />
-
-        {/* Divider */}
-        <div
-          style={{
-            height: "1px",
-            background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)",
-          }}
-        />
+        <Divider />
         <About />
-        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
+        <Divider />
         <Skills />
-        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
+        <Divider />
         <Experience />
-        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
+        <Divider />
         <Projects />
-        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--color-border-hi), transparent)" }} />
+        <Divider />
         <Contact />
       </main>
       <Footer />

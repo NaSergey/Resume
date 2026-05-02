@@ -114,7 +114,7 @@ export function ProjectModal({ project, onClose }: Props) {
             </div>
 
             <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--color-ink-dim)" }}>
-              {p.desc}
+              {t.projects.descs[p.id as keyof typeof t.projects.descs] ?? p.desc}
             </p>
 
             <div className="flex flex-wrap gap-2 mb-6">
