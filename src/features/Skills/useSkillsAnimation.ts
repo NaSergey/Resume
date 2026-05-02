@@ -23,16 +23,12 @@ function addGroupBars(
   const dotDelay = opts?.dotDelay ?? 0.65;
   const dotDur   = opts?.dotDur   ?? 0.2;
 
-  const bars   = groupEl.querySelectorAll<HTMLElement>(".skill-bar-fill");
-  const labels = groupEl.querySelectorAll<HTMLElement>(".skill-level-label");
+  const bars = groupEl.querySelectorAll<HTMLElement>(".skill-bar-fill");
 
   bars.forEach((bar, bi) => {
-    const target   = parseFloat(bar.dataset.level ?? "0") / 100;
-    const levelNum = Math.round(target * 100);
-    const dot      = bar.parentElement?.querySelector<HTMLElement>(".skill-bar-dot");
-    const labelEl  = labels[bi] ?? null;
-    const pos      = basePos + bi * step;
-    const proxy    = { val: 0 };
+    const target = parseFloat(bar.dataset.level ?? "0") / 100;
+    const dot    = bar.parentElement?.querySelector<HTMLElement>(".skill-bar-dot");
+    const pos    = basePos + bi * step;
 
     gsap.set(bar, { scaleX: 0 });
     if (dot) gsap.set(dot, { scale: 0 });
@@ -40,15 +36,6 @@ function addGroupBars(
     tl.fromTo(bar,
       { scaleX: 0 },
       { scaleX: target, duration: dur, ease: "power2.out" },
-      pos
-    );
-    tl.to(proxy,
-      {
-        val: levelNum, duration: dur, ease: "power2.out",
-        onUpdate() {
-          if (labelEl) labelEl.textContent = `${Math.round(proxy.val)}%`;
-        },
-      },
       pos
     );
     if (dot) {
@@ -59,6 +46,28 @@ function addGroupBars(
       );
     }
   });
+}
+
+function animateLabels(sectionEl: HTMLElement, trigger: Element | null) {
+  const tl = gsap.timeline();
+
+  sectionEl.querySelectorAll<HTMLElement>(".skill-group").forEach((groupEl, gi) => {
+    const bars   = groupEl.querySelectorAll<HTMLElement>(".skill-bar-fill");
+    const labels = groupEl.querySelectorAll<HTMLElement>(".skill-level-label");
+
+    bars.forEach((bar, bi) => {
+      const levelNum = Math.round(parseFloat(bar.dataset.level ?? "0"));
+      const labelEl  = labels[bi];
+      if (!labelEl) return;
+      const proxy = { val: 0 };
+      tl.to(proxy, {
+        val: levelNum, duration: 0.7, ease: "power2.out",
+        onUpdate() { labelEl.textContent = `${Math.round(proxy.val)}%`; },
+      }, gi * 1.4 + bi * 0.12);
+    });
+  });
+
+  ScrollTrigger.create({ trigger, animation: tl, start: "top 75%", once: true });
 }
 
 export function useSkillsAnimation({ sectionRef, pinWrapRef, cardsTrackRef }: SkillsRefs) {
@@ -121,6 +130,8 @@ export function useSkillsAnimation({ sectionRef, pinWrapRef, cardsTrackRef }: Sk
           scrub:               1.5,
           invalidateOnRefresh: true,
         });
+
+        animateLabels(sectionRef.current!, sectionRef.current);
       });
 
       mm.add("(max-width: 767px)", () => {
@@ -188,6 +199,8 @@ export function useSkillsAnimation({ sectionRef, pinWrapRef, cardsTrackRef }: Sk
           scrub:               1.2,
           invalidateOnRefresh: true,
         });
+
+        animateLabels(sectionRef.current!, sectionRef.current);
       });
 
       ScrollTrigger.refresh();
