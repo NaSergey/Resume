@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/shared/lib/utils";
-import { scrollTo } from "@/shared/providers/LenisProvider";
+import { navigateTo } from "@/shared/providers/LenisProvider";
 import { useLang } from "@/shared/providers/LangProvider";
 import { locales } from "@/shared/config/i18n";
 import { AnimatedSlashIcon } from "@/shared/ui/AnimatedSlashIcon";
@@ -87,7 +87,7 @@ function Nav() {
 
   function handleNav(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
     e.preventDefault();
-    scrollTo(href);
+    navigateTo(href);
   }
 
   return (

@@ -5,6 +5,7 @@ export const translations = {
       skills:     "Стек",
       experience: "Опыт",
       projects:   "Проекты",
+      contact:    "Контакты",
     },
     logo: "Наумов С.",
     hero: {
@@ -77,6 +78,7 @@ export const translations = {
       skills:     "Stack",
       experience: "Experience",
       projects:   "Projects",
+      contact:    "Contact",
     },
     logo: "Naumov S.",
     hero: {

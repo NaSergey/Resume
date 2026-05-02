@@ -19,8 +19,14 @@ export function useCursor() {
   const t1Ref   = useRef<HTMLDivElement>(null); // trail 1
   const t2Ref   = useRef<HTMLDivElement>(null); // trail 2
   const [state, setState] = useState<CursorState>("default");
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      setIsTouch(true);
+      return;
+    }
+
     const dot  = dotRef.current;
     const ring = ringRef.current;
     const t1   = t1Ref.current;
@@ -132,5 +138,5 @@ export function useCursor() {
     };
   }, []);
 
-  return { dotRef, ringRef, t1Ref, t2Ref, state };
+  return { dotRef, ringRef, t1Ref, t2Ref, state, isTouch };
 }

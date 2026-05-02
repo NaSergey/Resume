@@ -89,19 +89,16 @@ export function Experience() {
 
   return (
     <section id="experience" ref={sectionRef}>
-      <div className="section-wrap">
-        <div className="exp-tag mb-4 opacity-0">
+      <div className="flex flex-col px-5 md:px-20 py-16 md:py-10 md:h-[calc(100vh-65px)] max-w-350 mx-auto">
+        <div className="exp-tag  opacity-0">
           <SectionTag index="03" label="Experience" />
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-16">
-          <h2
-            className="exp-heading opacity-0 font-bold"
-            style={{ fontSize: "var(--text-h2)", color: "var(--color-ink)" }}
-          >
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+          <h2 className="exp-heading opacity-0 font-bold text-h2 text-ink">
             {t.experience.heading}
           </h2>
-          <p className="font-mono text-sm" style={{ color: "var(--color-ink-faint)" }}>
+          <p className="font-mono text-sm text-ink-faint">
             {t.experience.subtitle}
           </p>
         </div>
@@ -109,17 +106,13 @@ export function Experience() {
         <div className="timeline-wrap grid lg:grid-cols-[40px_1fr_380px] gap-0">
 
           {/* Scrollbar track + thumb */}
-          <div className="relative hidden lg:block" style={{ height: "480px" }}>
+          <div className="relative hidden lg:block h-120">
             <div
               ref={thumbRef}
-              className="absolute rounded-full"
+              className="absolute top-0 left-[calc(50%-1.5px)] w-0.75 rounded-full [transition:top_0.12s_ease]"
               style={{
-                top: 0,
-                left: "calc(50% - 1.5px)",
-                width: "3px",
                 background: "var(--color-cyan)",
                 boxShadow: "0 0 8px var(--color-cyan)",
-                transition: "top 0.12s ease",
               }}
             />
           </div>
@@ -127,8 +120,8 @@ export function Experience() {
           {/* Scrollable card list */}
           <div
             ref={listRef}
-            className="flex flex-col gap-3 overflow-y-auto [&::-webkit-scrollbar]:hidden"
-            style={{ maxHeight: "480px", scrollbarWidth: "none" }}
+            className="flex flex-col gap-3 overflow-y-auto h-120 [&::-webkit-scrollbar]:hidden"
+            style={{  scrollbarWidth: "none" }}
             onMouseEnter={syncLenisTarget}
             onScroll={updateThumb}
           >
@@ -151,11 +144,10 @@ export function Experience() {
                       <div className="flex items-center gap-2 mb-1">
                         {job.highlight && (
                           <span
-                            className="font-mono text-[9px] tracking-widest uppercase px-2 py-0.5"
+                            className="font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 rounded-xs"
                             style={{
                               color: job.color,
                               border: `1px solid ${job.color}50`,
-                              borderRadius: "2px",
                             }}
                           >
                             Latest
@@ -172,19 +164,16 @@ export function Experience() {
                           {job.company}
                         </span>
                       </div>
-                      <span
-                        className="font-mono text-label"
-                        style={{ color: "var(--color-ink-faint)" }}
-                      >
+                      <span className="font-mono text-label text-ink-faint">
                         {job.role}
                       </span>
                     </div>
 
                     <div className="text-right shrink-0">
-                      <div className="font-mono text-label" style={{ color: "var(--color-ink-dim)" }}>
+                      <div className="font-mono text-label text-ink-dim">
                         {job.period}
                       </div>
-                      <div className="font-mono text-[10px]" style={{ color: "var(--color-ink-faint)" }}>
+                      <div className="font-mono text-[10px] text-ink-faint">
                         {t.experience.durations[job.id as keyof typeof t.experience.durations] ?? job.duration}
                       </div>
                     </div>
@@ -195,7 +184,7 @@ export function Experience() {
           </div>
 
           {/* Right — detail panel */}
-          <div className="hidden lg:block pl-8">
+          <div className="lg:pl-8 mt-4 lg:mt-0">
             <DetailPanel job={activeJob} />
           </div>
         </div>
@@ -257,7 +246,7 @@ function DetailPanel({ job }: { job: Job }) {
         <h3 className="font-bold text-lg mb-1" style={{ color: displayed.color, textShadow: `0 0 16px ${displayed.color}60` }}>
           {displayed.company}
         </h3>
-        <p className="text-sm" style={{ color: "var(--color-ink-dim)" }}>{displayed.role}</p>
+        <p className="text-sm text-ink-dim">{displayed.role}</p>
       </div>
 
       <div className="space-y-3 mb-6">
@@ -267,15 +256,15 @@ function DetailPanel({ job }: { job: Job }) {
           { label: "Type",     value: displayed.type },
         ].map((row) => (
           <div key={row.label} className="flex justify-between">
-            <span className="font-mono text-label" style={{ color: "var(--color-ink-faint)" }}>{row.label}</span>
-            <span className="font-mono text-label" style={{ color: "var(--color-ink-dim)" }}>{row.value}</span>
+            <span className="font-mono text-label text-ink-faint">{row.label}</span>
+            <span className="font-mono text-label text-ink-dim">{row.value}</span>
           </div>
         ))}
       </div>
 
-      <div className="h-px w-full mb-6" style={{ background: "var(--color-border)" }} />
+      <div className="h-px w-full mb-6 bg-border" />
 
-      <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--color-ink-dim)" }}>
+      <p className="text-sm leading-relaxed mb-6 text-ink-dim">
         {t.experience.jobs[displayed.id as keyof typeof t.experience.jobs] ?? displayed.desc}
       </p>
 
@@ -283,11 +272,10 @@ function DetailPanel({ job }: { job: Job }) {
         {displayed.stack.map((s) => (
           <span
             key={s}
-            className="font-mono text-[10px] tracking-wider px-2 py-1"
+            className="font-mono text-[10px] tracking-wider px-2 py-1 rounded-xs"
             style={{
               color: displayed.color,
               border: `1px solid ${displayed.color}40`,
-              borderRadius: "2px",
               background: `${displayed.color}08`,
             }}
           >
