@@ -44,6 +44,8 @@ export function Projects() {
       if (!track || !pinWrap) return;
 
       const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 120);
+      // Cached to avoid reading scrollWidth on every scroll frame (causes reflow)
+      let cachedScrollAmount = getScrollAmount();
 
       const trig = {
         trigger: sectionRef.current,
@@ -74,13 +76,16 @@ export function Projects() {
       const hST = ScrollTrigger.create({
         trigger: pinWrap,
         start: "top 65px",
-        end: () => `+=${Math.abs(getScrollAmount()) + window.innerHeight - 65}`,
+        end: () => {
+          cachedScrollAmount = getScrollAmount(); // recalc only on resize
+          return `+=${Math.abs(cachedScrollAmount) + window.innerHeight - 65}`;
+        },
         pin: true,
         scrub: 1,
         invalidateOnRefresh: true,
 
         onUpdate: (self) => {
-          gsap.set(track, { x: getScrollAmount() * self.progress });
+          gsap.set(track, { x: cachedScrollAmount * self.progress });
 
           const delta = self.progress - lastProgress;
           lastProgress = self.progress;

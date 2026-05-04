@@ -126,7 +126,6 @@ export function ProjectCard({ project, onOpen }: Props) {
             style={{
               background: `radial-gradient(circle, ${project.rawColor}18 0%, transparent 70%)`,
               top: "10%", left: "10%",
-              filter: "blur(35px)",
             }}
           />
 

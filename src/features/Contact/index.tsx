@@ -10,131 +10,71 @@ import { useLang } from "@/shared/providers/LangProvider";
 gsap.registerPlugin(ScrollTrigger);
 
 const CONTACT_LINKS = [
-  { label: "Email", value: "wxtx.ns@gmail.com", href: "mailto:wxtx.ns@gmail.com", icon: "✉" },
-  { label: "Telegram", value: "@Na_Sergey", href: "https://t.me/Na_Sergey", icon: "→" },
-  { label: "GitHub", value: "github.com/NaSergey", href: "https://github.com/NaSergey", icon: "⌥" },
+  { label: "Email",    value: "wxtx.ns@gmail.com",    href: "mailto:wxtx.ns@gmail.com",      icon: "✉" },
+  { label: "Telegram", value: "@Na_Sergey",            href: "https://t.me/Na_Sergey",        icon: "→" },
+  { label: "GitHub",   value: "github.com/NaSergey",  href: "https://github.com/NaSergey",   icon: "⌥" },
 ];
 
 export function Contact() {
   const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const glitchIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const trig = {
-        trigger: sectionRef.current,
-        start: "top 75%",
-        toggleActions: "play none none none",
-      };
+    const el = headingRef.current;
+    const originalHTML = el?.innerHTML ?? "";
 
-      gsap.fromTo(
-        ".contact-tag",
+    // Split heading into word spans for stagger reveal
+    if (el) {
+      const words = (el.textContent ?? "").split(/\s+/).filter(Boolean);
+      el.innerHTML = words
+        .map((w) => `<span class="h-word" style="display:inline-block">${w}</span>`)
+        .join(" ");
+    }
+
+    const ctx = gsap.context(() => {
+      const trig = { trigger: sectionRef.current, start: "top 70%", once: true };
+
+      gsap.fromTo(".contact-tag",
         { x: -30, opacity: 0 },
         { x: 0, opacity: 1, duration: 0.6, ease: "power2.out", scrollTrigger: trig }
       );
 
-      // Возвращаем триггер для глитча
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top 70%",
-        once: true,
-        onEnter: () => triggerGlitch(),
-      });
+      // Word stagger — each word slides up and fades in
+      if (el) {
+        gsap.set(el, { opacity: 1 });
+        gsap.fromTo(".h-word",
+          { y: 32, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, stagger: 0.07, delay: 0.05, ease: "power3.out", scrollTrigger: trig }
+        );
+      }
 
-      // Heading fade in
-      gsap.fromTo(
-        headingRef.current,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", scrollTrigger: { ...trig, start: "top 70%" } }
-      );
-
-      // Sub text
-      gsap.fromTo(
-        ".contact-sub",
+      gsap.fromTo(".contact-sub",
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, ease: "power2.out", scrollTrigger: { ...trig, start: "top 68%" } }
+        { y: 0, opacity: 1, duration: 0.7, delay: 0.2, ease: "power2.out", scrollTrigger: trig }
       );
-
-      // Links stagger
-      gsap.fromTo(
-        ".contact-row",
+      gsap.fromTo(".contact-row",
         { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "back.out(1.4)",
-          scrollTrigger: { ...trig, start: "top 65%" },
-        }
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, delay: 0.3, ease: "back.out(1.4)", scrollTrigger: trig }
       );
-
-      // CTA
-      gsap.fromTo(
-        ".contact-cta",
+      gsap.fromTo(".contact-cta",
         { scale: 0.9, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.7,
-          ease: "back.out(1.6)",
-          scrollTrigger: { ...trig, start: "top 60%" },
-        }
+        { scale: 1, opacity: 1, duration: 0.7, delay: 0.5, ease: "back.out(1.6)", scrollTrigger: trig }
       );
     }, sectionRef);
 
     return () => {
       ctx.revert();
-      if (glitchIntervalRef.current) clearInterval(glitchIntervalRef.current);
+      if (el) el.innerHTML = originalHTML;
     };
   }, []);
-
-  function triggerGlitch() {
-    const el = headingRef.current;
-    if (!el) return;
-
-    // 1. Фиксируем высоту ДО старта перебора, чтобы блок не прыгал при переносе строк
-    const currentHeight = el.offsetHeight;
-    el.style.minHeight = `${currentHeight}px`;
-
-    const original = el.textContent ?? "";
-    
-    // 2. Убрали слишком широкие символы (W, M, @, %) для стабилизации ширины слов
-    const CHARS = "ABCDEFGHJKLNPQRSTUVXYZ0123456789#$&?";
-    let iterations = 0;
-
-    glitchIntervalRef.current = setInterval(() => {
-      el.textContent = original
-        .split("")
-        .map((char, i) => {
-          if (char === " ") return " ";
-          if (i < iterations) return original[i];
-          return CHARS[Math.floor(Math.random() * CHARS.length)];
-        })
-        .join("");
-
-      iterations += 1.5;
-      
-      if (iterations >= original.length) {
-        if (glitchIntervalRef.current) clearInterval(glitchIntervalRef.current);
-        el.textContent = original;
-        // 3. Снимаем фиксацию высоты после завершения
-        el.style.minHeight = "";
-      }
-    }, 40);
-  }
 
   return (
     <section id="contact" ref={sectionRef}>
       <div className="relative overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 50% at 50% 100%, rgba(0,212,255,0.06) 0%, transparent 60%)",
-          }}
+          style={{ background: "radial-gradient(ellipse 80% 50% at 50% 100%, rgba(0,212,255,0.06) 0%, transparent 60%)" }}
           aria-hidden
         />
 
@@ -146,8 +86,8 @@ export function Contact() {
           <div className="max-w-3xl">
             <h2
               ref={headingRef}
-              className="font-bold text-h2 text-ink mb-4 md:mb-6 opacity-0"
-              style={{ lineHeight: 1.05 }}
+              className="font-bold text-h2 text-ink mb-4 md:mb-6"
+              style={{ lineHeight: 1.05, opacity: 0 }}
             >
               {t.contact.heading}
             </h2>
@@ -181,24 +121,23 @@ export function Contact() {
 }
 
 function ContactRow({ link, index }: { link: typeof CONTACT_LINKS[0]; index: number }) {
-  const rowRef = useRef<HTMLAnchorElement>(null);
+  const rowRef   = useRef<HTMLAnchorElement>(null);
+  const labelRef = useRef<HTMLSpanElement>(null);
+  const iconRef  = useRef<HTMLSpanElement>(null);
+  const lineRef  = useRef<HTMLDivElement>(null);
 
   const handleEnter = () => {
-    const el = rowRef.current;
-    if (!el) return;
-    gsap.to(el.querySelector(".row-label"), { x: 8, duration: 0.3, ease: "power2.out" });
-    gsap.to(el.querySelector(".row-icon"), { x: 6, opacity: 1, duration: 0.3, ease: "power2.out" });
-    gsap.to(el.querySelector(".row-line"), { scaleX: 1, duration: 0.4, ease: "power2.out" });
-    gsap.to(el, { borderColor: "rgba(0,212,255,0.2)", duration: 0.2 });
+    gsap.to(labelRef.current, { x: 8,   duration: 0.3, ease: "power2.out" });
+    gsap.to(iconRef.current,  { x: 6, opacity: 1, duration: 0.3, ease: "power2.out" });
+    gsap.to(lineRef.current,  { scaleX: 1, duration: 0.4, ease: "power2.out" });
+    gsap.to(rowRef.current,   { borderColor: "rgba(0,212,255,0.2)", duration: 0.2 });
   };
 
   const handleLeave = () => {
-    const el = rowRef.current;
-    if (!el) return;
-    gsap.to(el.querySelector(".row-label"), { x: 0, duration: 0.4, ease: "power2.out" });
-    gsap.to(el.querySelector(".row-icon"), { x: 0, opacity: 0.3, duration: 0.4, ease: "power2.out" });
-    gsap.to(el.querySelector(".row-line"), { scaleX: 0, duration: 0.3, ease: "power2.in" });
-    gsap.to(el, { borderColor: "var(--color-border)", duration: 0.3 });
+    gsap.to(labelRef.current, { x: 0,   duration: 0.4, ease: "power2.out" });
+    gsap.to(iconRef.current,  { x: 0, opacity: 0.3, duration: 0.4, ease: "power2.out" });
+    gsap.to(lineRef.current,  { scaleX: 0, duration: 0.3, ease: "power2.in" });
+    gsap.to(rowRef.current,   { borderColor: "var(--color-border)", duration: 0.3 });
   };
 
   return (
@@ -214,7 +153,8 @@ function ContactRow({ link, index }: { link: typeof CONTACT_LINKS[0]; index: num
       data-cursor-hover
     >
       <div
-        className="row-line absolute bottom-0 left-0 right-0 h-px origin-left"
+        ref={lineRef}
+        className="absolute bottom-0 left-0 right-0 h-px origin-left"
         style={{
           background: "linear-gradient(90deg, var(--color-cyan), var(--color-purple))",
           transform: "scaleX(0)",
@@ -222,26 +162,22 @@ function ContactRow({ link, index }: { link: typeof CONTACT_LINKS[0]; index: num
       />
 
       <div className="flex items-center gap-4 md:gap-6">
-        <span
-          className="hidden md:block font-mono text-label tracking-widest uppercase w-20 shrink-0 text-ink-faint"
-        >
+        <span className="hidden md:block font-mono text-label tracking-widest uppercase w-20 shrink-0 text-ink-faint">
           {String(index + 1).padStart(2, "0")}
         </span>
-
         <div className="flex flex-col md:flex-row md:items-center gap-0.5 md:gap-6">
           <span className="font-mono text-[10px] md:text-label tracking-widest uppercase shrink-0 md:w-20 text-ink-faint">
             {link.label}
           </span>
-          <span
-            className="row-label font-sans text-sm md:text-xl text-ink"
-          >
+          <span ref={labelRef} className="font-sans text-sm md:text-xl text-ink">
             {link.value}
           </span>
         </div>
       </div>
 
       <span
-        className="row-icon font-mono text-lg md:text-xl shrink-0 ml-2"
+        ref={iconRef}
+        className="font-mono text-lg md:text-xl shrink-0 ml-2"
         style={{ color: "var(--color-cyan)", opacity: 0.3 }}
       >
         {link.icon}
