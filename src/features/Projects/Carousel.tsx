@@ -78,24 +78,8 @@ export function Carousel({ images, color, onOpen }: Props) {
             disabled={current === maxIndex}
           >
             →
-          </button>
+          </button>ё
         </>
-      )}
-
-      {showNav && (
-        <div className="flex justify-center gap-1.5 mt-2">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              className="w-1.5 h-1.5 rounded-full transition-all duration-200"
-              style={{
-                background: i === current ? color : `${color}35`,
-                transform: i === current ? "scale(1.4)" : "scale(1)",
-              }}
-              onClick={() => setCurrent(Math.min(i, maxIndex))}
-            />
-          ))}
-        </div>
       )}
     </div>
   );
