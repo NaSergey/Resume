@@ -17,41 +17,23 @@ export function Projects() {
   const trackRef   = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<Project | null>(null);
 
-  // Preload all project assets on mount so the modal opens instantly
   useEffect(() => {
     const links: HTMLLinkElement[] = [];
-
     PROJECTS.forEach(({ images, video }) => {
-      // Images
       images.forEach((src) => { new Image().src = src; });
-
-      // Video — <link rel="preload"> is the only reliable way to prime the browser cache
       const link = document.createElement("link");
-      link.rel = "preload";
-      link.as = "video";
-      link.href = video;
+      link.rel = "preload"; link.as = "video"; link.href = video;
       document.head.appendChild(link);
       links.push(link);
     });
-
     return () => { links.forEach((l) => l.remove()); };
   }, []);
 
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
     const ctx = gsap.context(() => {
-      const track   = trackRef.current;
-      const pinWrap = pinWrapRef.current;
-      if (!track || !pinWrap) return;
-
-      const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 120);
-      // Cached to avoid reading scrollWidth on every scroll frame (causes reflow)
-      let cachedScrollAmount = getScrollAmount();
-
-      const trig = {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        toggleActions: "play none none none",
-      };
+      const trig = { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none none" };
 
       gsap.fromTo(".proj-tag",
         { x: -30, opacity: 0 },
@@ -62,12 +44,28 @@ export function Projects() {
         { y: 0, opacity: 1, duration: 0.7, ease: "power2.out", scrollTrigger: trig }
       );
 
-      // Cached once — not queried per scroll frame
-      const inners = Array.from(track.querySelectorAll<HTMLElement>(".card-inner"));
+      if (isMobile) {
+        // Mobile: simple vertical reveal, no pin, no horizontal scroll
+        gsap.fromTo(".proj-card",
+          { y: 24, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 0.55, stagger: 0.08, ease: "power2.out",
+            scrollTrigger: { trigger: trackRef.current, start: "top 85%", once: true },
+          }
+        );
+        return;
+      }
 
-      let lastProgress  = 0;
-      let smoothVel     = 0;
-      let springBackRaf = 0;
+      // Desktop: horizontal scroll + velocity tilt
+      const track   = trackRef.current;
+      const pinWrap = pinWrapRef.current;
+      if (!track || !pinWrap) return;
+
+      const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 120);
+      let cachedScrollAmount = getScrollAmount();
+
+      const inners = Array.from(track.querySelectorAll<HTMLElement>(".card-inner"));
+      let lastProgress = 0, smoothVel = 0, springBackRaf = 0;
 
       const springBackCards = () => {
         gsap.to(inners, { rotationY: 0, duration: 1.0, ease: "elastic.out(1.3, 0.45)", overwrite: "auto" });
@@ -77,7 +75,7 @@ export function Projects() {
         trigger: pinWrap,
         start: "top 65px",
         end: () => {
-          cachedScrollAmount = getScrollAmount(); // recalc only on resize
+          cachedScrollAmount = getScrollAmount();
           return `+=${Math.abs(cachedScrollAmount) + window.innerHeight - 65}`;
         },
         pin: true,
@@ -104,15 +102,11 @@ export function Projects() {
         onLeaveBack: springBackCards,
       });
 
-      gsap.fromTo(
-        ".proj-card",
+      gsap.fromTo(".proj-card",
         { clipPath: "inset(100% 0 0 0)", opacity: 0 },
         {
-          clipPath: "inset(0% 0 0 0)",
-          opacity: 1,
-          duration: 0.9,
-          stagger: 0.1,
-          ease: "expo.out",
+          clipPath: "inset(0% 0 0 0)", opacity: 1,
+          duration: 0.9, stagger: 0.1, ease: "expo.out",
           scrollTrigger: { ...trig, start: "top 70%", once: true },
           onComplete() { gsap.set(".proj-card", { clearProps: "clipPath" }); },
         }
@@ -144,9 +138,10 @@ export function Projects() {
           </div>
         </div>
 
+        {/* Mobile: vertical stack. Desktop: horizontal scroll track */}
         <div
           ref={trackRef}
-          className="flex items-center shrink-0 px-5 md:px-20 gap-6 py-4 h-[clamp(440px,62vh,600px)]"
+          className="flex flex-col md:flex-row md:items-center shrink-0 px-5 md:px-20 gap-4 md:gap-6 py-4 md:h-[clamp(440px,62vh,600px)]"
         >
           {PROJECTS.map((project) => (
             <ProjectCard key={project.id} project={project} onOpen={setActive} />

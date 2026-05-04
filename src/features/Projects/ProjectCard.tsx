@@ -94,7 +94,7 @@ export function ProjectCard({ project, onOpen }: Props) {
   return (
     <div
       ref={cardRef}
-      className="proj-card flex-shrink-0 opacity-0 w-[clamp(240px,26vw,360px)] h-full perspective-[1100px]"
+      className="proj-card flex-shrink-0 opacity-0 w-full md:w-[clamp(240px,26vw,360px)] h-70 md:h-full perspective-[1100px]"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={() => onOpen(project)}
@@ -103,7 +103,7 @@ export function ProjectCard({ project, onOpen }: Props) {
       <div
         ref={innerRef}
         className="card-inner h-full relative"
-        style={{ borderRadius: "4px", willChange: "transform" }}
+        style={{ borderRadius: "4px" }}
       >
         <div
           className="noise absolute inset-0 pointer-events-none z-10"
@@ -157,7 +157,7 @@ export function ProjectCard({ project, onOpen }: Props) {
             <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--color-ink-dim)" }}>
               {t.projects.descs[project.id as keyof typeof t.projects.descs] ?? project.desc}
             </p>
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="hidden md:flex flex-wrap gap-2 mb-6">
               {project.stack.map((s) => (
                 <span
                   key={s}
