@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { stopLenis, startLenis } from "@/shared/providers/LenisProvider";
-
 import { type Project } from "@/shared/data";
 import { useLang } from "@/shared/providers/LangProvider";
 
@@ -18,10 +17,10 @@ export function ProjectModal({ project, onClose }: Props) {
   const p = last.current;
 
   const { t } = useLang();
-  const [ready, setReady] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
-    if (project) { stopLenis(); setReady(false); }
+    if (project) { stopLenis(); setVideoReady(false); }
     else startLenis();
     return () => { startLenis(); };
   }, [project]);
@@ -74,13 +73,17 @@ export function ProjectModal({ project, onClose }: Props) {
             ✕
           </DialogClose>
 
-          <div style={{ opacity: ready ? 1 : 0, transition: "opacity 0.3s ease" }}>
-          <div className="relative w-full overflow-hidden" style={{ borderRadius: "12px 12px 0 0", height: "320px" }}>
+          {/* Video — fades in when ready; placeholder keeps layout stable */}
+          <div
+            className="relative w-full overflow-hidden"
+            style={{ borderRadius: "12px 12px 0 0", height: "320px", background: "rgba(18,18,42,0.8)" }}
+          >
             <video
               src={p.video}
               autoPlay muted loop playsInline
               className="w-full h-full object-cover"
-              onLoadedMetadata={() => setReady(true)}
+              style={{ opacity: videoReady ? 1 : 0, transition: "opacity 0.4s ease" }}
+              onLoadedMetadata={() => setVideoReady(true)}
             />
             <div
               className="absolute bottom-0 left-0 right-0 h-16"
@@ -88,6 +91,7 @@ export function ProjectModal({ project, onClose }: Props) {
             />
           </div>
 
+          {/* Images and text — visible immediately */}
           <div className="flex gap-3 px-6 pt-4">
             {p.images.map((src, i) => (
               <img
@@ -139,7 +143,6 @@ export function ProjectModal({ project, onClose }: Props) {
             className="absolute bottom-0 left-0 right-0 h-px"
             style={{ background: `linear-gradient(90deg, transparent, ${p.rawColor}60, transparent)` }}
           />
-          </div>
         </DialogContent>
       )}
     </Dialog>
