@@ -17,6 +17,16 @@ export function Projects() {
   const trackRef   = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<Project | null>(null);
 
+  // Preload all project assets on mount so the modal opens instantly
+  useEffect(() => {
+    PROJECTS.forEach(({ images, video }) => {
+      images.forEach((src) => { new Image().src = src; });
+      const vid = document.createElement("video");
+      vid.preload = "metadata";
+      vid.src = video;
+    });
+  }, []);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       const track   = trackRef.current;
