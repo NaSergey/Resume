@@ -203,3 +203,10 @@ export const TECH_TAG_GROUPS = [
   { color: "#00ff87",             rawColor: "#00ff87", tags: ["@Wagmi", "Rainbow-me", "Viem"] },
   { color: "#fff12d",             rawColor: "#fff12d", tags: ["Node.js", "Nest.js"] },
 ];
+
+// ─── Social links ────────────────────────────────────────────────────────────
+export const SOCIAL_LINKS = [
+  { label: "email",    href: "mailto:wxtx.ns@gmail.com" },
+  { label: "github",   href: "https://github.com/NaSergey" },
+  { label: "telegram", href: "#" },
+] as const;

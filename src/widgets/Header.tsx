@@ -151,7 +151,7 @@ function Nav() {
         <div className="flex items-center gap-2">
           <LangSwitcher />
           <a
-            href="https://t.me/username"
+            href="https://t.me/Na_Sergey"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Telegram"

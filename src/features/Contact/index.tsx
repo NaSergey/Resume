@@ -11,9 +11,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CONTACT_LINKS = [
   { label: "Email", value: "wxtx.ns@gmail.com", href: "mailto:wxtx.ns@gmail.com", icon: "✉" },
-  { label: "Telegram", value: "@ns_dev", href: "https://t.me/ns_dev", icon: "→" },
+  { label: "Telegram", value: "@Na_Sergey", href: "https://t.me/Na_Sergey", icon: "→" },
   { label: "GitHub", value: "github.com/NaSergey", href: "https://github.com/NaSergey", icon: "⌥" },
-  { label: "LinkedIn", value: "linkedin.com/in/ns", href: "#", icon: "⬡" },
 ];
 
 export function Contact() {
