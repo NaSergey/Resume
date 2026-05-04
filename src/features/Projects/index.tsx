@@ -19,12 +19,22 @@ export function Projects() {
 
   // Preload all project assets on mount so the modal opens instantly
   useEffect(() => {
+    const links: HTMLLinkElement[] = [];
+
     PROJECTS.forEach(({ images, video }) => {
+      // Images
       images.forEach((src) => { new Image().src = src; });
-      const vid = document.createElement("video");
-      vid.preload = "metadata";
-      vid.src = video;
+
+      // Video — <link rel="preload"> is the only reliable way to prime the browser cache
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "video";
+      link.href = video;
+      document.head.appendChild(link);
+      links.push(link);
     });
+
+    return () => { links.forEach((l) => l.remove()); };
   }, []);
 
   useEffect(() => {

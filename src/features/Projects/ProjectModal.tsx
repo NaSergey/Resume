@@ -17,10 +17,10 @@ export function ProjectModal({ project, onClose }: Props) {
   const p = last.current;
 
   const { t } = useLang();
-  const [videoReady, setVideoReady] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (project) { stopLenis(); setVideoReady(false); }
+    if (project) { stopLenis(); setReady(false); }
     else startLenis();
     return () => { startLenis(); };
   }, [project]);
@@ -73,76 +73,72 @@ export function ProjectModal({ project, onClose }: Props) {
             ✕
           </DialogClose>
 
-          {/* Video — fades in when ready; placeholder keeps layout stable */}
-          <div
-            className="relative w-full overflow-hidden"
-            style={{ borderRadius: "12px 12px 0 0", height: "320px", background: "rgba(18,18,42,0.8)" }}
-          >
-            <video
-              src={p.video}
-              autoPlay muted loop playsInline
-              className="w-full h-full object-cover"
-              style={{ opacity: videoReady ? 1 : 0, transition: "opacity 0.4s ease" }}
-              onLoadedMetadata={() => setVideoReady(true)}
-            />
-            <div
-              className="absolute bottom-0 left-0 right-0 h-16"
-              style={{ background: "linear-gradient(to top, rgba(6,6,18,0.88), transparent)" }}
-            />
-          </div>
-
-          {/* Images and text — visible immediately */}
-          <div className="flex gap-3 px-6 pt-4">
-            {p.images.map((src, i) => (
-              <img
-                key={i} src={src} alt=""
-                className="flex-1 object-cover rounded-lg"
-                style={{ height: "120px", border: `1px solid ${p.rawColor}20` }}
+          <div style={{ opacity: ready ? 1 : 0, transition: "opacity 0.3s ease" }}>
+            <div className="relative w-full overflow-hidden" style={{ borderRadius: "12px 12px 0 0", height: "320px" }}>
+              <video
+                src={p.video}
+                autoPlay muted loop playsInline
+                className="w-full h-full object-cover"
+                onLoadedMetadata={() => setReady(true)}
               />
-            ))}
-          </div>
-
-          <div className="px-6 pt-5 pb-8">
-            <div className="flex items-start justify-between gap-4 mb-3">
-              <div>
-                <p className="font-mono text-label tracking-widest uppercase mb-1" style={{ color: "var(--color-ink-faint)" }}>
-                  {p.category} · {p.year === "Будет позже" ? t.projects.comingSoon : p.year}
-                </p>
-                <h2 className="font-bold" style={{ fontSize: "var(--text-h3)", color: "var(--color-ink)" }}>
-                  {p.title}
-                </h2>
-              </div>
-              <span className="font-mono text-label opacity-50" style={{ color: p.rawColor }}>
-                {p.num}
-              </span>
+              <div
+                className="absolute bottom-0 left-0 right-0 h-16"
+                style={{ background: "linear-gradient(to top, rgba(6,6,18,0.88), transparent)" }}
+              />
             </div>
 
-            <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--color-ink-dim)" }}>
-              {t.projects.descs[p.id as keyof typeof t.projects.descs] ?? p.desc}
-            </p>
-
-            <div className="flex flex-wrap gap-2 mb-6">
-              {p.stack.map((s) => (
-                <span
-                  key={s}
-                  className="font-mono text-[10px] tracking-wider px-2 py-1"
-                  style={{
-                    color: p.rawColor,
-                    border: `1px solid ${p.rawColor}30`,
-                    borderRadius: "2px",
-                    background: `${p.rawColor}08`,
-                  }}
-                >
-                  {s}
-                </span>
+            <div className="flex gap-3 px-6 pt-4">
+              {p.images.map((src, i) => (
+                <img
+                  key={i} src={src} alt=""
+                  className="flex-1 object-cover rounded-lg"
+                  style={{ height: "120px", border: `1px solid ${p.rawColor}20` }}
+                />
               ))}
             </div>
-          </div>
 
-          <div
-            className="absolute bottom-0 left-0 right-0 h-px"
-            style={{ background: `linear-gradient(90deg, transparent, ${p.rawColor}60, transparent)` }}
-          />
+            <div className="px-6 pt-5 pb-8">
+              <div className="flex items-start justify-between gap-4 mb-3">
+                <div>
+                  <p className="font-mono text-label tracking-widest uppercase mb-1" style={{ color: "var(--color-ink-faint)" }}>
+                    {p.category} · {p.year === "Будет позже" ? t.projects.comingSoon : p.year}
+                  </p>
+                  <h2 className="font-bold" style={{ fontSize: "var(--text-h3)", color: "var(--color-ink)" }}>
+                    {p.title}
+                  </h2>
+                </div>
+                <span className="font-mono text-label opacity-50" style={{ color: p.rawColor }}>
+                  {p.num}
+                </span>
+              </div>
+
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--color-ink-dim)" }}>
+                {t.projects.descs[p.id as keyof typeof t.projects.descs] ?? p.desc}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                {p.stack.map((s) => (
+                  <span
+                    key={s}
+                    className="font-mono text-[10px] tracking-wider px-2 py-1"
+                    style={{
+                      color: p.rawColor,
+                      border: `1px solid ${p.rawColor}30`,
+                      borderRadius: "2px",
+                      background: `${p.rawColor}08`,
+                    }}
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div
+              className="absolute bottom-0 left-0 right-0 h-px"
+              style={{ background: `linear-gradient(90deg, transparent, ${p.rawColor}60, transparent)` }}
+            />
+          </div>
         </DialogContent>
       )}
     </Dialog>
