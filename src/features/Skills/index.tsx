@@ -23,7 +23,7 @@ export function Skills() {
     <section id="skills" ref={sectionRef} className="relative z-1">
       <div
         ref={pinWrapRef}
-        className="flex flex-col md:h-[calc(100vh-65px)] px-5 md:pb-0 pb-8 md:px-20 md:pt-16 bg-bg"
+        className="flex flex-col md:h-[calc(100vh-65px)] px-5 md:pb-0 pb-8 md:px-20 md:pt-16 bg-bg relative z-10"
       >
         <div className="skills-tag mb-4 opacity-0">
           <SectionTag index="02" label="Skills" />

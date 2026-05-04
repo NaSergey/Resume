@@ -129,7 +129,6 @@ export function Contact() {
 
   return (
     <section id="contact" ref={sectionRef}>
-      {/* Gradient background */}
       <div className="relative overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none"
@@ -140,29 +139,28 @@ export function Contact() {
           aria-hidden
         />
 
-        <div className="section-wrap relative z-10">
-          <div className="contact-tag mb-12 opacity-0">
+        <div className="relative z-10 px-5 md:px-20 py-16 md:py-20 max-w-350 mx-auto">
+          <div className="contact-tag mb-8 md:mb-12 opacity-0">
             <SectionTag index="05" label="Contact" />
           </div>
 
           <div className="max-w-3xl">
-            {/* Heading */}
             <h2
               ref={headingRef}
-              className="font-bold mb-6 opacity-0"
-              style={{ fontSize: "var(--text-h2)", color: "var(--color-ink)", lineHeight: 1.05 }}
+              className="font-bold text-h2 text-ink mb-4 md:mb-6 opacity-0"
+              style={{ lineHeight: 1.05 }}
             >
               {t.contact.heading}
             </h2>
 
             <p
-              className="contact-sub opacity-0 text-lg mb-16 max-w-xl"
-              style={{ color: "var(--color-ink-dim)", lineHeight: 1.7 }}
+              className="contact-sub opacity-0 text-base md:text-lg mb-10 md:mb-16 max-w-xl text-ink-dim"
+              style={{ lineHeight: 1.7 }}
             >
               {t.contact.subtitle}
             </p>
 
-            <div className="space-y-1 mb-16">
+            <div className="space-y-1 mb-10 md:mb-16">
               {CONTACT_LINKS.map((link, i) => (
                 <ContactRow key={link.label} link={link} index={i} />
               ))}
@@ -210,7 +208,7 @@ function ContactRow({ link, index }: { link: typeof CONTACT_LINKS[0]; index: num
       href={link.href}
       target={link.href.startsWith("http") ? "_blank" : undefined}
       rel="noopener noreferrer"
-      className="contact-row opacity-0 flex items-center justify-between py-5 px-2 border-t relative group"
+      className="contact-row opacity-0 flex items-center justify-between py-4 md:py-5 px-2 border-t relative group"
       style={{ borderColor: "var(--color-border)" }}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
@@ -224,29 +222,27 @@ function ContactRow({ link, index }: { link: typeof CONTACT_LINKS[0]; index: num
         }}
       />
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4 md:gap-6">
         <span
-          className="font-mono text-[11px] tracking-widest uppercase w-20 flex-shrink-0"
-          style={{ color: "var(--color-ink-faint)" }}
+          className="hidden md:block font-mono text-label tracking-widest uppercase w-20 shrink-0 text-ink-faint"
         >
           {String(index + 1).padStart(2, "0")}
         </span>
-        <span
-          className="font-mono text-[11px] tracking-widest uppercase flex-shrink-0"
-          style={{ color: "var(--color-ink-faint)", width: "80px" }}
-        >
-          {link.label}
-        </span>
-        <span
-          className="row-label font-sans text-base md:text-xl"
-          style={{ color: "var(--color-ink)" }}
-        >
-          {link.value}
-        </span>
+
+        <div className="flex flex-col md:flex-row md:items-center gap-0.5 md:gap-6">
+          <span className="font-mono text-[10px] md:text-label tracking-widest uppercase shrink-0 md:w-20 text-ink-faint">
+            {link.label}
+          </span>
+          <span
+            className="row-label font-sans text-sm md:text-xl text-ink"
+          >
+            {link.value}
+          </span>
+        </div>
       </div>
 
       <span
-        className="row-icon font-mono text-xl"
+        className="row-icon font-mono text-lg md:text-xl shrink-0 ml-2"
         style={{ color: "var(--color-cyan)", opacity: 0.3 }}
       >
         {link.icon}
