@@ -78,7 +78,7 @@ export function Carousel({ images, color, onOpen }: Props) {
             disabled={current === maxIndex}
           >
             →
-          </button>ё
+          </button>
         </>
       )}
     </div>

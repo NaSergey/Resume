@@ -102,7 +102,7 @@ export function ProjectCard({ project, onOpen }: Props) {
   return (
     <div
       ref={cardRef}
-      className="proj-card flex-shrink-0 opacity-0 w-[clamp(240px,26vw,360px)] h-full perspective-[1100px]"
+      className="proj-card flex-shrink-0 opacity-0 w-full md:w-[clamp(240px,26vw,360px)] h-full perspective-[1100px]"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={() => onOpen(project)}
