@@ -65,7 +65,11 @@ export function Projects() {
       let cachedScrollAmount = getScrollAmount();
 
       const inners = Array.from(track.querySelectorAll<HTMLElement>(".card-inner"));
-      let lastProgress = 0, smoothVel = 0, springBackRaf = 0;
+      let lastProgress = 0, smoothVel = 0, springBackTimer = 0;
+
+      const quickTilts = inners.map((el) =>
+        gsap.quickTo(el, "rotationY", { duration: 0.25, ease: "power2.out" })
+      );
 
       const springBackCards = () => {
         gsap.to(inners, { rotationY: 0, duration: 1.0, ease: "elastic.out(1.3, 0.45)", overwrite: "auto" });
@@ -90,12 +94,12 @@ export function Projects() {
           smoothVel = smoothVel * 0.55 + delta * 0.45;
 
           const tiltDeg = Math.max(-18, Math.min(18, smoothVel * -1400));
-          gsap.to(inners, { rotationY: tiltDeg, duration: 0.25, ease: "power2.out", overwrite: "auto" });
+          quickTilts.forEach((qt) => qt(tiltDeg));
 
-          cancelAnimationFrame(springBackRaf);
-          springBackRaf = requestAnimationFrame(() => {
+          clearTimeout(springBackTimer);
+          springBackTimer = window.setTimeout(() => {
             if (Math.abs(smoothVel) < 0.0008) springBackCards();
-          });
+          }, 80);
         },
 
         onLeave:     springBackCards,
@@ -112,7 +116,7 @@ export function Projects() {
         }
       );
 
-      return () => { hST.kill(); cancelAnimationFrame(springBackRaf); };
+      return () => { hST.kill(); clearTimeout(springBackTimer); };
     }, sectionRef);
 
     return () => ctx.revert();

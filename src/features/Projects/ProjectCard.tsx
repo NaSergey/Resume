@@ -28,6 +28,7 @@ export function ProjectCard({ project, onOpen }: Props) {
   const numRef    = useRef<HTMLSpanElement>(null);
   const orbRef    = useRef<HTMLDivElement>(null);
   const layerRefs = useRef<Record<LayerKey, HTMLDivElement | null>>({ back: null, mid: null, front: null });
+  const rafRef    = useRef<number>(0);
 
   useEffect(() => {
     const numEl = numRef.current;
@@ -58,27 +59,34 @@ export function ProjectCard({ project, onOpen }: Props) {
     if (!inner) return;
 
     const rect = e.currentTarget.getBoundingClientRect();
-    const rx = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
-    const ry = ((e.clientX - rect.left) / rect.width  - 0.5) * -2;
-    const cx = e.clientX - rect.left - rect.width  / 2;
-    const cy = e.clientY - rect.top  - rect.height / 2;
+    const clientX = e.clientX;
+    const clientY = e.clientY;
 
-    gsap.to(inner, {
-      rotationX: rx * 12, rotationY: ry * 12,
-      duration: 0.28, ease: "power2.out",
-      transformPerspective: 900, overwrite: "auto",
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      const rx = ((clientY - rect.top)  / rect.height - 0.5) * 2;
+      const ry = ((clientX - rect.left) / rect.width  - 0.5) * -2;
+      const cx = clientX - rect.left - rect.width  / 2;
+      const cy = clientY - rect.top  - rect.height / 2;
+
+      gsap.to(inner, {
+        rotationX: rx * 12, rotationY: ry * 12,
+        duration: 0.28, ease: "power2.out",
+        transformPerspective: 900, overwrite: "auto",
+      });
+
+      LAYERS.forEach(({ key, mult }) => {
+        const el = layerRefs.current[key];
+        if (el) gsap.to(el, { x: cx * mult, y: cy * mult, duration: 0.32, ease: "power2.out", overwrite: "auto" });
+      });
+
+      const orb = orbRef.current;
+      if (orb) gsap.to(orb, { x: cx * 0.45, y: cy * 0.45, duration: 0.4, ease: "power2.out" });
     });
-
-    LAYERS.forEach(({ key, mult }) => {
-      const el = layerRefs.current[key];
-      if (el) gsap.to(el, { x: cx * mult, y: cy * mult, duration: 0.32, ease: "power2.out", overwrite: "auto" });
-    });
-
-    const orb = orbRef.current;
-    if (orb) gsap.to(orb, { x: cx * 0.45, y: cy * 0.45, duration: 0.4, ease: "power2.out" });
   };
 
   const handleMouseLeave = () => {
+    cancelAnimationFrame(rafRef.current);
     const inner = innerRef.current;
     if (!inner) return;
 
@@ -94,7 +102,7 @@ export function ProjectCard({ project, onOpen }: Props) {
   return (
     <div
       ref={cardRef}
-      className="proj-card flex-shrink-0 opacity-0 w-full md:w-[clamp(240px,26vw,360px)] h-70 md:h-full perspective-[1100px]"
+      className="proj-card flex-shrink-0 opacity-0 w-[clamp(240px,26vw,360px)] h-full perspective-[1100px]"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={() => onOpen(project)}
@@ -103,7 +111,7 @@ export function ProjectCard({ project, onOpen }: Props) {
       <div
         ref={innerRef}
         className="card-inner h-full relative"
-        style={{ borderRadius: "4px" }}
+        style={{ borderRadius: "4px", willChange: "transform" }}
       >
         <div
           className="noise absolute inset-0 pointer-events-none z-10"
@@ -112,8 +120,6 @@ export function ProjectCard({ project, onOpen }: Props) {
             background: "rgba(18, 18, 42, 0.96)",
             border: `1px solid ${project.rawColor}55`,
             boxShadow: `0 0 0 1px ${project.rawColor}15, inset 0 1px 0 ${project.rawColor}20`,
-            backdropFilter: "blur(16px) saturate(160%)",
-            WebkitBackdropFilter: "blur(16px) saturate(160%)",
           }}
         />
         <div
