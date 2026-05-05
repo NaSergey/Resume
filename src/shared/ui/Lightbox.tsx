@@ -9,7 +9,6 @@ interface Props {
   type: "image" | "video";
   onClose: () => void;
 }
-
 export function Lightbox({ src, type, onClose }: Props) {
   const [mounted, setMounted] = useState(false);
 
@@ -19,7 +18,13 @@ export function Lightbox({ src, type, onClose }: Props) {
     if (!src) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    // Блокируем скролл на уровне body, чтобы убрать лишние расчеты сдвига
+    document.body.style.overflow = "hidden"; 
+    
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
   }, [src, onClose]);
 
   if (!src || !mounted) return null;
@@ -27,12 +32,17 @@ export function Lightbox({ src, type, onClose }: Props) {
   return createPortal(
     <div
       className="fixed inset-0 flex items-center justify-center"
-      style={{ zIndex: 9500, background: "rgba(0,0,0,0.92)", backdropFilter: "blur(12px)" }}
+      style={{ 
+        zIndex: 9500, 
+        background: "rgba(3, 3, 5, 0.96)", // Увеличили непрозрачность, убрали blur
+        // backdropFilter: "none" // Если тормозит — это первое на удаление
+      }}
       onClick={onClose}
     >
+      {/* Кнопка закрытия */}
       <button
-        className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center font-mono text-sm rounded-full"
-        style={{ background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.15)" }}
+        className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center font-mono text-lg rounded-full transition-colors hover:bg-white/10"
+        style={{ background: "rgba(255,255,255,0.05)", color: "white", border: "1px solid rgba(255,255,255,0.1)" }}
         onClick={onClose}
       >
         ✕
@@ -40,23 +50,29 @@ export function Lightbox({ src, type, onClose }: Props) {
 
       <div
         className="relative flex items-center justify-center"
-        style={{ maxWidth: "72vw", maxHeight: "72vh" }}
+        style={{ width: "90vw", height: "80vh" }} // Чуть увеличим область для комфорта
         onClick={(e) => e.stopPropagation()}
       >
         {type === "video" ? (
           <video
             src={src}
             autoPlay muted loop playsInline controls
-            className="rounded-lg"
-            style={{ maxWidth: "72vw", maxHeight: "72vh" }}
+            className="rounded-lg shadow-2xl"
+            style={{ 
+               maxWidth: "100%", 
+               maxHeight: "100%", 
+               transform: "translateZ(0)", // GPU ускорение
+               willChange: "contents" 
+            }}
           />
         ) : (
-          <div style={{ position: "relative", width: "min(72vw, 960px)", height: "min(72vh, 600px)" }}>
+          <div className="relative w-full h-full">
             <Image
               src={src}
               alt=""
               fill
-              sizes="72vw"
+              priority // Чтобы картинка не мерцала при загрузке в портале
+              sizes="90vw"
               className="object-contain rounded-lg"
             />
           </div>
