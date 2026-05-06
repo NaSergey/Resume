@@ -9,6 +9,8 @@ import { ProjectModal } from "./ProjectModal";
 import { ProjectCard } from "./ProjectCard";
 import { PROJECTS, type Project } from "@/shared/data";
 import { useLang } from "@/shared/providers/LangProvider";
+import { createMobileSlider } from "@/shared/lib/createMobileSlider";
+import { SliderDots } from "@/shared/ui/SliderDots";
 
 export function Projects() {
   const { t } = useLang();
@@ -45,14 +47,20 @@ export function Projects() {
       );
 
       if (isMobile) {
-        // Mobile: simple vertical reveal, no pin, no horizontal scroll
-        gsap.fromTo(".proj-card",
-          { y: 24, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 0.55, stagger: 0.08, ease: "power2.out",
-            scrollTrigger: { trigger: trackRef.current, start: "top 85%", once: true },
-          }
-        );
+        const track   = trackRef.current;
+        const pinWrap = pinWrapRef.current;
+        if (!track || !pinWrap) return;
+
+        gsap.set(".proj-card", { opacity: 1 });
+
+        createMobileSlider({
+          track,
+          pinWrap,
+          sectionRoot:  sectionRef.current,
+          itemSelector: ".proj-card",
+          gap:          16,
+        });
+
         return;
       }
 
@@ -142,15 +150,17 @@ export function Projects() {
           </div>
         </div>
 
-        {/* Mobile: vertical stack. Desktop: horizontal scroll track */}
-        <div
-          ref={trackRef}
-          className="flex flex-col md:flex-row md:items-center shrink-0 px-5 md:px-20 gap-4 md:gap-6 py-4 md:h-[clamp(440px,62vh,600px)]"
-        >
-          {PROJECTS.map((project) => (
-            <ProjectCard key={project.id} project={project} onOpen={setActive} />
-          ))}
+        <div className="overflow-hidden md:overflow-visible">
+          <div
+            ref={trackRef}
+            className="flex md:flex-row md:items-center shrink-0 px-5 md:px-20 gap-4 md:gap-6 py-4 h-105 md:h-[clamp(440px,62vh,600px)]"
+          >
+            {PROJECTS.map((project) => (
+              <ProjectCard key={project.id} project={project} onOpen={setActive} />
+            ))}
+          </div>
         </div>
+        <SliderDots items={PROJECTS} className="pb-4" />
       </div>
 
       <ProjectModal project={active} onClose={() => setActive(null)} />

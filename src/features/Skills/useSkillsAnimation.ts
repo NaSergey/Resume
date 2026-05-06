@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { createMobileSlider } from "@/shared/lib/createMobileSlider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -148,45 +149,27 @@ export function useSkillsAnimation({ sectionRef, pinWrapRef, cardsTrackRef }: Sk
           }
         );
 
-        const track = cardsTrackRef.current;
-        const cards = Array.from(
-          sectionRef.current?.querySelectorAll<HTMLElement>(".skill-group") ?? []
-        );
-        const dots = Array.from(
-          sectionRef.current?.querySelectorAll<HTMLElement>("[data-dot-index]") ?? []
-        );
+        const track   = cardsTrackRef.current;
+        const pinWrap = pinWrapRef.current;
+        if (!track || !pinWrap) return;
 
-        if (!track || cards.length < 3) return;
-
-        gsap.set(track, { x: 0 });
-
-        const tl    = gsap.timeline();
         const mOpts = { dur: 0.5, step: 0.1, dotDelay: 0.45, dotDur: 0.18 };
-        const slide = (n: number) => () =>
-          -((track.parentElement?.offsetWidth ?? 0) + 12) * n;
 
-        const advanceTo = (n: number, pos: number) => {
-          tl.to(track,    { x: slide(n), duration: 0.5, ease: "power2.inOut" }, pos);
-          if (dots[n - 1]) tl.to(dots[n - 1], { opacity: 0.3, duration: 0.3 }, pos);
-          if (dots[n])     tl.to(dots[n],     { opacity: 1,   duration: 0.3 }, pos);
-        };
-
-        addGroupBars(tl, cards[0], 0.1, mOpts);
-        advanceTo(1, 1.2);
-        addGroupBars(tl, cards[1], 1.7, mOpts);
-        advanceTo(2, 2.7);
-        addGroupBars(tl, cards[2], 3.2, mOpts);
-
-        ScrollTrigger.create({
-          trigger:             pinWrapRef.current,
-
-          animation:           tl,
-          start:               "top 65px",
-          end:                 "+=250%",
-          pin:                 true,
-
-          scrub:               1.2,
-          invalidateOnRefresh: true,
+        createMobileSlider({
+          track,
+          pinWrap,
+          sectionRoot:  sectionRef.current,
+          itemSelector: ".skill-group",
+          gap:          12,
+          end:          "+=250%",
+          buildTimeline: (tl, cards, advanceTo) => {
+            if (cards.length < 3) return;
+            addGroupBars(tl, cards[0], 0.1, mOpts);
+            advanceTo(1, 1.2);
+            addGroupBars(tl, cards[1], 1.7, mOpts);
+            advanceTo(2, 2.7);
+            addGroupBars(tl, cards[2], 3.2, mOpts);
+          },
         });
 
       });

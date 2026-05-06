@@ -9,6 +9,7 @@ import { useLang } from "@/shared/providers/LangProvider";
 import { useSkillsAnimation } from "./useSkillsAnimation";
 import { useCardHover } from "./useCardHover";
 import { SkillCard } from "./SkillCard";
+import { SliderDots } from "@/shared/ui/SliderDots";
 
 export function Skills() {
   const { t } = useLang();
@@ -49,16 +50,7 @@ export function Skills() {
           </div>
         </div>
 
-        <div className="flex md:hidden justify-center gap-2 mb-5">
-          {SKILL_GROUPS.map((group, i) => (
-            <div
-              key={i}
-              data-dot-index={i}
-              className={`w-1.5 h-1.5 rounded-full ${i === 0 ? "opacity-100" : "opacity-30"}`}
-              style={{ background: group.rawColor }}
-            />
-          ))}
-        </div>
+        <SliderDots items={SKILL_GROUPS} className="mb-5" />
 
         <div>
           <FlickerText className="font-mono text-xs tracking-[0.2em] uppercase mb-6">
