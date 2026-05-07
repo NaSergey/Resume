@@ -18,20 +18,31 @@ export function useCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const t1Ref   = useRef<HTMLDivElement>(null); // trail 1
   const t2Ref   = useRef<HTMLDivElement>(null); // trail 2
-  const [state, setState] = useState<CursorState>("default");
-  const [isTouch, setIsTouch] = useState(false);
+  const [state, setState] = useState<CursorState>("hidden");
+  const [isTouch, setIsTouch] = useState(true);
 
+  // Effect 1: detect touch once (before rendering cursor elements)
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) {
-      setIsTouch(true);
-      return;
+    if (!window.matchMedia("(pointer: coarse)").matches) {
+      setIsTouch(false);
     }
+  }, []);
+
+  // Effect 2: GSAP setup runs after isTouch=false causes cursor divs to mount
+  useEffect(() => {
+    if (isTouch) return;
 
     const dot  = dotRef.current;
     const ring = ringRef.current;
     const t1   = t1Ref.current;
     const t2   = t2Ref.current;
     if (!dot || !ring) return;
+
+    // position off-screen until first mousemove; GSAP owns the full transform
+    gsap.set(
+      [dot, ring, ...(t1 ? [t1] : []), ...(t2 ? [t2] : [])],
+      { xPercent: -50, yPercent: -50, x: -200, y: -200 },
+    );
 
     // Velocity state — exponential moving average
     let prevX = 0, prevY = 0;
@@ -75,6 +86,7 @@ export function useCursor() {
     const onMove = (e: MouseEvent) => {
       curX = e.clientX;
       curY = e.clientY;
+      setState(prev => prev === "hidden" ? "default" : prev);
 
       gsap.set(dot, { x: curX, y: curY });
 
@@ -121,22 +133,26 @@ export function useCursor() {
       }
     };
 
+    const onDocLeave = () => setState(prev => prev === "click" ? prev : "hidden");
+
     rafId = requestAnimationFrame(tick);
     window.addEventListener("mousemove",  onMove);
     window.addEventListener("mousedown",  onDown);
     window.addEventListener("mouseup",    onUp);
-    document.addEventListener("mouseover", onOver);
-    document.addEventListener("mouseout",  onOut);
+    document.addEventListener("mouseover",  onOver);
+    document.addEventListener("mouseout",   onOut);
+    document.documentElement.addEventListener("mouseleave", onDocLeave);
 
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("mousemove",  onMove);
       window.removeEventListener("mousedown",  onDown);
       window.removeEventListener("mouseup",    onUp);
-      document.removeEventListener("mouseover", onOver);
-      document.removeEventListener("mouseout",  onOut);
+      document.removeEventListener("mouseover",  onOver);
+      document.removeEventListener("mouseout",   onOut);
+      document.documentElement.removeEventListener("mouseleave", onDocLeave);
     };
-  }, []);
+  }, [isTouch]);
 
   return { dotRef, ringRef, t1Ref, t2Ref, state, isTouch };
 }
