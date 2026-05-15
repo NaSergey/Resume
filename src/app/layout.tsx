@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { LenisProvider } from "@/shared/providers/LenisProvider";
 import { LangProvider } from "@/shared/providers/LangProvider";
 import { CustomCursor } from "@/widgets/CustomCursor";
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {children}
           </LenisProvider>
         </LangProvider>
+        <Analytics />
       </body>
     </html>
   );
