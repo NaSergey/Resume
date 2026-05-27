@@ -19,16 +19,13 @@ export function Projects() {
   const trackRef   = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<Project | null>(null);
 
+  const preloadRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const links: HTMLLinkElement[] = [];
-    PROJECTS.forEach(({ images, video }) => {
+    PROJECTS.forEach(({ images }) => {
       images.forEach((src) => { new Image().src = src; });
-      const link = document.createElement("link");
-      link.rel = "preload"; link.as = "video"; link.href = video;
-      document.head.appendChild(link);
-      links.push(link);
     });
-    return () => { links.forEach((l) => l.remove()); };
+    preloadRef.current?.querySelectorAll("video").forEach((v) => v.load());
   }, []);
 
   useEffect(() => {
@@ -171,6 +168,16 @@ export function Projects() {
       </div>
 
       <ProjectModal project={active} onClose={() => setActive(null)} />
+
+      <div
+        ref={preloadRef}
+        aria-hidden
+        style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", pointerEvents: "none" }}
+      >
+        {PROJECTS.filter((p) => p.year !== "Будет позже").map((p) => (
+          <video key={p.id} src={p.video} preload="auto" muted playsInline />
+        ))}
+      </div>
     </section>
   );
 }

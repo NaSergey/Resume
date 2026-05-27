@@ -3,7 +3,7 @@
 import { useRef, useCallback } from "react";
 import gsap from "gsap";
 import { useMagneticHover } from "@/shared/hooks/useMagneticHover";
-import { scrollTo } from "@/shared/providers/LenisProvider";
+import { navigateTo } from "@/shared/providers/LenisProvider";
 
 interface MagneticButtonProps {
   children: React.ReactNode;
@@ -168,7 +168,7 @@ export function MagneticButton({
     const handleAnchorClick = href.startsWith("#")
       ? (e: React.MouseEvent<HTMLAnchorElement>) => {
           e.preventDefault();
-          scrollTo(href);
+          navigateTo(href);
         }
       : undefined;
 
