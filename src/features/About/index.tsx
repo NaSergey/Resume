@@ -153,7 +153,8 @@ export function About() {
       if (frameRef.current) {
         const paths = frameRef.current.querySelectorAll("path, rect, line");
         paths.forEach((p) => {
-          const len = (p as SVGGeometryElement).getTotalLength?.() ?? 200;
+          let len = 200;
+          try { len = (p as SVGGeometryElement).getTotalLength() || 200; } catch {}
           gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
           gsap.to(p, {
             strokeDashoffset: 0,
