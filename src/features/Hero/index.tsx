@@ -425,7 +425,7 @@ export function Hero() {
         </div>
 
         {/* Role */}
-        <div ref={roleRef} className="mb-12">
+        <div ref={roleRef} className="mb-6">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {["Frontend Engineer", "—", "React · Next.js · TypeScript"].map((word) => (
               <span
@@ -446,6 +446,20 @@ export function Hero() {
                 {word}
               </span>
             ))}
+          </div>
+
+          {/* Tagline */}
+          <div
+            className="role-word mt-3 inline-flex items-center gap-2.5 font-mono text-sm"
+            style={{
+              color: "var(--color-ink-dim)",
+              letterSpacing: "-0.01em",
+              clipPath: "inset(0 0 100% 0)",
+              opacity: 0,
+            }}
+          >
+            <span className="w-4 h-px flex-shrink-0" style={{ background: "var(--color-cyan)" }} />
+            {t.hero.tagline}
           </div>
         </div>
 

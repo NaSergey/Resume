@@ -22,13 +22,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Наумов Сергей — Frontend Engineer",
+  title: "Naumov Sergey — Frontend Engineer",
   description:
     "Middle Frontend Engineer специализирующийся на React, Next.js, TypeScript. 4+ лет опыта построения production-grade интерфейсов.",
-  keywords: ["Frontend Engineer", "React", "Next.js", "TypeScript", "Наумов Сергей"],
-  authors: [{ name: "Наумов Сергей" }],
+  keywords: ["Frontend Engineer", "React", "Next.js", "TypeScript", "Naumov Sergey"],
+  authors: [{ name: "Naumov Sergey" }],
   openGraph: {
-    title: "Наумов Сергей — Frontend Engineer",
+    title: "Naumov Sergey — Frontend Engineer",
     description: "Middle Frontend Engineer. React · Next.js · TypeScript · 4+ лет опыта",
     type: "website",
   },

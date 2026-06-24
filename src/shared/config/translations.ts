@@ -21,6 +21,7 @@ export const translations = {
         location:   "/ Remote",
       },
       cta: "Посмотреть работы",
+      tagline: "Создаю fullstack-продукты с AI",
       name: { line1: "НАУМОВ", line2main: "СЕРГЕ", line2end: "Й" },
     },
     about: {
@@ -28,6 +29,7 @@ export const translations = {
       body: [
         "4 года в коммерческой разработке — крипто-продукты, CRM-системы, стартапы. Чаще всего один или два фронтендера на весь продукт.",
         "Сильная сторона — анимации и сложный UI: GSAP, Framer Motion, Lenis. Архитектура, компоненты, оптимизация — предпочитаю вести проект полностью, от структуры до деталей.",
+        "Сейчас собираю fullstack-продукты с AI — от фронтенда до бэкенда.",
         "Открыт для full-time или фриланса.",
       ],
       daysLabel: "дней в разработке",
@@ -94,6 +96,7 @@ export const translations = {
         location:   "/ Remote",
       },
       cta: "View projects",
+      tagline: "Building fullstack products with AI",
       name: { line1: "NAUMOV", line2main: "SERGE", line2end: "Y" },
     },
     about: {
@@ -101,6 +104,7 @@ export const translations = {
       body: [
         "4 years in commercial development — crypto products, CRM systems, startups. Usually one or two frontend devs for the whole product.",
         "Strong side — animations and complex UI: GSAP, Framer Motion, Lenis. Architecture, components, optimization — I prefer to own the project fully, from structure to details.",
+        "Now building fullstack products with AI — from frontend to backend.",
         "Open to full-time or freelance.",
       ],
       daysLabel: "days in development",
